@@ -1,142 +1,227 @@
 """
-Course: 2025F SSW 555-WN Agile Methods for Software Development
+Course: 2025F SSW 555–WN Agile Methods for Software Development
 Professor: Dr. Richard Ens
 Group 2 GEDCOM Program
 GitHub: cs555-gedcom-Group2
 """
 
-""" 
-TODO 1: Need to sort the returning dictionaries from the parse_individuals_family_data function
-TODO 2: Need to calculate the age of individuals
-TODO 3: Aren't we supposed to keep the code from week 2 in here?
-"""
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+from datetime import datetime, date
+import re
+import sys
 
-from prettytable import PrettyTable
+@dataclass
+class Individual:
+    id: str
+    name: str = ""
+    sex: str = ""
+    birthday: str = ""
+    age: object = "NA"         
+    alive: bool = True
+    death: str = "NA"
+    child: List[str] = field(default_factory=list)   
+    spouse: List[str] = field(default_factory=list)  
 
-def parse_individuals_family_data(ged_file):
-     """
-     This function will parse the GEDCOM file and return dictionaries with individuals and families data.
-     :param ged_file: GEDCOM file
-     :return: individuals dictionary and families dictionary
-     """
-     individuals = {}
-     families = {}
-     reading_individual = False
-     reading_family = False
+@dataclass
+class Family:
+    id: str
+    married: str = "NA"
+    divorced: str = "NA"
+    husband_id: str = ""
+    husband_name: str = ""
+    wife_id: str = ""
+    wife_name: str = ""
+    children: List[str] = field(default_factory=list)
 
-     for line in ged_file:
-          split_line = line.strip().split()
 
-          if len(split_line) == 3 and (split_line[2] == 'FAM' or split_line[2] == 'INDI'):
-               tag = split_line[2]
-          else:
-               tag = split_line[1]
+def _parse_date(s: str) -> Optional[date]:
+    """Parse GEDCOM-like date 'D MON YYYY' -> date or None."""
+    try:
+        return datetime.strptime(s.strip(), "%d %b %Y").date()
+    except Exception:
+        return None
 
-          if tag == "INDI":
-               id = split_line[1].strip("@")
-               individuals[id] = {
-                    "id": id,
-                    "name": "",
-                    "sex": "",
-                    "birthday": "",
-                    "age": 0,
-                    "alive": True,
-                    "death": "N/A",
-                    "child": [],
-                    "spouse": []
-               }
-               reading_individual = True
-               reading_family = False
-          elif tag == "FAM":
-               id = split_line[1].strip("@")
-               families[id] = {
-                    "id": id,
-                    "married": "",
-                    "divorced": "NA",
-                    "husband_id": "",
-                    "husband_name": "",
-                    "wife_id": "",
-                    "wife_name": "",
-                    "children": []
-               }
-               reading_individual = False
-               reading_family = True
-          elif reading_individual:
-               if tag == "NAME":
-                    individuals[id]["name"] = split_line[2] + " " + split_line[3]
-               elif tag == "SEX":
-                    individuals[id]["sex"] = split_line[2]
-               elif tag == "BIRT":
-                    birth_date_line = next(gedFile).strip().split()
-                    individuals[id]["birthday"] = (','.join(str(x) for x in birth_date_line[2:]))
-               elif tag == "DEAT":
-                    death_date_line = next(gedFile).strip().split()
-                    individuals[id]["death"] = (','.join(str(x) for x in death_date_line[2:]))
-                    individuals[id]["alive"] = False
-          elif reading_family:
-               if tag == "HUSB":
-                    husband_id = split_line[2].strip("@")
-                    families[id]["husband_id"] = husband_id
-                    families[id]["husband_name"] = individuals[husband_id]["name"]
-                    individuals[husband_id]["spouse"].append(id)
-               elif tag == "WIFE":
-                    wife_id = split_line[2].strip("@")
-                    families[id]["wife_id"] = wife_id
-                    families[id]["wife_name"] = individuals[wife_id]["name"]
-                    individuals[wife_id]["spouse"].append(id)
-               elif tag == "CHIL":
-                    child_id = split_line[2].strip("@")
-                    families[id]["children"].append(child_id)
-                    individuals[child_id]["child"].append(id)
-               elif tag == "MARR":
-                    marriage_date_line = next(gedFile).strip().split()
-                    families[id]["married"] = (','.join(str(x) for x in marriage_date_line[2:]))
-               elif tag == "DIV":
-                    divorce_date_line = next(gedFile).strip().split()
-                    families[id]["divorced"] = (','.join(str(x) for x in divorce_date_line[2:]))
-     return individuals, families
+def _compute_age(birth: Optional[date], end: Optional[date] = None):
+    if not birth:
+        return "NA"
+    end = end or date.today()
+    years = end.year - birth.year
+    if (end.month, end.day) < (birth.month, birth.day):
+        years -= 1
+    return years
 
-def individual_prettytable(individual_data):
-     """
-     This function will take a dictionary of individuals data and return a formatted PrettyTable table.
-     :param individual_data: dictionary of individuals with data
-     :return: table formatted with individuals data
-     """
-     print("Individuals")
-     table = PrettyTable()
-     table.field_names = ['ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse']
-     for val in individual_data.values():
-          table.add_row([val['id'], val['name'], val['sex'], val['birthday'], val['age'], val['alive'], val['death'], val['child'], val['spouse']])
+def _id_sort_key(x: str) -> int:
+    m = re.search(r"\d+", x or "")
+    return int(m.group()) if m else 0
 
-     return table
 
-def family_prettytable(family_data):
-     """
-     This function will take a dictionary of families data and return a formatted PrettyTable table.
-     :param family_data: dictionary of individuals with data
-     :return: table formatted with families data
-     """
-     print("Families")
-     table = PrettyTable()
-     table.field_names = ['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children']
-     for val in family_data.values():
-          table.add_row([val['id'], val['married'], val['divorced'], val['husband_id'], val['husband_name'], val['wife_id'], val['wife_name'], val['children']])
+VALID_TAGS = {
+    "HEAD","TRLR","NOTE","INDI","FAM","NAME","SEX","BIRT","DEAT","DATE",
+    "FAMC","FAMS","HUSB","WIFE","CHIL","MARR","DIV",
+    "SOUR","WWW","FILE","GEDC","VERS","FORM","SUBM","SUBN","CHAR",
+    "_PRIMARY","_CURRENT","DEST","GIVN"
+}
 
-     return table
+def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict[str, Family]]:
+    individuals: Dict[str, Individual] = {}
+    families: Dict[str, Family] = {}
 
-#Main
+    current_person: Optional[Individual] = None
+    current_family: Optional[Family] = None
+    pending_date_for: Optional[str] = None  
 
-try:
-     gedFile = open("data/TestData.ged")
-except Exception as e:
-     print("Cannot open file. Please try again.")
-     print(e)
-     exit()
+    for raw in ged_file:
+        line = raw.rstrip("\n")
+        if not line.strip():
+            continue
+        parts = line.strip().split()
+        try:
+            level = int(parts[0])
+        except Exception:
+            continue
 
-individuals_data, families_data = parse_individuals_family_data(gedFile)
+        tag: Optional[str] = None
+        args = ""
+        if len(parts) >= 2:
+            if len(parts) >= 3 and parts[1].startswith("@") and parts[2] in {"INDI", "FAM"}:
+                tag = parts[2]
+                args = parts[1]               
+            else:
+                tag = parts[1]
+                args = " ".join(parts[2:]) if len(parts) > 2 else ""
 
-gedFile.close()
+        if tag not in VALID_TAGS:
+            pending_date_for = None
+            continue
 
-print(individual_prettytable(individuals_data))
+        if level == 0:
+            pending_date_for = None
+            current_person = None
+            current_family = None
+            if tag == "INDI":
+                pid = args                             
+                current_person = individuals.get(pid) or Individual(id=pid)
+                individuals[pid] = current_person
+            elif tag == "FAM":
+                fid = args                              
+                current_family = families.get(fid) or Family(id=fid)
+                families[fid] = current_family
+            continue
 
-print(family_prettytable(families_data))
+        if current_person:
+            if tag == "NAME" and level == 1:
+                current_person.name = args.strip()
+            elif tag == "SEX" and level == 1:
+                current_person.sex = args.strip()
+            elif tag in {"BIRT", "DEAT"} and level == 1:
+                pending_date_for = tag
+            elif tag == "DATE" and level == 2 and pending_date_for:
+                date_text = args.strip()               
+                if pending_date_for == "BIRT":
+                    current_person.birthday = date_text
+                elif pending_date_for == "DEAT":
+                    current_person.death = date_text
+                    current_person.alive = False
+                pending_date_for = None
+            elif tag == "FAMC" and level == 1:
+                fam_id = args.strip()
+                if fam_id:
+                    current_person.child.append(fam_id)
+            elif tag == "FAMS" and level == 1:
+                fam_id = args.strip()
+                if fam_id:
+                    current_person.spouse.append(fam_id)
+            else:
+                pending_date_for = None
+            continue
+
+        if current_family:
+            if tag in {"MARR", "DIV"} and level == 1:
+                pending_date_for = tag
+            elif tag == "DATE" and level == 2 and pending_date_for:
+                date_text = args.strip()
+                if pending_date_for == "MARR":
+                    current_family.married = date_text
+                elif pending_date_for == "DIV":
+                    current_family.divorced = date_text
+                pending_date_for = None
+            elif tag == "HUSB" and level == 1:
+                current_family.husband_id = args.strip()
+            elif tag == "WIFE" and level == 1:
+                current_family.wife_id = args.strip()
+            elif tag == "CHIL" and level == 1:
+                cid = args.strip()
+                if cid:
+                    current_family.children.append(cid)
+            else:
+                pending_date_for = None
+            continue
+
+    for person in individuals.values():
+        b = _parse_date(person.birthday)
+        d = _parse_date(person.death) if not person.alive else None
+        person.age = _compute_age(b, d)
+
+    for fam in families.values():
+        fam.husband_name = individuals.get(fam.husband_id, Individual(fam.husband_id)).name
+        fam.wife_name    = individuals.get(fam.wife_id,    Individual(fam.wife_id)).name
+
+    return individuals, families
+
+def individual_prettytable(individuals: Dict[str, Individual]):
+    from prettytable import PrettyTable
+    t = PrettyTable()
+    t.field_names = ['ID','Name','Gender','Birthday','Age','Alive','Death','Child','Spouse']
+    for iid in sorted(individuals.keys(), key=_id_sort_key):
+        p = individuals[iid]
+        t.add_row([
+            p.id, p.name, p.sex, p.birthday, p.age, p.alive,
+            p.death, p.child, p.spouse
+        ])
+    return t
+
+def family_prettytable(families: Dict[str, Family]):
+    from prettytable import PrettyTable
+    t = PrettyTable()
+    t.field_names = ['ID','Married','Divorced','Husband ID','Husband Name','Wife ID','Wife Name','Children']
+    for fid in sorted(families.keys(), key=_id_sort_key):
+        f = families[fid]
+        t.add_row([
+            f.id, f.married, f.divorced,
+            f.husband_id, f.husband_name, f.wife_id, f.wife_name, f.children
+        ])
+    return t
+
+def main():
+    path = "data/TestData.ged"
+    if len(sys.argv) > 1:
+        path = sys.argv[1]
+
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            individuals, families = parse_individuals_family_data(fh)
+    except Exception as e:
+        print("Cannot open GEDCOM file:", path)
+        print(e)
+        sys.exit(1)
+
+    i_table = individual_prettytable(individuals)
+    f_table = family_prettytable(families)
+
+    print("Individuals")
+    print(i_table)
+    print("\nFamilies")
+    print(f_table)
+
+    with open("run_output.txt", "w", encoding="utf-8") as out:
+        out.write("Individuals\n")
+        out.write(str(i_table))
+        out.write("\n\nFamilies\n")
+        out.write(str(f_table))
+        out.write("\n")
+
+if __name__ == "__main__":
+    main()
+
