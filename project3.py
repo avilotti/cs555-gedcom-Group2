@@ -59,9 +59,7 @@ def _id_sort_key(x: str) -> int:
 
 VALID_TAGS = {
     "HEAD","TRLR","NOTE","INDI","FAM","NAME","SEX","BIRT","DEAT","DATE",
-    "FAMC","FAMS","HUSB","WIFE","CHIL","MARR","DIV",
-    "SOUR","WWW","FILE","GEDC","VERS","FORM","SUBM","SUBN","CHAR",
-    "_PRIMARY","_CURRENT","DEST","GIVN"
+    "FAMC","FAMS","HUSB","WIFE","CHIL","MARR","DIV"
 }
 
 def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict[str, Family]]:
