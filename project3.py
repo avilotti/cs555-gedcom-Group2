@@ -99,11 +99,11 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
             current_person = None
             current_family = None
             if tag == "INDI":
-                pid = args                             
+                pid = args.strip("@")                             
                 current_person = individuals.get(pid) or Individual(id=pid)
                 individuals[pid] = current_person
             elif tag == "FAM":
-                fid = args                              
+                fid = args.strip("@")                              
                 current_family = families.get(fid) or Family(id=fid)
                 families[fid] = current_family
             continue
@@ -124,11 +124,11 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                     current_person.alive = False
                 pending_date_for = None
             elif tag == "FAMC" and level == 1:
-                fam_id = args.strip()
+                fam_id = args.strip("@")
                 if fam_id:
                     current_person.child.append(fam_id)
             elif tag == "FAMS" and level == 1:
-                fam_id = args.strip()
+                fam_id = args.strip("@")
                 if fam_id:
                     current_person.spouse.append(fam_id)
             else:
@@ -146,11 +146,11 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                     current_family.divorced = date_text
                 pending_date_for = None
             elif tag == "HUSB" and level == 1:
-                current_family.husband_id = args.strip()
+                current_family.husband_id = args.strip("@")
             elif tag == "WIFE" and level == 1:
-                current_family.wife_id = args.strip()
+                current_family.wife_id = args.strip("@")
             elif tag == "CHIL" and level == 1:
-                cid = args.strip()
+                cid = args.strip("@")
                 if cid:
                     current_family.children.append(cid)
             else:
