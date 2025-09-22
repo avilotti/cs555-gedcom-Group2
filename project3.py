@@ -11,6 +11,7 @@ from typing import Dict, List, Optional, Tuple
 from datetime import datetime, date
 import re
 import sys
+import os
 
 @dataclass
 class Individual:
@@ -35,6 +36,10 @@ class Family:
     wife_name: str = ""
     children: List[str] = field(default_factory=list)
 
+VALID_TAGS = {
+    "HEAD","TRLR","NOTE","INDI","FAM","NAME","SEX","BIRT","DEAT","DATE",
+    "FAMC","FAMS","HUSB","WIFE","CHIL","MARR","DIV"
+}
 
 def _parse_date(s: str) -> Optional[date]:
     """Parse GEDCOM-like date 'D MON YYYY' -> date or None."""
@@ -55,12 +60,6 @@ def _compute_age(birth: Optional[date], end: Optional[date] = None):
 def _id_sort_key(x: str) -> int:
     m = re.search(r"\d+", x or "")
     return int(m.group()) if m else 0
-
-
-VALID_TAGS = {
-    "HEAD","TRLR","NOTE","INDI","FAM","NAME","SEX","BIRT","DEAT","DATE",
-    "FAMC","FAMS","HUSB","WIFE","CHIL","MARR","DIV"
-}
 
 def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict[str, Family]]:
     individuals: Dict[str, Individual] = {}
@@ -83,7 +82,7 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
         tag: Optional[str] = None
         args = ""
         if len(parts) >= 2:
-            if len(parts) >= 3 and parts[1].startswith("@") and parts[2] in {"INDI", "FAM"}:
+            if len(parts) >= 3 and parts[2] in {"INDI", "FAM"}:
                 tag = parts[2]
                 args = parts[1]               
             else:
@@ -192,8 +191,38 @@ def family_prettytable(families: Dict[str, Family]):
         ])
     return t
 
+def prompt_user_for_input():
+    """
+    This function will query the user for a GEDCOM file input before returning.
+    This function will query again until the user exits by entering q or provides the correct input.
+    :return: A validated GEDCOM file
+    """
+    user_input = 0
+    while True:
+        try:
+            user_input = input("\nEnter the GEDCOM file path or enter q to exit the program: ")
+            if user_input is 'q':
+                print("\n*****User exited the program******")
+                sys.exit()
+            user_input = str(user_input)
+            if len(user_input) == 0:
+                print("\n*****Please check your input and try again.")
+                continue
+            if not os.path.exists(user_input):
+                print("\n*****Could not find file. Please check your input and try again.")
+                continue
+        except ValueError:
+            #Providing generic feedback for the error
+            print("\n*****An incorrect input was identified. Please check your input and try again.")
+            continue
+        else:
+            break
+
+    return user_input
+
 def main():
-    path = "data/TestData.ged"
+    #path = "data/TestData.ged"
+    path = prompt_user_for_input()
     if len(sys.argv) > 1:
         path = sys.argv[1]
 
@@ -208,7 +237,7 @@ def main():
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
 
-    print("Individuals")
+    print("\nIndividuals")
     print(i_table)
     print("\nFamilies")
     print(f_table)
