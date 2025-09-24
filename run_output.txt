@@ -1,31 +1,40 @@
 Individuals
-+-----+--------------------+--------+-------------+-----+-------+-------------+--------+--------------+
-|  ID |        Name        | Gender |   Birthday  | Age | Alive |    Death    | Child  |    Spouse    |
-+-----+--------------------+--------+-------------+-----+-------+-------------+--------+--------------+
-|  I1 |     John Smith     |   M    |  1 JAN 2000 |  25 |  True |      NA     | ['F1'] |      []      |
-|  I2 |    James Smith     |   M    |  2 MAY 1979 |  30 | False |  2 JUL 2009 | ['F2'] |    ['F1']    |
-|  I3 |    Donna Smith     |   F    |  2 MAR 1980 |  45 |  True |      NA     | ['F4'] | ['F1', 'F3'] |
-|  I4 |   Richard Smith    |   M    | 12 NOV 1950 |  74 |  True |      NA     | ['F5'] |    ['F2']    |
-|  I5 |   Rebecca Smith    |   F    |  7 FEB 1954 |  56 | False | 12 JUN 2010 |   []   |    ['F2']    |
-|  I6 | William Blackburn  |   M    | 27 SEP 1940 |  79 | False |  8 JUL 2020 |   []   |    ['F4']    |
-|  I7 | Victoria Blackburn |   F    | 25 NOV 1945 |  79 |  True |      NA     |   []   |    ['F4']    |
-|  I8 |    Daniel Smith    |   M    |  8 SEP 1998 |  27 |  True |      NA     | ['F1'] |      []      |
-|  I9 |    Angela Smith    |   F    | 16 DEC 2004 |  20 |  True |      NA     | ['F1'] |      []      |
-| I10 |    Rick Simmons    |   M    |  8 SEP 1985 |  40 |  True |      NA     |   []   |    ['F3']    |
-| I11 |   Brent Simmons    |   M    | 10 AUG 2010 |  15 |  True |      NA     | ['F3'] |      []      |
-| I12 | Elizabeth Simmons  |   F    |  1 JAN 2013 |  12 |  True |      NA     | ['F3'] |      []      |
-| I13 |    Kendra Smith    |   F    |  5 MAY 1919 |  81 | False |  8 MAY 2000 |   []   |    ['F5']    |
-| I14 |     Ken Smith      |   M    |  4 APR 1914 |  86 | False |  6 JUN 2000 |   []   |    ['F5']    |
-| I15 |  Cassandra Smith   |   F    | 17 OCT 1950 |  74 |  True |      NA     | ['F5'] |      []      |
-+-----+--------------------+--------+-------------+-----+-------+-------------+--------+--------------+
++-----+--------------------+--------+-------------+------+-------+-------------+--------+--------------+
+|  ID |        Name        | Gender |   Birthday  | Age  | Alive |    Death    | Child  |    Spouse    |
++-----+--------------------+--------+-------------+------+-------+-------------+--------+--------------+
+|  I1 |     John Smith     |   M    |  1 JAN 2000 |  25  |  True |      NA     | ['F1'] |      []      |
+|  I2 |    James Smith     |   M    |  2 MAY 1979 |  30  | False |  2 JUL 2009 | ['F2'] |    ['F1']    |
+|  I3 |    Donna Smith     |   F    |  2 MAR 1980 |  45  |  True |      NA     | ['F4'] | ['F1', 'F3'] |
+|  I4 |   Richard Smith    |   M    | 12 NOV 1950 |  74  |  True |      NA     | ['F5'] |    ['F2']    |
+|  I5 |   Rebecca Smith    |   F    |  7 FEB 1954 |  56  | False | 12 JUN 2010 |   []   |    ['F2']    |
+|  I6 | William Blackburn  |   M    | 27 SEP 1940 |  79  | False |  8 JUL 2020 |   []   |    ['F4']    |
+|  I7 | Victoria Blackburn |   F    | 25 NOV 1945 |  79  |  True |      NA     |   []   |    ['F4']    |
+|  I8 |    Daniel Smith    |   M    |  8 SEP 1998 |  27  |  True |      NA     | ['F1'] |      []      |
+|  I9 |    Angela Smith    |   F    | 16 DEC 2004 |  20  |  True |      NA     | ['F1'] |      []      |
+| I10 |    Rick Simmons    |   M    |  8 SEP 1985 |  40  |  True |      NA     |   []   |    ['F3']    |
+| I11 |   Brent Simmons    |   M    | 10 AUG 2010 |  15  |  True |      NA     | ['F3'] |      []      |
+| I12 | Elizabeth Simmons  |   F    |  1 JAN 2013 |  12  |  True |      NA     | ['F3'] |      []      |
+| I13 |    Kendra Smith    |   F    |  5 MAY 2919 | -919 | False |  8 MAY 2000 |   []   |    ['F5']    |
+| I14 |     Ken Smith      |   M    |  4 APR 1914 | 186  | False |  6 JUN 2100 |   []   |    ['F5']    |
+| I15 |  Cassandra Smith   |   F    | 17 OCT 1950 |  74  |  True |      NA     | ['F5'] |      []      |
++-----+--------------------+--------+-------------+------+-------+-------------+--------+--------------+
 
 Families
-+----+------------+----------+------------+-------------------+---------+--------------------+--------------------+
-| ID |  Married   | Divorced | Husband ID |    Husband Name   | Wife ID |     Wife Name      |      Children      |
-+----+------------+----------+------------+-------------------+---------+--------------------+--------------------+
-| F1 |     NA     |    NA    |     I2     |    James Smith    |    I3   |    Donna Smith     | ['I1', 'I8', 'I9'] |
-| F2 | 4 JUL 1970 |    NA    |     I4     |   Richard Smith   |    I5   |   Rebecca Smith    |       ['I2']       |
-| F3 |     NA     |    NA    |    I10     |    Rick Simmons   |    I3   |    Donna Smith     |   ['I11', 'I12']   |
-| F4 |     NA     |    NA    |     I6     | William Blackburn |    I7   | Victoria Blackburn |       ['I3']       |
-| F5 |     NA     |    NA    |    I14     |     Ken Smith     |   I13   |    Kendra Smith    |   ['I4', 'I15']    |
-+----+------------+----------+------------+-------------------+---------+--------------------+--------------------+
++----+------------+------------+------------+-------------------+---------+--------------------+--------------------+
+| ID |  Married   |  Divorced  | Husband ID |    Husband Name   | Wife ID |     Wife Name      |      Children      |
++----+------------+------------+------------+-------------------+---------+--------------------+--------------------+
+| F1 |     NA     |     NA     |     I2     |    James Smith    |    I3   |    Donna Smith     | ['I1', 'I8', 'I9'] |
+| F2 | 4 JUL 1970 |     NA     |     I4     |   Richard Smith   |    I5   |   Rebecca Smith    |       ['I2']       |
+| F3 |     NA     |     NA     |    I10     |    Rick Simmons   |    I3   |    Donna Smith     |   ['I11', 'I12']   |
+| F4 | 4 JUL 2070 |     NA     |     I6     | William Blackburn |    I7   | Victoria Blackburn |       ['I3']       |
+| F5 |     NA     | 9 AUG 2030 |    I14     |     Ken Smith     |   I13   |    Kendra Smith    |   ['I4', 'I15']    |
++----+------------+------------+------------+-------------------+---------+--------------------+--------------------+
+
+Errors & Anomalies+-------+------------+------------+-----------+-----+-----------------------------------------------+
+|  Type |    Tag     | User Story | File Line |  ID |                    Message                    |
++-------+------------+------------+-----------+-----+-----------------------------------------------+
+| ERROR | INDIVIDUAL |    US01    |    TBD    | I13 |    Birthday 2919-05-05 occurs in the future   |
+| ERROR | INDIVIDUAL |    US01    |    TBD    | I14 |     Death 2100-06-06 occurs in the future     |
+| ERROR |   FAMILY   |    US01    |    TBD    |  F4 | Marriage date 2070-07-04 occurs in the future |
+| ERROR |   FAMILY   |    US01    |    TBD    |  F5 |  Divorce date 2030-08-09 occurs in the future |
++-------+------------+------------+-----------+-----+-----------------------------------------------+
