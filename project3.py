@@ -319,6 +319,103 @@ def prompt_user_for_input():
 
     return user_input
 
+    # ---------- AV Sprint 1 (US04, US05, US06) ----------
+
+from datetime import datetime, date  
+
+def _to_date(s: str) -> date | None:
+    """Parse 'DD MON YYYY' or return None for 'NA'/blank."""
+    if not s or s == "NA":
+        return None
+    try:
+        return datetime.strptime(s.strip(), "%d %b %Y").date()
+    except Exception:
+        return None
+
+def validate_us04(families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    for f in families.values():
+        m = _parse_date(f.married)
+        d = _parse_date(f.divorced)
+        if m and d and m > d:
+            out.append(ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam='FAMILY',
+                user_story_id='US04',
+                gedcom_line='TBD',
+                indi_or_fam_id=f.id,
+                message=f'Marriage date {m} occurs after divorce date {d}'
+            ))
+    return out
+
+def validate_us05(individuals: Dict[str, Individual],
+                  families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    for f in families.values():
+        m = _parse_date(f.married)
+        if not m: 
+            continue
+        h = individuals.get(f.husband_id)
+        if h:
+            hd = _parse_date(h.death) if not h.alive else None
+            if hd and m > hd:
+                out.append(ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam='FAMILY',
+                    user_story_id='US05',
+                    gedcom_line='TBD',
+                    indi_or_fam_id=f.id,
+                    message=f'Marriage date {m} occurs after death of husband {h.id} ({h.name}) on {hd}'
+                ))
+        w = individuals.get(f.wife_id)
+        if w:
+            wd = _parse_date(w.death) if not w.alive else None
+            if wd and m > wd:
+                out.append(ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam='FAMILY',
+                    user_story_id='US05',
+                    gedcom_line='TBD',
+                    indi_or_fam_id=f.id,
+                    message=f'Marriage date {m} occurs after death of wife {w.id} ({w.name}) on {wd}'
+                ))
+    return out
+
+def validate_us06(individuals: Dict[str, Individual],
+                  families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    for f in families.values():
+        dv = _parse_date(f.divorced)
+        if not dv:
+            continue
+        h = individuals.get(f.husband_id)
+        if h:
+            hd = _parse_date(h.death) if not h.alive else None
+            if hd and dv > hd:
+                out.append(ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam='FAMILY',
+                    user_story_id='US06',
+                    gedcom_line='TBD',
+                    indi_or_fam_id=f.id,
+                    message=f'Divorce date {dv} occurs after death of husband {h.id} ({h.name}) on {hd}'
+                ))
+        w = individuals.get(f.wife_id)
+        if w:
+            wd = _parse_date(w.death) if not w.alive else None
+            if wd and dv > wd:
+                out.append(ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam='FAMILY',
+                    user_story_id='US06',
+                    gedcom_line='TBD',
+                    indi_or_fam_id=f.id,
+                    message=f'Divorce date {dv} occurs after death of wife {w.id} ({w.name}) on {wd}'
+                ))
+    return out
+
+
+
 def main():
     path = "data/TestData.ged"
     #path = prompt_user_for_input()
@@ -332,6 +429,10 @@ def main():
         print("Cannot open GEDCOM file:", path)
         print(e)
         sys.exit(1)
+
+    ERRORS_ANOMALIES.extend(validate_us04(families))
+    ERRORS_ANOMALIES.extend(validate_us05(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us06(individuals, families))
 
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)

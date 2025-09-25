@@ -30,13 +30,15 @@ Families
 | F5 |     NA     | 9 AUG 2030 |    I14     |     Ken Smith     |   I13   |    Kendra Smith    |   ['I4', 'I15']    |
 +----+------------+------------+------------+-------------------+---------+--------------------+--------------------+
 
-Errors & Anomalies+-------+------------+------------+-----------+-----+-------------------------------------------------------------------------------------+
-|  Type |    Tag     | User Story | File Line |  ID |                                       Message                                       |
-+-------+------------+------------+-----------+-----+-------------------------------------------------------------------------------------+
-| ERROR | INDIVIDUAL |    US03    |    TBD    | I13 |        Kendra Smith's birthday 2919-05-05 occurs after death date 8 MAY 2000        |
-| ERROR |   FAMILY   |    US02    |    TBD    |  F2 | Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04 |
-| ERROR | INDIVIDUAL |    US01    |    TBD    | I13 |                       Birthday 2919-05-05 occurs in the future                      |
-| ERROR | INDIVIDUAL |    US01    |    TBD    | I14 |                        Death 2100-06-06 occurs in the future                        |
-| ERROR |   FAMILY   |    US01    |    TBD    |  F4 |                    Marriage date 2070-07-04 occurs in the future                    |
-| ERROR |   FAMILY   |    US01    |    TBD    |  F5 |                     Divorce date 2030-08-09 occurs in the future                    |
-+-------+------------+------------+-----------+-----+-------------------------------------------------------------------------------------+
+Errors & Anomalies+-------+------------+------------+-----------+-----+---------------------------------------------------------------------------------------------+
+|  Type |    Tag     | User Story | File Line |  ID |                                           Message                                           |
++-------+------------+------------+-----------+-----+---------------------------------------------------------------------------------------------+
+| ERROR | INDIVIDUAL |    US03    |    TBD    | I13 |            Kendra Smith's birthday 2919-05-05 occurs after death date 8 MAY 2000            |
+| ERROR |   FAMILY   |    US02    |    TBD    |  F2 |     Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04     |
+| ERROR | INDIVIDUAL |    US01    |    TBD    | I13 |                           Birthday 2919-05-05 occurs in the future                          |
+| ERROR | INDIVIDUAL |    US01    |    TBD    | I14 |                            Death 2100-06-06 occurs in the future                            |
+| ERROR |   FAMILY   |    US01    |    TBD    |  F4 |                        Marriage date 2070-07-04 occurs in the future                        |
+| ERROR |   FAMILY   |    US01    |    TBD    |  F5 |                         Divorce date 2030-08-09 occurs in the future                        |
+| ERROR |   FAMILY   |    US05    |    TBD    |  F4 | Marriage date 2070-07-04 occurs after death of husband I6 (William Blackburn) on 2020-07-08 |
+| ERROR |   FAMILY   |    US06    |    TBD    |  F5 |     Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08     |
++-------+------------+------------+-----------+-----+---------------------------------------------------------------------------------------------+
