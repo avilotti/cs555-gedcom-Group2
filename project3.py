@@ -135,6 +135,16 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 elif pending_date_for == "DEAT":
                     current_person.death = date_text
                     current_person.alive = False
+                    if (  _compute_age(_parse_date(current_person.birthday) , _parse_date(date_text) ) < 0 ):
+                        error = ErrorAnomaly(
+                        error_or_anomaly='ERROR',
+                        indi_or_fam = 'INDIVIDUAL',
+                        user_story_id = 'US03',
+                        gedcom_line = 'TBD',
+                        indi_or_fam_id = current_person.id,
+                        message= f'{current_person.name}\'s birthday {_parse_date(current_person.birthday)} occurs after death date {date_text}'
+                        )
+                        ERRORS_ANOMALIES.append(error)
                 pending_date_for = None
             elif tag == "FAMC" and level == 1:
                 fam_id = args.strip("@")
@@ -155,6 +165,28 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 date_text = args.strip()
                 if pending_date_for == "MARR":
                     current_family.married = date_text
+                    husband = individuals[current_family.husband_id]
+                    wife = individuals[current_family.wife_id]
+                    if( _compute_age( _parse_date(husband.birthday), _parse_date(date_text) ) < 0 ):
+                        error = ErrorAnomaly(
+                        error_or_anomaly='ERROR',
+                        indi_or_fam = 'FAMILY',
+                        user_story_id = 'US02',
+                        gedcom_line = 'TBD',
+                        indi_or_fam_id = current_family.id,
+                        message= f'Husband {husband.name}\'s birth date {_parse_date(husband.birthday)} occurs after marriage date {_parse_date(date_text)}'
+                        )
+                        ERRORS_ANOMALIES.append(error)
+                    if(_compute_age( _parse_date(wife.birthday), _parse_date(date_text) ) < 0 ):
+                        error = ErrorAnomaly(
+                        error_or_anomaly='ERROR',
+                        indi_or_fam = 'FAMILY',
+                        user_story_id = 'US02',
+                        gedcom_line = 'TBD',
+                        indi_or_fam_id = current_family.id,
+                        message= f'Wife {wife.name}\'s birth date {_parse_date(wife.birthday)} occurs after marriage date {_parse_date(date_text)}'
+                        )
+                        ERRORS_ANOMALIES.append(error)
                 elif pending_date_for == "DIV":
                     current_family.divorced = date_text
                 pending_date_for = None
