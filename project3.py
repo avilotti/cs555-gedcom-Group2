@@ -77,8 +77,6 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
     individuals: Dict[str, Individual] = {}
     families: Dict[str, Family] = {}
 
-
-    current_date = date.today()
     current_person: Optional[Individual] = None
     current_family: Optional[Family] = None
     pending_date_for: Optional[str] = None  
@@ -206,52 +204,10 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
         b = _parse_date(person.birthday)
         d = _parse_date(person.death) if not person.alive else None
         person.age = _compute_age(b, d)
-        if _compute_age(b, current_date) < 0:
-            error = ErrorAnomaly(
-                error_or_anomaly='ERROR',
-                indi_or_fam = 'INDIVIDUAL',
-                user_story_id = 'US01',
-                gedcom_line = 'TBD',
-                indi_or_fam_id = person.id,
-                message= f'Birthday {b} occurs in the future'
-            )
-            ERRORS_ANOMALIES.append(error)
-        if not person.alive and _compute_age(d, current_date) < 0:
-            error = ErrorAnomaly(
-                error_or_anomaly='ERROR',
-                indi_or_fam = 'INDIVIDUAL',
-                user_story_id = 'US01',
-                gedcom_line = 'TBD',
-                indi_or_fam_id = person.id,
-                message= f'Death {d} occurs in the future'
-            )
-            ERRORS_ANOMALIES.append(error)
 
     for fam in families.values():
         fam.husband_name = individuals.get(fam.husband_id, Individual(fam.husband_id)).name
         fam.wife_name    = individuals.get(fam.wife_id,    Individual(fam.wife_id)).name
-        m = _parse_date(fam.married)
-        d = _parse_date(fam.divorced)
-        if not m is None and _compute_age(m, current_date) < 0:
-            error = ErrorAnomaly(
-                error_or_anomaly='ERROR',
-                indi_or_fam = 'FAMILY',
-                user_story_id = 'US01',
-                gedcom_line = 'TBD',
-                indi_or_fam_id = fam.id,
-                message= f'Marriage date {m} occurs in the future'
-            )
-            ERRORS_ANOMALIES.append(error)
-        if not d is None and _compute_age(d, current_date) < 0:
-            error = ErrorAnomaly(
-                error_or_anomaly='ERROR',
-                indi_or_fam = 'FAMILY',
-                user_story_id = 'US01',
-                gedcom_line = 'TBD',
-                indi_or_fam_id = fam.id,
-                message= f'Divorce date {d} occurs in the future'
-            )
-            ERRORS_ANOMALIES.append(error)
 
     return individuals, families
 
@@ -331,6 +287,77 @@ def _to_date(s: str) -> date | None:
         return datetime.strptime(s.strip(), "%d %b %Y").date()
     except Exception:
         return None
+
+def validate_dates_before_current_date(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #us01
+    out: List[ErrorAnomaly] = []
+    current_date = date.today()
+    for person in individuals.values():
+        b = _parse_date(person.birthday)
+        d = _parse_date(person.death) if not person.alive else None
+        if _compute_age(b, current_date) < 0:
+            error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam='INDIVIDUAL',
+                user_story_id='US01',
+                gedcom_line='TBD',
+                indi_or_fam_id=person.id,
+                message=f'Birthday {b} occurs in the future'
+            )
+            out.append(error)
+        if not person.alive and _compute_age(d, current_date) < 0:
+            error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam='INDIVIDUAL',
+                user_story_id='US01',
+                gedcom_line='TBD',
+                indi_or_fam_id=person.id,
+                message=f'Death {d} occurs in the future'
+            )
+            out.append(error)
+
+    for fam in families.values():
+        m = _parse_date(fam.married)
+        d = _parse_date(fam.divorced)
+        if not m is None and _compute_age(m, current_date) < 0:
+            error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam='FAMILY',
+                user_story_id='US01',
+                gedcom_line='TBD',
+                indi_or_fam_id=fam.id,
+                message=f'Marriage date {m} occurs in the future'
+            )
+            out.append(error)
+        if not d is None and _compute_age(d, current_date) < 0:
+            error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam='FAMILY',
+                user_story_id='US01',
+                gedcom_line='TBD',
+                indi_or_fam_id=fam.id,
+                message=f'Divorce date {d} occurs in the future'
+            )
+            out.append(error)
+    return out
+
+def validate_less_than_150_years_old(individuals: Dict[str, Individual]) -> List[ErrorAnomaly]: #us07
+    out: List[ErrorAnomaly] = []
+    for person in individuals.values():
+        b = _parse_date(person.birthday)
+        d = _parse_date(person.death) if not person.alive else None
+        if person.age >= 150:
+            error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam='INDIVIDUAL',
+                user_story_id='US07',
+                gedcom_line='TBD',
+                indi_or_fam_id=person.id,
+                message=f'More than 150 years old - Birth {b}'
+            )
+            if not person.alive:
+                error.message=f'More than 150 years old at death - Birth {b} : Death {d}'
+            out.append(error)
+    return out
 
 def validate_us04(families: Dict[str, Family]) -> List[ErrorAnomaly]:
     out: List[ErrorAnomaly] = []
@@ -414,8 +441,6 @@ def validate_us06(individuals: Dict[str, Individual],
                 ))
     return out
 
-
-
 def main():
     path = "data/TestData.ged"
     #path = prompt_user_for_input()
@@ -430,9 +455,11 @@ def main():
         print(e)
         sys.exit(1)
 
+    ERRORS_ANOMALIES.extend(validate_dates_before_current_date(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us04(families))
     ERRORS_ANOMALIES.extend(validate_us05(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us06(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_less_than_150_years_old(individuals))
 
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
@@ -450,7 +477,7 @@ def main():
         out.write(str(i_table))
         out.write("\n\nFamilies\n")
         out.write(str(f_table))
-        out.write("\n\nErrors & Anomalies")
+        out.write("\n\nErrors & Anomalies\n")
         out.write(str(e_table))
         out.write("\n")
 
