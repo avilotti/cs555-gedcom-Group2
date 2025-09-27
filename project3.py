@@ -24,6 +24,8 @@ class Individual:
     death: str = "NA"
     child: List[str] = field(default_factory=list)   
     spouse: List[str] = field(default_factory=list)  
+    ged_line_start: int = None
+    ged_line_end: int = None
 
 @dataclass
 class Family:
@@ -35,6 +37,8 @@ class Family:
     wife_id: str = ""
     wife_name: str = ""
     children: List[str] = field(default_factory=list)
+    ged_line_start: int = None
+    ged_line_end: int = None
 
 @dataclass
 class ErrorAnomaly:
@@ -45,6 +49,13 @@ class ErrorAnomaly:
     indi_or_fam_id: str
     message: str
 
+@dataclass
+class GedLine:
+    line_num: int
+    level: int
+    tag: str
+    value: str
+GED_LINES: List[GedLine] = []
 
 VALID_TAGS = {
     "HEAD","TRLR","NOTE","INDI","FAM","NAME","SEX","BIRT","DEAT","DATE",
@@ -62,7 +73,7 @@ def _parse_date(s: str) -> Optional[date]:
 
 def _compute_age(birth: Optional[date], end: Optional[date] = None):
     if not birth:
-        return "NA"
+        return "NA" #AF NOTE: Causes exceptions in int comparisons if returning string or None
     end = end or date.today()
     years = end.year - birth.year
     if (end.month, end.day) < (birth.month, birth.day):
@@ -70,8 +81,8 @@ def _compute_age(birth: Optional[date], end: Optional[date] = None):
     return years
 
 def _id_sort_key(x: str) -> int:
-    m = re.search(r"\d+", x or "")
-    return int(m.group()) if m else 0
+    m = re.findall(r"\d+", x or "")
+    return int(''.join(m)) if m else 0
 
 def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict[str, Family]]:
     individuals: Dict[str, Individual] = {}
@@ -81,7 +92,7 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
     current_family: Optional[Family] = None
     pending_date_for: Optional[str] = None  
 
-    for raw in ged_file:
+    for line_num, raw in enumerate(ged_file, start=1):
         line = raw.rstrip("\n")
         if not line.strip():
             continue
@@ -101,21 +112,25 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 tag = parts[1]
                 args = " ".join(parts[2:]) if len(parts) > 2 else ""
 
+        GED_LINES.append(GedLine(line_num=line_num, level=level, tag=tag, value=args))
+
         if tag not in VALID_TAGS:
             pending_date_for = None
             continue
 
         if level == 0:
+            if current_person: current_person.ged_line_end=line_num-1
+            if current_family: current_family.ged_line_end=line_num-1
             pending_date_for = None
             current_person = None
             current_family = None
             if tag == "INDI":
                 pid = args.strip("@")                             
-                current_person = individuals.get(pid) or Individual(id=pid)
+                current_person = individuals.get(pid) or Individual(id=pid, ged_line_start=line_num)
                 individuals[pid] = current_person
             elif tag == "FAM":
                 fid = args.strip("@")                              
-                current_family = families.get(fid) or Family(id=fid)
+                current_family = families.get(fid) or Family(id=fid, ged_line_start=line_num)
                 families[fid] = current_family
             continue
 
@@ -133,7 +148,7 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 elif pending_date_for == "DEAT":
                     current_person.death = date_text
                     current_person.alive = False
-                    if (  _compute_age(_parse_date(current_person.birthday) , _parse_date(date_text) ) < 0 ):
+                    if ( current_person.birthday and _compute_age(_parse_date(current_person.birthday) , _parse_date(date_text) ) < 0 ):
                         error = ErrorAnomaly(
                         error_or_anomaly='ERROR',
                         indi_or_fam = 'INDIVIDUAL',
@@ -163,9 +178,9 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 date_text = args.strip()
                 if pending_date_for == "MARR":
                     current_family.married = date_text
-                    husband = individuals[current_family.husband_id]
-                    wife = individuals[current_family.wife_id]
-                    if( _compute_age( _parse_date(husband.birthday), _parse_date(date_text) ) < 0 ):
+                    husband = individuals.get(current_family.husband_id)
+                    wife = individuals.get(current_family.wife_id)
+                    if( husband and husband.birthday and _compute_age( _parse_date(husband.birthday), _parse_date(date_text) ) < 0 ):
                         error = ErrorAnomaly(
                         error_or_anomaly='ERROR',
                         indi_or_fam = 'FAMILY',
@@ -175,7 +190,7 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                         message= f'Husband {husband.name}\'s birth date {_parse_date(husband.birthday)} occurs after marriage date {_parse_date(date_text)}'
                         )
                         ERRORS_ANOMALIES.append(error)
-                    if(_compute_age( _parse_date(wife.birthday), _parse_date(date_text) ) < 0 ):
+                    if(wife and wife.birthday and _compute_age( _parse_date(wife.birthday), _parse_date(date_text) ) < 0 ):
                         error = ErrorAnomaly(
                         error_or_anomaly='ERROR',
                         indi_or_fam = 'FAMILY',
@@ -294,7 +309,7 @@ def validate_dates_before_current_date(individuals: Dict[str, Individual], famil
     for person in individuals.values():
         b = _parse_date(person.birthday)
         d = _parse_date(person.death) if not person.alive else None
-        if _compute_age(b, current_date) < 0:
+        if b and _compute_age(b, current_date) < 0:
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='INDIVIDUAL',
@@ -304,7 +319,7 @@ def validate_dates_before_current_date(individuals: Dict[str, Individual], famil
                 message=f'Birthday {b} occurs in the future'
             )
             out.append(error)
-        if not person.alive and _compute_age(d, current_date) < 0:
+        if d and not person.alive and _compute_age(d, current_date) < 0:
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='INDIVIDUAL',
@@ -345,7 +360,7 @@ def validate_less_than_150_years_old(individuals: Dict[str, Individual]) -> List
     for person in individuals.values():
         b = _parse_date(person.birthday)
         d = _parse_date(person.death) if not person.alive else None
-        if person.age >= 150:
+        if person.age != "NA" and person.age >= 150:
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='INDIVIDUAL',
@@ -441,6 +456,78 @@ def validate_us06(individuals: Dict[str, Individual],
                 ))
     return out
 
+def validate_birth_before_parent_marriage(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:  #US08
+    out: List[ErrorAnomaly] = []
+    for indi in individuals.values():
+        try:
+            indi_dob = _parse_date(indi.birthday)
+            if not indi_dob: continue
+            fams = [f for f in families.values() if any(c == indi.id for c in f.children)]
+            for fam in fams: #Allow child to be member of multiple families - a separate validation should handle this
+                try:
+                    fam_marr = _parse_date(fam.married)
+                    if not fam_marr: continue
+                    if indi_dob < fam_marr:
+                        line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end)
+                        out.append(
+                            ErrorAnomaly(
+                                error_or_anomaly = "ANOMALY",
+                                indi_or_fam = "FAMILY",
+                                user_story_id = "US08",
+                                gedcom_line = line_num,
+                                indi_or_fam_id = fam.id,
+                                message = f"Child {indi.id} born {indi_dob} before marriage on {fam_marr}"
+                            )
+                        )
+                except: continue
+        except: continue
+    return out
+
+def validate_birth_before_parent_death(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #US08
+    out: List[ErrorAnomaly] = []
+    for indi in individuals.values():
+        try:
+            indi_dob = _parse_date(indi.birthday)
+            if not indi_dob: continue
+            fams = [f for f in families.values() if any(c == indi.id for c in f.children)]
+            for fam in fams: #Allow child to be member of multiple families - a separate validation should handle this
+                try:
+                    if (not fam.wife_id or fam.wife_id == "NA") and (not fam.husband_id or fam.husband_id == "NA"): continue
+                    for (parent_type, parent_id) in [("mother", fam.wife_id), ("father", fam.husband_id)]:
+                        try:
+                            if parent_id and parent_id != "NA":
+                                parents = [p for p in individuals.values() if p.id == parent_id]
+                                for parent in parents: #Allow multiple mothers/fathers - a separate validation should handle this
+                                    try:
+                                        parent_dod = _parse_date(parent.death)
+                                        if parent.alive or not parent_dod: continue
+                                        if indi_dob > parent_dod:
+                                            line_num = find_ged_line("DATE", indi.birthday, "BIRT", indi.ged_line_start, indi.ged_line_end)
+                                            out.append(
+                                                ErrorAnomaly(
+                                                    error_or_anomaly = "ERROR",
+                                                    indi_or_fam = "FAMILY",
+                                                    user_story_id = "US09",
+                                                    gedcom_line = line_num,
+                                                    indi_or_fam_id = fam.id,
+                                                    message = f"Child {indi.id} born {indi_dob} after {parent_type}'s death on {parent_dod}"
+                                                )
+                                            )
+                                    except: continue
+                        except: continue
+                except: continue
+        except: continue
+    return out
+
+def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
+    if not tag and not value: return None
+    if start > end: return None
+    ged_lines = [g for g in GED_LINES if start <= g.line_num <= end and g.tag == tag and g.value == value and (not prev_tag or (0 < g.line_num < len(GED_LINES) and prev_tag == GED_LINES[g.line_num-1].tag))]
+    if ged_lines:
+        return ged_lines[0].line_num #Returns first found instance
+    else:
+        return None
+
 def main():
     path = "data/TestData.ged"
     #path = prompt_user_for_input()
@@ -460,6 +547,8 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us05(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us06(individuals, families))
     ERRORS_ANOMALIES.extend(validate_less_than_150_years_old(individuals))
+    ERRORS_ANOMALIES.extend(validate_birth_before_parent_marriage(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_birth_before_parent_death(individuals, families))
 
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
