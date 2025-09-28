@@ -8,7 +8,8 @@ GitHub: cs555-gedcom-Group2
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
 import re
 import sys
 import os
@@ -519,6 +520,57 @@ def validate_birth_before_parent_death(individuals: Dict[str, Individual], famil
         except: continue
     return out
 
+def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #US10
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        if fam.married != 'NA': # if no marriage date do nothing
+            fam_married_dt = _parse_date(fam.married) # store marriage date for familiy
+            
+            # locate and store husband and wife if they exist
+            indis = [] 
+            if not fam.husband_id: 
+                pass
+            else:
+                indis.append(fam.husband_id)
+
+            if not fam.wife_id:
+                pass
+            else:
+                indis.append(fam.wife_id)
+
+            # locate and store birthdates for husband and wife if they exist,
+            # calculate age at marriage in years
+            dobs = []
+
+            for indi in individuals.values():
+                if indi.id in indis:
+                    
+                    try:
+                        dob = _parse_date(indi.birthday)
+                        delta = relativedelta(fam_married_dt, dob) # calculate age at marriage
+                        age_at_marriage = delta.years # floor years
+                        dobs.append([indi.id, dob, age_at_marriage])
+
+                    except Exception:
+                        continue
+            
+            # check all spouses for age >= 14 at marraige
+            for dob in dobs:
+                if dob[2] < 14:
+                    line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end)
+                    out.append(
+                            ErrorAnomaly(
+                                error_or_anomaly = "ANOMALY",
+                                indi_or_fam = "FAMILY",
+                                user_story_id = "US10",
+                                gedcom_line = line_num,
+                                indi_or_fam_id = fam.id,
+                                message = f"Spouse {dob[0]} born on {dob[1]} had age {dob[2]} < 14 at marriage date {fam_married_dt}"
+                            )
+                    )
+    return out
+
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: return None
     if start > end: return None
@@ -549,6 +601,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_less_than_150_years_old(individuals))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_death(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_marriage_after_14(individuals, families))
 
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)

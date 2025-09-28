@@ -82,4 +82,6 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US08    |    None   | US08.F05 |             Child US08.I05 born 2000-01-01 before marriage on 2000-01-02             |
 |  ERROR  |   FAMILY   |    US09    |    None   | US09.F05 |          Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31          |
 |  ERROR  |   FAMILY   |    US09    |    None   | US09.F06 |          Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31          |
+| ANOMALY |   FAMILY   |    US10    |    None   |    F2    |       Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04       |
+| ANOMALY |   FAMILY   |    US10    |    None   |    F5    |     Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04      |
 +---------+------------+------------+-----------+----------+--------------------------------------------------------------------------------------+
