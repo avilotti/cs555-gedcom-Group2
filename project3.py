@@ -581,8 +581,8 @@ def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> in
         return None
 
 def main():
-    path = "data/TestData.ged"
-    #path = prompt_user_for_input()
+    #path = "data/TestData.ged"
+    path = prompt_user_for_input()
     if len(sys.argv) > 1:
         path = sys.argv[1]
 
