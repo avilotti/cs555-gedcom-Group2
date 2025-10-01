@@ -64,9 +64,6 @@ Errors & Anomalies
 +---------+------------+------------+-----------+----------+--------------------------------------------------------------------------------------+
 |   Type  |    Tag     | User Story | File Line |    ID    |                                       Message                                        |
 +---------+------------+------------+-----------+----------+--------------------------------------------------------------------------------------+
-|  ERROR  | INDIVIDUAL |    US03    |    TBD    |   I13    |        Kendra Smith's birthday 2919-05-05 occurs after death date 8 MAY 2000         |
-|  ERROR  |   FAMILY   |    US02    |    TBD    |    F2    | Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04  |
-|  ERROR  |   FAMILY   |    US02    |    TBD    |    F5    |   Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04    |
 |  ERROR  | INDIVIDUAL |    US01    |    TBD    |   I13    |                       Birthday 2919-05-05 occurs in the future                       |
 |  ERROR  | INDIVIDUAL |    US01    |    TBD    |   I14    |                        Death 2100-06-06 occurs in the future                         |
 |  ERROR  |   FAMILY   |    US01    |    TBD    |    F5    |                    Marriage date 2040-07-04 occurs in the future                     |
@@ -84,4 +81,7 @@ Errors & Anomalies
 |  ERROR  |   FAMILY   |    US09    |    None   | US09.F06 |          Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31          |
 | ANOMALY |   FAMILY   |    US10    |    None   |    F2    |       Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04       |
 | ANOMALY |   FAMILY   |    US10    |    None   |    F5    |     Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04      |
+|  ERROR  |   FAMILY   |    US02    |    TBD    |    F2    | Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04  |
+|  ERROR  |   FAMILY   |    US02    |    TBD    |    F5    |   Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04    |
+|  ERROR  | INDIVIDUAL |    US03    |    TBD    |   I13    |        Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08         |
 +---------+------------+------------+-----------+----------+--------------------------------------------------------------------------------------+

@@ -149,16 +149,6 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 elif pending_date_for == "DEAT":
                     current_person.death = date_text
                     current_person.alive = False
-                    if ( current_person.birthday and _compute_age(_parse_date(current_person.birthday) , _parse_date(date_text) ) < 0 ):
-                        error = ErrorAnomaly(
-                        error_or_anomaly='ERROR',
-                        indi_or_fam = 'INDIVIDUAL',
-                        user_story_id = 'US03',
-                        gedcom_line = 'TBD',
-                        indi_or_fam_id = current_person.id,
-                        message= f'{current_person.name}\'s birthday {_parse_date(current_person.birthday)} occurs after death date {date_text}'
-                        )
-                        ERRORS_ANOMALIES.append(error)
                 pending_date_for = None
             elif tag == "FAMC" and level == 1:
                 fam_id = args.strip("@")
@@ -179,28 +169,6 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 date_text = args.strip()
                 if pending_date_for == "MARR":
                     current_family.married = date_text
-                    husband = individuals.get(current_family.husband_id)
-                    wife = individuals.get(current_family.wife_id)
-                    if( husband and husband.birthday and _compute_age( _parse_date(husband.birthday), _parse_date(date_text) ) < 0 ):
-                        error = ErrorAnomaly(
-                        error_or_anomaly='ERROR',
-                        indi_or_fam = 'FAMILY',
-                        user_story_id = 'US02',
-                        gedcom_line = 'TBD',
-                        indi_or_fam_id = current_family.id,
-                        message= f'Husband {husband.name}\'s birth date {_parse_date(husband.birthday)} occurs after marriage date {_parse_date(date_text)}'
-                        )
-                        ERRORS_ANOMALIES.append(error)
-                    if(wife and wife.birthday and _compute_age( _parse_date(wife.birthday), _parse_date(date_text) ) < 0 ):
-                        error = ErrorAnomaly(
-                        error_or_anomaly='ERROR',
-                        indi_or_fam = 'FAMILY',
-                        user_story_id = 'US02',
-                        gedcom_line = 'TBD',
-                        indi_or_fam_id = current_family.id,
-                        message= f'Wife {wife.name}\'s birth date {_parse_date(wife.birthday)} occurs after marriage date {_parse_date(date_text)}'
-                        )
-                        ERRORS_ANOMALIES.append(error)
                 elif pending_date_for == "DIV":
                     current_family.divorced = date_text
                 pending_date_for = None
@@ -570,6 +538,56 @@ def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dic
                     )
     return out
 
+def validate_us02_death_before_marriage(individuals: Dict[str, Individual], families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        if(family and family.married != 'NA' and family.husband_id and family.wife_id):
+            marriageDate = _parse_date(family.married)
+            husband = individuals.get(family.husband_id)
+            wife = individuals.get(family.wife_id)
+            husbandBirthday = _parse_date(husband.birthday)
+            wifeBirthday = _parse_date(wife.birthday)
+            if(husbandBirthday and _compute_age(husbandBirthday, marriageDate) < 0):
+                error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam = 'FAMILY',
+                user_story_id = 'US02',
+                gedcom_line = 'TBD',
+                indi_or_fam_id = family.id,
+                message= f'Husband {husband.name}\'s birth date {husbandBirthday} occurs after marriage date {marriageDate}'
+                )
+                out.append(error)
+            if(wifeBirthday and _compute_age(wifeBirthday, marriageDate) < 0):
+                error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam = 'FAMILY',
+                user_story_id = 'US02',
+                gedcom_line = 'TBD',
+                indi_or_fam_id = family.id,
+                message= f'Wife {wife.name}\'s birth date {wifeBirthday} occurs after marriage date {marriageDate}'
+                )
+                out.append(error)
+    return out
+
+def validate_us03_death_before_birth(individuals: Dict[str, Individual]):
+    out: List[ErrorAnomaly] = []
+    for person in individuals.values():
+        if(person.birthday and person.death and  person.death != 'NA'):
+            birthday = _parse_date(person.birthday)
+            death = _parse_date(person.death)
+            if(_compute_age(birthday, death) < 0):
+                error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam = 'INDIVIDUAL',
+                user_story_id = 'US03',
+                gedcom_line = 'TBD',
+                indi_or_fam_id = person.id,
+                message= f'{person.name}\'s birthday {birthday} occurs after death date {death}'
+                )
+                ERRORS_ANOMALIES.append(error)
+    return out
+
+
 
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: return None
@@ -602,6 +620,8 @@ def main():
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_death(individuals, families))
     ERRORS_ANOMALIES.extend(validate_marriage_after_14(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us02_death_before_marriage(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us03_death_before_birth(individuals))
 
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
