@@ -584,9 +584,51 @@ def validate_us03_death_before_birth(individuals: Dict[str, Individual]):
                 indi_or_fam_id = person.id,
                 message= f'{person.name}\'s birthday {birthday} occurs after death date {death}'
                 )
-                ERRORS_ANOMALIES.append(error)
+                out.append(error)
     return out
 
+def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        if(family.husband_id and family.wife_id):
+            #Get youngest child
+            latest = _parse_date("1 JAN 1800")
+            for child in family.children:
+                current = individuals.get(child)
+                if(current):
+                    currentBirthday = _parse_date(current.birthday)
+                    if( _compute_age(latest, currentBirthday) > 0 ):
+                        latest = currentBirthday
+
+            husband = individuals.get(family.husband_id)
+            if(husband):
+                husbandBirthday = _parse_date(husband.birthday)
+                if(husbandBirthday and _compute_age(husbandBirthday, latest) >= 80 ):
+                    error = ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam = 'FAMILY',
+                    user_story_id = 'US12',
+                    gedcom_line = 'TBD',
+                    indi_or_fam_id = family.id,
+                    message= f'{husband.name} is at least 80 years older then their children'
+                    )
+                    out.append(error)
+
+            wife = individuals.get(family.wife_id)
+            if(wife):
+                wifeBirthday = _parse_date(wife.birthday)
+                if(wifeBirthday and _compute_age(wifeBirthday, latest) >= 60):
+                    error = ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam = 'FAMILY',
+                    user_story_id = 'US12',
+                    gedcom_line = 'TBD',
+                    indi_or_fam_id = family.id,
+                    message= f'{wife.name} is at least 60 years older then their children'
+                    )
+                    out.append(error)
+    return out
+                
 
 
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
@@ -622,7 +664,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_marriage_after_14(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us02_death_before_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us03_death_before_birth(individuals))
-
+    ERRORS_ANOMALIES.extend(validate_us12_parents_not_too_old(individuals, families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
