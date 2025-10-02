@@ -240,7 +240,7 @@ def prompt_user_for_input():
     while True:
         try:
             user_input = input("\nEnter the GEDCOM file path or enter q to exit the program: ")
-            if user_input is 'q':
+            if str(user_input).strip().lower() == 'q':                
                 print("\n*****User exited the program******")
                 sys.exit()
             user_input = str(user_input)
@@ -629,16 +629,104 @@ def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], famili
                     out.append(error)
     return out
                 
+def validate_us13_siblings_spacing(individuals: Dict[str, Individual],
+                                   families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US13: Birth dates of siblings should be more than 8 months apart or less than 2 days apart.
+    Violation iff day_diff > 2 AND month_diff < 8.
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        kids = []
+        for cid in fam.children:
+            p = individuals.get(cid)
+            if not p:
+                continue
+            dob = _parse_date(p.birthday)
+            if dob:
+                kids.append((p, dob))
+
+        n = len(kids)
+        for i in range(n):
+            for j in range(i + 1, n):
+                (pi, di), (pj, dj) = kids[i], kids[j]
+                if di > dj:
+                    (pi, di), (pj, dj) = (pj, dj), (pi, di)
+
+                day_diff = (dj - di).days
+                rel = relativedelta(dj, di)
+                month_diff = rel.years * 12 + rel.months
+
+                if day_diff > 2 and month_diff < 8:
+                    line_num = find_ged_line("DATE", pi.birthday, "BIRT",
+                                             pi.ged_line_start, pi.ged_line_end) or "TBD"
+                    out.append(ErrorAnomaly(
+                        error_or_anomaly="ERROR",
+                        indi_or_fam="FAMILY",
+                        user_story_id="US13",
+                        gedcom_line=line_num,
+                        indi_or_fam_id=fam.id,
+                        message=(f"Siblings {pi.id} ({pi.name}, {di}) and "
+                                 f"{pj.id} ({pj.name}, {dj}) too close in age")
+                    ))
+    return out
 
 
-def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
-    if not tag and not value: return None
-    if start > end: return None
-    ged_lines = [g for g in GED_LINES if start <= g.line_num <= end and g.tag == tag and g.value == value and (not prev_tag or (0 < g.line_num < len(GED_LINES) and prev_tag == GED_LINES[g.line_num-1].tag))]
-    if ged_lines:
-        return ged_lines[0].line_num #Returns first found instance
-    else:
+def validate_us18_siblings_not_marry(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US18: Siblings should not marry one another.
+    If spouses share any parent family (intersection of their FAMC sets), flag an error.
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        h = individuals.get(fam.husband_id) if fam.husband_id else None
+        w = individuals.get(fam.wife_id) if fam.wife_id else None
+        if not h or not w:
+            continue
+
+        h_par = set(h.child or [])
+        w_par = set(w.child or [])
+        if h_par and w_par and h_par.intersection(w_par):
+            line_num = (find_ged_line("DATE", fam.married, "MARR",
+                                      fam.ged_line_start, fam.ged_line_end)
+                        or fam.ged_line_start or "TBD")
+            out.append(ErrorAnomaly(
+                error_or_anomaly="ERROR",
+                indi_or_fam="FAMILY",
+                user_story_id="US18",
+                gedcom_line=line_num,
+                indi_or_fam_id=fam.id,
+                message=(f"Spouses {h.id} ({h.name}) and {w.id} ({w.name}) are siblings")
+            ))
+    return out
+#end of US18
+
+def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> int:
+    if start is None:
+        start = -1
+    if end is None:
+        end = 10**12  
+
+    if start > end:
         return None
+
+    candidates = [g for g in GED_LINES
+                  if start <= g.line_num <= end
+                  and g.tag == tag
+                  and g.value == value]
+
+    if not candidates:
+        return None
+
+    for g in candidates:
+        idx = g.line_num - 2  
+        if 0 <= idx < len(GED_LINES):
+            if not prev_tag or GED_LINES[idx].tag == prev_tag:
+                return g.line_num
+
+    return candidates[0].line_num
+
 
 def main():
     #path = "data/TestData.ged"
@@ -665,6 +753,8 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us02_death_before_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us03_death_before_birth(individuals))
     ERRORS_ANOMALIES.extend(validate_us12_parents_not_too_old(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us13_siblings_spacing(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us18_siblings_not_marry(individuals, families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
