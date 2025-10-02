@@ -597,13 +597,13 @@ def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], famili
                 current = individuals.get(child)
                 if(current):
                     currentBirthday = _parse_date(current.birthday)
-                    if( _compute_age(latest, currentBirthday) > 0 ):
+                    if( type(latest) == type(currentBirthday) and _compute_age(latest, currentBirthday) > 0 ):
                         latest = currentBirthday
 
             husband = individuals.get(family.husband_id)
             if(husband):
                 husbandBirthday = _parse_date(husband.birthday)
-                if(husbandBirthday and _compute_age(husbandBirthday, latest) >= 80 ):
+                if(husbandBirthday and type(husbandBirthday) == type(latest) and _compute_age(husbandBirthday, latest) >= 80 ):
                     error = ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam = 'FAMILY',
@@ -617,7 +617,7 @@ def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], famili
             wife = individuals.get(family.wife_id)
             if(wife):
                 wifeBirthday = _parse_date(wife.birthday)
-                if(wifeBirthday and _compute_age(wifeBirthday, latest) >= 60):
+                if(wifeBirthday and type(wifeBirthday) == type(latest) and _compute_age(wifeBirthday, latest) >= 60):
                     error = ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam = 'FAMILY',
@@ -702,6 +702,23 @@ def validate_us18_siblings_not_marry(individuals: Dict[str, Individual],
     return out
 #end of US18
 
+#us15 - There should be fewer than 15 siblings in a family
+def validate_us15_fewer_than_15_siblings(families: Dict[str, Individual]):
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        if(len(family.children) >= 15):
+            error = ErrorAnomaly(
+            error_or_anomaly='ERROR',
+            indi_or_fam = 'FAMILY',
+            user_story_id = 'US15',
+            gedcom_line = 'TBD',
+            indi_or_fam_id = family.id,
+            message= f'{family.id} has 15 or more siblings in a family'
+            )
+            out.append(error)
+    return out
+
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> int:
     if start is None:
         start = -1
@@ -755,6 +772,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us12_parents_not_too_old(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us13_siblings_spacing(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us18_siblings_not_marry(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us15_fewer_than_15_siblings(families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)

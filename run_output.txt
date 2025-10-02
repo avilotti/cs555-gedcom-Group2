@@ -28,6 +28,8 @@ Individuals
 | US09.C.04  | US09 Test04_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |   []   |      []      |
 | US09.C.05  | US09 Test05_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |   []   |      []      |
 | US09.C.06  | US09 Test06_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |   []   |      []      |
+|  US15.P01  |   Test12_Father    |        |  1 JAN 1800 | 225  |  True |      NA     |   []   |      []      |
+|  US15.P02  |   Test12_Mother    |        |  1 JAN 1800 | 225  |  True |      NA     |   []   |      []      |
 | US09.P1.02 | US09 Test02_Father |        |             |  NA  | False |  2 JAN 2000 |   []   |      []      |
 | US09.P1.04 | US09 Test04_Father |        |             |  NA  |  True |      NA     |   []   |      []      |
 | US09.P1.05 | US09 Test05_Father |        |             |  NA  |  True |      NA     |   []   |      []      |
@@ -39,26 +41,27 @@ Individuals
 +------------+--------------------+--------+-------------+------+-------+-------------+--------+--------------+
 
 Families
-+----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------+
-|    ID    |   Married   |  Divorced  | Husband ID |    Husband Name    |  Wife ID   |     Wife Name      |      Children      |
-+----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------+
-|    F1    |      NA     |     NA     |     I2     |    James Smith     |     I3     |    Donna Smith     | ['I1', 'I8', 'I9'] |
-|    F2    |  4 JUL 1970 |     NA     |     I4     |   Richard Smith    |     I5     |   Rebecca Smith    |       ['I2']       |
-|    F3    |      NA     |     NA     |    I10     |    Rick Simmons    |     I3     |    Donna Smith     |   ['I11', 'I12']   |
-|    F4    |  4 JUL 2010 |     NA     |     I6     | William Blackburn  |     I7     | Victoria Blackburn |       ['I3']       |
-|    F5    |  4 JUL 2040 | 9 AUG 2030 |    I14     |     Ken Smith      |    I13     |    Kendra Smith    |   ['I4', 'I15']    |
-| US08.F01 |      NA     |     NA     |            |                    |            |                    |    ['US08.I01']    |
-| US08.F02 |      NA     |     NA     |            |                    |            |                    |    ['US08.I02']    |
-| US08.F03 |  1 JAN 2000 |     NA     |            |                    |            |                    |    ['US08.I03']    |
-| US08.F04 | 31 DEC 1999 |     NA     |            |                    |            |                    |    ['US08.I04']    |
-| US08.F05 |  2 JAN 2000 |     NA     |            |                    |            |                    |    ['US08.I05']    |
-| US09.F01 |      NA     |     NA     |            |                    |            |                    |   ['US09.C.01']    |
-| US09.F02 |      NA     |     NA     | US09.P1.02 | US09 Test02_Father |            |                    |   ['US09.C.02']    |
-| US09.F03 |      NA     |     NA     |            |                    | US09.P2.03 | US09 Test03_Mother |   ['US09.C.03']    |
-| US09.F04 |      NA     |     NA     | US09.P1.04 | US09 Test04_Father | US09.P2.04 | US09 Test04_Mother |   ['US09.C.04']    |
-| US09.F05 |      NA     |     NA     | US09.P1.05 | US09 Test05_Father | US09.P2.05 | US09 Test05_Mother |   ['US09.C.05']    |
-| US09.F06 |      NA     |     NA     | US09.P1.06 | US09 Test06_Father | US09.P2.06 | US09 Test06_Mother |   ['US09.C.06']    |
-+----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------+
++----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
+|    ID    |   Married   |  Divorced  | Husband ID |    Husband Name    |  Wife ID   |     Wife Name      |                                             Children                                             |
++----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
+|    F1    |      NA     |     NA     |     I2     |    James Smith     |     I3     |    Donna Smith     |                                        ['I1', 'I8', 'I9']                                        |
+|    F2    |  4 JUL 1970 |     NA     |     I4     |   Richard Smith    |     I5     |   Rebecca Smith    |                                              ['I2']                                              |
+|    F3    |      NA     |     NA     |    I10     |    Rick Simmons    |     I3     |    Donna Smith     |                                          ['I11', 'I12']                                          |
+|    F4    |  4 JUL 2010 |     NA     |     I6     | William Blackburn  |     I7     | Victoria Blackburn |                                              ['I3']                                              |
+|    F5    |  4 JUL 2040 | 9 AUG 2030 |    I14     |     Ken Smith      |    I13     |    Kendra Smith    |                                          ['I4', 'I15']                                           |
+| US08.F01 |      NA     |     NA     |            |                    |            |                    |                                           ['US08.I01']                                           |
+| US08.F02 |      NA     |     NA     |            |                    |            |                    |                                           ['US08.I02']                                           |
+| US08.F03 |  1 JAN 2000 |     NA     |            |                    |            |                    |                                           ['US08.I03']                                           |
+| US08.F04 | 31 DEC 1999 |     NA     |            |                    |            |                    |                                           ['US08.I04']                                           |
+| US08.F05 |  2 JAN 2000 |     NA     |            |                    |            |                    |                                           ['US08.I05']                                           |
+| US09.F01 |      NA     |     NA     |            |                    |            |                    |                                          ['US09.C.01']                                           |
+| US09.F02 |      NA     |     NA     | US09.P1.02 | US09 Test02_Father |            |                    |                                          ['US09.C.02']                                           |
+| US09.F03 |      NA     |     NA     |            |                    | US09.P2.03 | US09 Test03_Mother |                                          ['US09.C.03']                                           |
+| US09.F04 |      NA     |     NA     | US09.P1.04 | US09 Test04_Father | US09.P2.04 | US09 Test04_Mother |                                          ['US09.C.04']                                           |
+| US09.F05 |      NA     |     NA     | US09.P1.05 | US09 Test05_Father | US09.P2.05 | US09 Test05_Mother |                                          ['US09.C.05']                                           |
+| US09.F06 |      NA     |     NA     | US09.P1.06 | US09 Test06_Father | US09.P2.06 | US09 Test06_Mother |                                          ['US09.C.06']                                           |
+| US15.F01 |      NA     |     NA     |  US15.P01  |   Test12_Father    |  US15.P02  |   Test12_Mother    | ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15'] |
++----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
 
 Errors & Anomalies
 +---------+------------+------------+-----------+----------+--------------------------------------------------------------------------------------+
@@ -73,15 +76,20 @@ Errors & Anomalies
 |  ERROR  |   FAMILY   |    US06    |    TBD    |    F5    | Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08  |
 |  ERROR  | INDIVIDUAL |    US07    |    TBD    |   I12    |                      More than 150 years old - Birth 1813-01-01                      |
 |  ERROR  | INDIVIDUAL |    US07    |    TBD    |   I14    |        More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06        |
-| ANOMALY |   FAMILY   |    US08    |    None   |    F4    |                Child I3 born 1980-03-02 before marriage on 2010-07-04                |
-| ANOMALY |   FAMILY   |    US08    |    None   |    F5    |                Child I4 born 1972-11-12 before marriage on 2040-07-04                |
-| ANOMALY |   FAMILY   |    US08    |    None   |    F5    |               Child I15 born 1950-10-17 before marriage on 2040-07-04                |
-| ANOMALY |   FAMILY   |    US08    |    None   | US08.F05 |             Child US08.I05 born 2000-01-01 before marriage on 2000-01-02             |
-|  ERROR  |   FAMILY   |    US09    |    None   | US09.F05 |          Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31          |
-|  ERROR  |   FAMILY   |    US09    |    None   | US09.F06 |          Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31          |
-| ANOMALY |   FAMILY   |    US10    |    None   |    F2    |       Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04       |
-| ANOMALY |   FAMILY   |    US10    |    None   |    F5    |     Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04      |
+|  ERROR  | INDIVIDUAL |    US07    |    TBD    | US15.P01 |                      More than 150 years old - Birth 1800-01-01                      |
+|  ERROR  | INDIVIDUAL |    US07    |    TBD    | US15.P02 |                      More than 150 years old - Birth 1800-01-01                      |
+| ANOMALY |   FAMILY   |    US08    |    128    |    F4    |                Child I3 born 1980-03-02 before marriage on 2010-07-04                |
+| ANOMALY |   FAMILY   |    US08    |    135    |    F5    |                Child I4 born 1972-11-12 before marriage on 2040-07-04                |
+| ANOMALY |   FAMILY   |    US08    |    135    |    F5    |               Child I15 born 1950-10-17 before marriage on 2040-07-04                |
+| ANOMALY |   FAMILY   |    US08    |    171    | US08.F05 |             Child US08.I05 born 2000-01-01 before marriage on 2000-01-02             |
+|  ERROR  |   FAMILY   |    US09    |    213    | US09.F05 |          Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31          |
+|  ERROR  |   FAMILY   |    US09    |    227    | US09.F06 |          Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31          |
+| ANOMALY |   FAMILY   |    US10    |    122    |    F2    |       Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04       |
+| ANOMALY |   FAMILY   |    US10    |    135    |    F5    |     Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04      |
 |  ERROR  |   FAMILY   |    US02    |    TBD    |    F2    | Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04  |
 |  ERROR  |   FAMILY   |    US02    |    TBD    |    F5    |   Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04    |
 |  ERROR  | INDIVIDUAL |    US03    |    TBD    |   I13    |        Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08         |
+|  ERROR  |   FAMILY   |    US12    |    TBD    | US15.F01 |             Test12_Father is at least 80 years older then their children             |
+|  ERROR  |   FAMILY   |    US12    |    TBD    | US15.F01 |             Test12_Mother is at least 60 years older then their children             |
+|  ERROR  |   FAMILY   |    US15    |    TBD    | US15.F01 |                     US15.F01 has 15 or more siblings in a family                     |
 +---------+------------+------------+-----------+----------+--------------------------------------------------------------------------------------+
