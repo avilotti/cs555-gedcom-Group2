@@ -590,20 +590,20 @@ def validate_us03_death_before_birth(individuals: Dict[str, Individual]):
 def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], families: Dict[str, Family]):
     out: List[ErrorAnomaly] = []
     for family in families.values():
-        if(family.husband_id and family.wife_id):
-            #Get youngest child
+        if family.husband_id and family.wife_id:
+            #Get the youngest child
             latest = _parse_date("1 JAN 1800")
             for child in family.children:
                 current = individuals.get(child)
-                if(current):
+                if current:
                     currentBirthday = _parse_date(current.birthday)
-                    if( type(latest) == type(currentBirthday) and _compute_age(latest, currentBirthday) > 0 ):
+                    if type(latest) == type(currentBirthday) and _compute_age(latest, currentBirthday) > 0:
                         latest = currentBirthday
 
             husband = individuals.get(family.husband_id)
-            if(husband):
+            if husband:
                 husbandBirthday = _parse_date(husband.birthday)
-                if(husbandBirthday and type(husbandBirthday) == type(latest) and _compute_age(husbandBirthday, latest) >= 80 ):
+                if husbandBirthday and type(husbandBirthday) == type(latest) and _compute_age(husbandBirthday, latest) >= 80:
                     error = ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam = 'FAMILY',
@@ -615,9 +615,9 @@ def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], famili
                     out.append(error)
 
             wife = individuals.get(family.wife_id)
-            if(wife):
+            if wife:
                 wifeBirthday = _parse_date(wife.birthday)
-                if(wifeBirthday and type(wifeBirthday) == type(latest) and _compute_age(wifeBirthday, latest) >= 60):
+                if wifeBirthday and type(wifeBirthday) == type(latest) and _compute_age(wifeBirthday, latest) >= 60:
                     error = ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam = 'FAMILY',
@@ -697,16 +697,16 @@ def validate_us18_siblings_not_marry(individuals: Dict[str, Individual],
                 user_story_id="US18",
                 gedcom_line=line_num,
                 indi_or_fam_id=fam.id,
-                message=(f"Spouses {h.id} ({h.name}) and {w.id} ({w.name}) are siblings")
+                message=f"Spouses {h.id} ({h.name}) and {w.id} ({w.name}) are siblings"
             ))
     return out
 #end of US18
 
 #us15 - There should be fewer than 15 siblings in a family
-def validate_us15_fewer_than_15_siblings(families: Dict[str, Individual]):
+def validate_us15_fewer_than_15_siblings(families: Dict[str, Family]):
     out: List[ErrorAnomaly] = []
     for family in families.values():
-        if(len(family.children) >= 15):
+        if len(family.children) >= 15:
             error = ErrorAnomaly(
             error_or_anomaly='ERROR',
             indi_or_fam = 'FAMILY',
@@ -718,15 +718,48 @@ def validate_us15_fewer_than_15_siblings(families: Dict[str, Individual]):
             out.append(error)
     return out
 
+def validate_us16_male_last_names(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US16: Male last names
+    All male members of a family should have the same last name, if not then flag an anomaly.
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        h = individuals.get(fam.husband_id) if fam.husband_id else None
+        if not h:
+            continue
+        name_parts = h.name.split()
+        if len(name_parts) != 2:
+            continue
+        last_name = name_parts[-1]
+        for child in fam.children:
+            ch = individuals.get(child)
+            if ch.sex != 'M':
+                continue
+            name_parts = ch.name.split()
+            if len(name_parts) != 2:
+                continue
+            child_last_name = name_parts[-1]
+            if child_last_name != last_name:
+                out.append(ErrorAnomaly(
+                    error_or_anomaly="ANOMALY",
+                    indi_or_fam="FAMILY",
+                    user_story_id="US16",
+                    gedcom_line='TBD',
+                    indi_or_fam_id=fam.id,
+                    message=f"Male member {ch.id} ({ch.name}) does not share the same last name {last_name} in the family"
+                ))
+    return out
 
-def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> int:
+def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> str:
     if start is None:
         start = -1
     if end is None:
         end = 10**12  
 
     if start > end:
-        return None
+        return "TBD"
 
     candidates = [g for g in GED_LINES
                   if start <= g.line_num <= end
@@ -734,20 +767,20 @@ def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> 
                   and g.value == value]
 
     if not candidates:
-        return None
+        return "TBD"
 
     for g in candidates:
         idx = g.line_num - 2  
         if 0 <= idx < len(GED_LINES):
             if not prev_tag or GED_LINES[idx].tag == prev_tag:
-                return g.line_num
+                return str(g.line_num)
 
-    return candidates[0].line_num
+    return str(candidates[0].line_num)
 
 
 def main():
-    #path = "data/TestData.ged"
-    path = prompt_user_for_input()
+    path = "data/TestData.ged"
+    #path = prompt_user_for_input()
     if len(sys.argv) > 1:
         path = sys.argv[1]
 
@@ -773,6 +806,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us13_siblings_spacing(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us18_siblings_not_marry(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us15_fewer_than_15_siblings(families))
+    ERRORS_ANOMALIES.extend(validate_us16_male_last_names(individuals, families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
