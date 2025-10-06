@@ -1,72 +1,90 @@
 Individuals
-+------------+--------------------+--------+-------------+------+-------+-------------+--------------+--------------+
-|     ID     |        Name        | Gender |   Birthday  | Age  | Alive |    Death    |    Child     |    Spouse    |
-+------------+--------------------+--------+-------------+------+-------+-------------+--------------+--------------+
-|     I1     |     John Smith     |   M    |  1 JAN 2000 |  25  |  True |      NA     |    ['F1']    |      []      |
-|     I2     |    James Smith     |   M    |  2 MAY 1979 |  30  | False |  2 JUL 2009 |    ['F2']    |    ['F1']    |
-|     I3     |    Donna Smith     |   F    |  2 MAR 1980 |  45  |  True |      NA     |    ['F4']    | ['F1', 'F3'] |
-|     I4     |   Richard Smith    |   M    | 12 NOV 1972 |  52  |  True |      NA     |    ['F5']    |    ['F2']    |
-|     I5     |   Rebecca Smith    |   F    |  7 FEB 1954 |  56  | False | 12 JUN 2010 |      []      |    ['F2']    |
-|     I6     | William Blackburn  |   M    | 27 SEP 1940 |  79  | False |  8 JUL 2020 |      []      |    ['F4']    |
-|     I7     | Victoria Blackburn |   F    | 25 NOV 1945 |  79  |  True |      NA     |      []      |    ['F4']    |
-|     I8     |    Daniel Smith    |   M    |  8 SEP 1998 |  27  |  True |      NA     |    ['F1']    |      []      |
-|     I9     |    Angela Smith    |   F    | 16 DEC 2004 |  20  |  True |      NA     |    ['F1']    |      []      |
-|    I10     |    Rick Simmons    |   M    |  8 SEP 1985 |  40  |  True |      NA     |      []      |    ['F3']    |
-|    I11     |   Brent Simmons    |   M    | 10 AUG 2010 |  15  |  True |      NA     |    ['F3']    |      []      |
-|    I12     | Elizabeth Simmons  |   F    |  1 JAN 1813 | 212  |  True |      NA     |    ['F3']    |      []      |
-|    I13     |    Kendra Smith    |   F    |  5 MAY 2919 | -919 | False |  8 MAY 2000 |      []      |    ['F5']    |
-|    I14     |     Ken Smith      |   M    |  4 APR 1914 | 186  | False |  6 JUN 2100 |      []      |    ['F5']    |
-|    I15     |  Cassandra Smith   |   F    | 17 OCT 1950 |  74  |  True |      NA     |    ['F5']    |      []      |
-|  US16_I1   |    Victor Sosa     |   M    | 17 OCT 1999 |  25  |  True |      NA     | ['US16.FAM'] |      []      |
-|  US16_I2   |    Hector Smith    |   M    | 17 OCT 1950 |  74  |  True |      NA     |      []      | ['US16.FAM'] |
-|  US16_I3   |     Lola Smith     |   F    | 17 OCT 1951 |  73  |  True |      NA     |      []      | ['US16.FAM'] |
-|  US16_I4   |    Victor Smith    |   M    | 17 OCT 1999 |  25  |  True |      NA     | ['US16.FAM'] |      []      |
-|  US08.I01  |    US08 Test01     |        |             |  NA  |  True |      NA     |      []      |      []      |
-|  US08.I02  |    US08 Test02     |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-|  US08.I03  |    US08 Test03     |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-|  US08.I04  |    US08 Test04     |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-|  US08.I05  |    US08 Test05     |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-| US09.C.01  | US09 Test01_Child  |        |             |  NA  |  True |      NA     |      []      |      []      |
-| US09.C.02  | US09 Test02_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-| US09.C.03  | US09 Test03_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-| US09.C.04  | US09 Test04_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-| US09.C.05  | US09 Test05_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-| US09.C.06  | US09 Test06_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |      []      |      []      |
-|  US15.P01  |   Test12_Father    |        |  1 JAN 1800 | 225  |  True |      NA     |      []      |      []      |
-|  US15.P02  |   Test12_Mother    |        |  1 JAN 1800 | 225  |  True |      NA     |      []      |      []      |
-| US09.P1.02 | US09 Test02_Father |        |             |  NA  | False |  2 JAN 2000 |      []      |      []      |
-| US09.P1.04 | US09 Test04_Father |        |             |  NA  |  True |      NA     |      []      |      []      |
-| US09.P1.05 | US09 Test05_Father |        |             |  NA  |  True |      NA     |      []      |      []      |
-| US09.P1.06 | US09 Test06_Father |        |             |  NA  | False | 31 DEC 1999 |      []      |      []      |
-| US09.P2.03 | US09 Test03_Mother |        |             |  NA  | False |  2 JAN 2000 |      []      |      []      |
-| US09.P2.04 | US09 Test04_Mother |        |             |  NA  |  True |      NA     |      []      |      []      |
-| US09.P2.05 | US09 Test05_Mother |        |             |  NA  | False | 31 DEC 1999 |      []      |      []      |
-| US09.P2.06 | US09 Test06_Mother |        |             |  NA  |  True |      NA     |      []      |      []      |
-+------------+--------------------+--------+-------------+------+-------+-------------+--------------+--------------+
++------------+--------------------+--------+-------------+------+-------+-------------+---------------+--------------+
+|     ID     |        Name        | Gender |   Birthday  | Age  | Alive |    Death    |     Child     |    Spouse    |
++------------+--------------------+--------+-------------+------+-------+-------------+---------------+--------------+
+|     I1     |     John Smith     |   M    |  1 JAN 2000 |  25  |  True |      NA     |     ['F1']    |      []      |
+|     I2     |    James Smith     |   M    |  2 MAY 1979 |  30  | False |  2 JUL 2009 |     ['F2']    |    ['F1']    |
+|     I3     |    Donna Smith     |   F    |  2 MAR 1980 |  45  |  True |      NA     |     ['F4']    | ['F1', 'F3'] |
+|     I4     |   Richard Smith    |   M    | 12 NOV 1972 |  52  |  True |      NA     |     ['F5']    |    ['F2']    |
+|     I5     |   Rebecca Smith    |   F    |  7 FEB 1954 |  56  | False | 12 JUN 2010 |       []      |    ['F2']    |
+|     I6     | William Blackburn  |   M    | 27 SEP 1940 |  79  | False |  8 JUL 2020 |       []      |    ['F4']    |
+|     I7     | Victoria Blackburn |   F    | 25 NOV 1945 |  79  |  True |      NA     |       []      |    ['F4']    |
+|     I8     |    Daniel Smith    |   M    |  8 SEP 1998 |  27  |  True |      NA     |     ['F1']    |      []      |
+|     I9     |    Angela Smith    |   F    | 16 DEC 2004 |  20  |  True |      NA     |     ['F1']    |      []      |
+|    I10     |    Rick Simmons    |   M    |  8 SEP 1985 |  40  |  True |      NA     |       []      |    ['F3']    |
+|    I11     |   Brent Simmons    |   M    | 10 AUG 2010 |  15  |  True |      NA     |     ['F3']    |      []      |
+|    I12     | Elizabeth Simmons  |   F    |  1 JAN 1813 | 212  |  True |      NA     |     ['F3']    |      []      |
+|    I13     |    Kendra Smith    |   F    |  5 MAY 2919 | -919 | False |  8 MAY 2000 |       []      |    ['F5']    |
+|    I14     |     Ken Smith      |   M    |  4 APR 1914 | 186  | False |  6 JUN 2100 |       []      |    ['F5']    |
+|    I15     |  Cassandra Smith   |   F    | 17 OCT 1950 |  74  |  True |      NA     |     ['F5']    |      []      |
+|  US14_I1   |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM'] |      []      |
+|  US14_I2   |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM'] |      []      |
+|  US14_I3   |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM'] |      []      |
+|  US14_I4   |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM'] |      []      |
+|  US14_I5   |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM'] |      []      |
+|  US16_I1   |    Victor Sosa     |   M    | 17 OCT 1999 |  25  |  True |      NA     |  ['US16.FAM'] |      []      |
+|  US16_I2   |    Hector Smith    |   M    | 17 OCT 1950 |  74  |  True |      NA     |       []      | ['US16.FAM'] |
+|  US16_I3   |     Lola Smith     |   F    | 17 OCT 1951 |  73  |  True |      NA     |       []      | ['US16.FAM'] |
+|  US16_I4   |    Victor Smith    |   M    | 17 OCT 1999 |  25  |  True |      NA     |  ['US16.FAM'] |      []      |
+|  US08.I01  |    US08 Test01     |        |             |  NA  |  True |      NA     |       []      |      []      |
+|  US08.I02  |    US08 Test02     |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+|  US08.I03  |    US08 Test03     |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+|  US08.I04  |    US08 Test04     |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+|  US08.I05  |    US08 Test05     |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+| US09.C.01  | US09 Test01_Child  |        |             |  NA  |  True |      NA     |       []      |      []      |
+| US09.C.02  | US09 Test02_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+| US09.C.03  | US09 Test03_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+| US09.C.04  | US09 Test04_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+| US09.C.05  | US09 Test05_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+| US09.C.06  | US09 Test06_Child  |        |  1 JAN 2000 |  25  |  True |      NA     |       []      |      []      |
+| US14_F2_I1 |                    |        | 17 OCT 1999 |  25  |  True |      NA     | ['US14.FAM2'] |      []      |
+| US14_F2_I2 |                    |        | 17 OCT 1999 |  25  |  True |      NA     | ['US14.FAM2'] |      []      |
+| US14_F2_I3 |                    |        | 17 OCT 1999 |  25  |  True |      NA     | ['US14.FAM2'] |      []      |
+| US14_F2_I4 |                    |        | 17 OCT 1999 |  25  |  True |      NA     | ['US14.FAM2'] |      []      |
+| US14_F2_I5 |                    |        | 17 OCT 2000 |  24  |  True |      NA     | ['US14.FAM2'] |      []      |
+| US14_F3_I1 |                    |        |             |  NA  |  True |      NA     | ['US14.FAM3'] |      []      |
+| US14_F3_I2 |                    |        |             |  NA  |  True |      NA     | ['US14.FAM3'] |      []      |
+| US14_F3_I3 |                    |        |             |  NA  |  True |      NA     | ['US14.FAM3'] |      []      |
+| US14_F3_I4 |                    |        |             |  NA  |  True |      NA     | ['US14.FAM3'] |      []      |
+| US14_F3_I5 |                    |        |             |  NA  |  True |      NA     | ['US14.FAM3'] |      []      |
+|  US15.P01  |   Test12_Father    |        |  1 JAN 1800 | 225  |  True |      NA     |       []      |      []      |
+|  US15.P02  |   Test12_Mother    |        |  1 JAN 1800 | 225  |  True |      NA     |       []      |      []      |
+| US09.P1.02 | US09 Test02_Father |        |             |  NA  | False |  2 JAN 2000 |       []      |      []      |
+| US09.P1.04 | US09 Test04_Father |        |             |  NA  |  True |      NA     |       []      |      []      |
+| US09.P1.05 | US09 Test05_Father |        |             |  NA  |  True |      NA     |       []      |      []      |
+| US09.P1.06 | US09 Test06_Father |        |             |  NA  | False | 31 DEC 1999 |       []      |      []      |
+| US09.P2.03 | US09 Test03_Mother |        |             |  NA  | False |  2 JAN 2000 |       []      |      []      |
+| US09.P2.04 | US09 Test04_Mother |        |             |  NA  |  True |      NA     |       []      |      []      |
+| US09.P2.05 | US09 Test05_Mother |        |             |  NA  | False | 31 DEC 1999 |       []      |      []      |
+| US09.P2.06 | US09 Test06_Mother |        |             |  NA  |  True |      NA     |       []      |      []      |
++------------+--------------------+--------+-------------+------+-------+-------------+---------------+--------------+
 
 Families
-+----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
-|    ID    |   Married   |  Divorced  | Husband ID |    Husband Name    |  Wife ID   |     Wife Name      |                                             Children                                             |
-+----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
-|    F1    |      NA     |     NA     |     I2     |    James Smith     |     I3     |    Donna Smith     |                                        ['I1', 'I8', 'I9']                                        |
-|    F2    |  4 JUL 1970 |     NA     |     I4     |   Richard Smith    |     I5     |   Rebecca Smith    |                                              ['I2']                                              |
-|    F3    |      NA     |     NA     |    I10     |    Rick Simmons    |     I3     |    Donna Smith     |                                          ['I11', 'I12']                                          |
-|    F4    |  4 JUL 2010 |     NA     |     I6     | William Blackburn  |     I7     | Victoria Blackburn |                                              ['I3']                                              |
-|    F5    |  4 JUL 2040 | 9 AUG 2030 |    I14     |     Ken Smith      |    I13     |    Kendra Smith    |                                          ['I4', 'I15']                                           |
-| US16.FAM |      NA     |     NA     |  US16_I2   |    Hector Smith    |  US16_I3   |     Lola Smith     |                                      ['US16_I1', 'US16_I4']                                      |
-| US08.F01 |      NA     |     NA     |            |                    |            |                    |                                           ['US08.I01']                                           |
-| US08.F02 |      NA     |     NA     |            |                    |            |                    |                                           ['US08.I02']                                           |
-| US08.F03 |  1 JAN 2000 |     NA     |            |                    |            |                    |                                           ['US08.I03']                                           |
-| US08.F04 | 31 DEC 1999 |     NA     |            |                    |            |                    |                                           ['US08.I04']                                           |
-| US08.F05 |  2 JAN 2000 |     NA     |            |                    |            |                    |                                           ['US08.I05']                                           |
-| US09.F01 |      NA     |     NA     |            |                    |            |                    |                                          ['US09.C.01']                                           |
-| US09.F02 |      NA     |     NA     | US09.P1.02 | US09 Test02_Father |            |                    |                                          ['US09.C.02']                                           |
-| US09.F03 |      NA     |     NA     |            |                    | US09.P2.03 | US09 Test03_Mother |                                          ['US09.C.03']                                           |
-| US09.F04 |      NA     |     NA     | US09.P1.04 | US09 Test04_Father | US09.P2.04 | US09 Test04_Mother |                                          ['US09.C.04']                                           |
-| US09.F05 |      NA     |     NA     | US09.P1.05 | US09 Test05_Father | US09.P2.05 | US09 Test05_Mother |                                          ['US09.C.05']                                           |
-| US09.F06 |      NA     |     NA     | US09.P1.06 | US09 Test06_Father | US09.P2.06 | US09 Test06_Mother |                                          ['US09.C.06']                                           |
-| US15.F01 |      NA     |     NA     |  US15.P01  |   Test12_Father    |  US15.P02  |   Test12_Mother    | ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15'] |
-+----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
++-----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
+|     ID    |   Married   |  Divorced  | Husband ID |    Husband Name    |  Wife ID   |     Wife Name      |                                             Children                                             |
++-----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
+|     F1    |      NA     |     NA     |     I2     |    James Smith     |     I3     |    Donna Smith     |                                        ['I1', 'I8', 'I9']                                        |
+|     F2    |  4 JUL 1970 |     NA     |     I4     |   Richard Smith    |     I5     |   Rebecca Smith    |                                              ['I2']                                              |
+|     F3    |      NA     |     NA     |    I10     |    Rick Simmons    |     I3     |    Donna Smith     |                                          ['I11', 'I12']                                          |
+|     F4    |  4 JUL 2010 |     NA     |     I6     | William Blackburn  |     I7     | Victoria Blackburn |                                              ['I3']                                              |
+|     F5    |  4 JUL 2040 | 9 AUG 2030 |    I14     |     Ken Smith      |    I13     |    Kendra Smith    |                                          ['I4', 'I15']                                           |
+|  US14.FAM |      NA     |     NA     |            |                    |            |                    |                     ['US14_I1', 'US14_I2', 'US14_I3', 'US14_I4', 'US14_I5']                      |
+|  US16.FAM |      NA     |     NA     |  US16_I2   |    Hector Smith    |  US16_I3   |     Lola Smith     |                                      ['US16_I1', 'US16_I4']                                      |
+| US14.FAM2 |      NA     |     NA     |            |                    |            |                    |              ['US14_F2_I1', 'US14_F2_I2', 'US14_F2_I3', 'US14_F2_I4', 'US14_F2_I5']              |
+| US14.FAM3 |      NA     |     NA     |            |                    |            |                    |              ['US14_F3_I1', 'US14_F3_I2', 'US14_F3_I3', 'US14_F3_I4', 'US14_F3_I5']              |
+|  US08.F01 |      NA     |     NA     |            |                    |            |                    |                                           ['US08.I01']                                           |
+|  US08.F02 |      NA     |     NA     |            |                    |            |                    |                                           ['US08.I02']                                           |
+|  US08.F03 |  1 JAN 2000 |     NA     |            |                    |            |                    |                                           ['US08.I03']                                           |
+|  US08.F04 | 31 DEC 1999 |     NA     |            |                    |            |                    |                                           ['US08.I04']                                           |
+|  US08.F05 |  2 JAN 2000 |     NA     |            |                    |            |                    |                                           ['US08.I05']                                           |
+|  US09.F01 |      NA     |     NA     |            |                    |            |                    |                                          ['US09.C.01']                                           |
+|  US09.F02 |      NA     |     NA     | US09.P1.02 | US09 Test02_Father |            |                    |                                          ['US09.C.02']                                           |
+|  US09.F03 |      NA     |     NA     |            |                    | US09.P2.03 | US09 Test03_Mother |                                          ['US09.C.03']                                           |
+|  US09.F04 |      NA     |     NA     | US09.P1.04 | US09 Test04_Father | US09.P2.04 | US09 Test04_Mother |                                          ['US09.C.04']                                           |
+|  US09.F05 |      NA     |     NA     | US09.P1.05 | US09 Test05_Father | US09.P2.05 | US09 Test05_Mother |                                          ['US09.C.05']                                           |
+|  US09.F06 |      NA     |     NA     | US09.P1.06 | US09 Test06_Father | US09.P2.06 | US09 Test06_Mother |                                          ['US09.C.06']                                           |
+|  US15.F01 |      NA     |     NA     |  US15.P01  |   Test12_Father    |  US15.P02  |   Test12_Mother    | ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15'] |
++-----------+-------------+------------+------------+--------------------+------------+--------------------+--------------------------------------------------------------------------------------------------+
 
 Errors & Anomalies
 +---------+------------+------------+-----------+----------+-----------------------------------------------------------------------------------------+
@@ -98,4 +116,5 @@ Errors & Anomalies
 |  ERROR  |   FAMILY   |    US12    |    TBD    | US15.F01 |               Test12_Mother is at least 60 years older then their children              |
 |  ERROR  |   FAMILY   |    US15    |    TBD    | US15.F01 |                       US15.F01 has 15 or more siblings in a family                      |
 | ANOMALY |   FAMILY   |    US16    |    TBD    | US16.FAM | Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family |
+| ANOMALY |   FAMILY   |    US14    |    TBD    | US14.FAM |                   5 or more sibling born on the same date 17 OCT 1999                   |
 +---------+------------+------------+-----------+----------+-----------------------------------------------------------------------------------------+

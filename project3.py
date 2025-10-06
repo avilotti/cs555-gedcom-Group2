@@ -752,6 +752,34 @@ def validate_us16_male_last_names(individuals: Dict[str, Individual],
                 ))
     return out
 
+def validate_us14_less_than_five_births(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US14: Multiple births <= 5
+    No more than five siblings should be born at the same time
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        child_count = len(fam.children)
+        if child_count < 5:
+            continue
+        birth_dates = []
+        for child in fam.children:
+            ch = individuals.get(child)
+            birth_dates.append(ch.birthday)
+        if all(d is None or d == "" for d in birth_dates):
+            continue
+        if len(set(birth_dates)) == 1:
+            out.append(ErrorAnomaly(
+                error_or_anomaly="ANOMALY",
+                indi_or_fam="FAMILY",
+                user_story_id="US14",
+                gedcom_line='TBD',
+                indi_or_fam_id=fam.id,
+                message=f"5 or more sibling born on the same date {birth_dates[0]}"
+            ))
+    return out
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> str:
     if start is None:
         start = -1
@@ -807,6 +835,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us18_siblings_not_marry(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us15_fewer_than_15_siblings(families))
     ERRORS_ANOMALIES.extend(validate_us16_male_last_names(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us14_less_than_five_births(individuals, families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
