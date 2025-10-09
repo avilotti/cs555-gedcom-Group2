@@ -780,6 +780,78 @@ def validate_us14_less_than_five_births(individuals: Dict[str, Individual],
             ))
     return out
 
+def validate_us20_aunts_and_uncles(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US20: Aunts and uncles
+    Aunts and uncles should not marry their nieces or nephews 24
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        h = individuals.get(fam.husband_id) if fam.husband_id else None
+        w = individuals.get(fam.wife_id) if fam.wife_id else None
+        if not h or not w:
+            continue
+        if len(h.child) > 0:
+            for h_families in h.child:
+                h_fam = families.get(h_families)
+                h_father = individuals.get(h_fam.husband_id)
+                h_mother = individuals.get(h_fam.wife_id)
+                if h_father and len(h_father.child) > 0:
+                    for h_father_families in h_father.child:
+                        h_father_fam = families.get(h_father_families)
+                        if h_father_fam.children.__contains__(w.id):
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line='TBD',
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {w.name} is an aunt to {h.name}"
+                            ))
+                if h_mother and len(h_mother.child) > 0:
+                    for h_mother_families in h_mother.child:
+                        h_mother_fam = families.get(h_mother_families)
+                        if h_mother_fam.children.__contains__(w.id):
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line='TBD',
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {w.name} is an aunt to {h.name}"
+                            ))
+        if len(w.child) > 0:
+            for w_families in w.child:
+                w_fam = families.get(w_families)
+                w_father = individuals.get(w_fam.husband_id)
+                w_mother = individuals.get(w_fam.wife_id)
+                if w_father and len(w_father.child) > 0:
+                    for w_father_families in w_father.child:
+                        w_father_fam = families.get(w_father_families)
+                        if w_father_fam.children.__contains__(h.id):
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line='TBD',
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {h.name} is an uncle to {w.name}"
+                            ))
+                if w_mother and len(w_mother.child) > 0:
+                    for w_mother_families in w_mother.child:
+                        w_mother_fam = families.get(w_mother_families)
+                        if w_mother_fam.children.__contains__(h.id):
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line='TBD',
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {h.name} is an aunt to {w.name}"
+                            ))
+    return out
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start: int, end: int) -> str:
     if start is None:
         start = -1
@@ -836,6 +908,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us15_fewer_than_15_siblings(families))
     ERRORS_ANOMALIES.extend(validate_us16_male_last_names(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us14_less_than_five_births(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us20_aunts_and_uncles(individuals, families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
