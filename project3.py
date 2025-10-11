@@ -488,7 +488,7 @@ def validate_birth_before_parent_death(individuals: Dict[str, Individual], famil
         except: continue
     return out
 
-def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #US10
+def validate_us10_marriage_after_14(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #US10
     out: List[ErrorAnomaly] = []
     for fam in families.values():
         if fam.married != 'NA': # if no marriage date do nothing
@@ -535,6 +535,133 @@ def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dic
                                 indi_or_fam_id = fam.id,
                                 message = f"Spouse {dob[0]} born on {dob[1]} had age {dob[2]} < 14 at marriage date {fam_married_dt}"
                             )
+                    )
+    return out
+
+def validate_us11_no_bigamy(individuals: Dict[str, Individual], families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    married: Dict[str, Family] = {}
+
+    # collect valid marriages
+    for fam in families.values():
+        if ((fam.married != 'NA') and (fam.married != '') and (fam.husband_id) and (fam.wife_id)):
+            married[fam.id] = fam
+
+    # collect spouses
+    husbands = [fam.husband_id for fam in married.values()]
+    wifes = [fam.wife_id for fam in married.values()]
+
+    # check if each spouse occurs more than once
+    for husband in set(husbands):
+        count = husbands.count(husband)
+
+        if count > 1:
+            temp = [fam for fam in married.values() if fam.husband_id == husband]
+            temp = sorted(
+                [fam for fam in temp if fam.married not in ('NA','',None)],
+            key = lambda f: _parse_date(f.married),
+            )
+            
+            div = _parse_date(temp[0].divorced)
+            marr = _parse_date(temp[0].married)
+            family1 = temp[0].id
+            wife_id = temp[0].wife_id
+
+            wife = [indi for indi in individuals.values() if indi.id == wife_id]
+            if wife:
+                wife_death = _parse_date(wife[0].death)
+
+            # for each later marriage
+            for mar in temp[1:]:
+                next_marr = _parse_date(mar.married)
+
+                # check if divorce, and prior to next marraige
+                if div:
+                    if (div < next_marr):
+
+                        # next marriage is the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        wife_id = mar.wife_id
+
+                # check if wifes death, and prior to next marraige
+                elif wife and wife_death is not None:
+                    if (wife_death < next_marr):
+
+                        # next marraige if the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        wife_id = mar.wife_id
+                        wife = [indi for indi in individuals.values() if indi.id == wife_id]
+                        if wife:
+                            wife_death = _parse_date(wife[0].death)
+                        
+                else:
+                    out.append(ErrorAnomaly(
+                        error_or_anomaly='ANOMALY',
+                        indi_or_fam = 'INDIVIDUAL',
+                        user_story_id = 'US11',
+                        gedcom_line = 'TBD',
+                        indi_or_fam_id = husband,
+                        message= f'{husband} engaged in Bigamy in families {family1} and {mar.id}'
+                        )
+                    )
+    # check if each spouse occurs more than once
+    for wife in set(wifes):
+        count = wifes.count(wife)
+
+        if count > 1:
+            temp = [fam for fam in married.values() if fam.wife_id == wife]
+            temp = sorted(
+                [fam for fam in temp if fam.married not in ('NA','',None)],
+            key = lambda f: _parse_date(f.married),
+            )
+            
+            div = _parse_date(temp[0].divorced)
+            marr = _parse_date(temp[0].married)
+            family1 = temp[0].id
+            husband_id = temp[0].husband_id
+
+            husband = [indi for indi in individuals.values() if indi.id == husband_id]
+            if husband:
+                husband_death = _parse_date(husband[0].death)
+
+            # for each later marriage
+            for mar in temp[1:]:
+                next_marr = _parse_date(mar.married)
+
+                # check if divorce, and prior to next marraige
+                if div:
+                    if (div < next_marr):
+
+                        # next marriage is the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        husband_id = mar.husband_id
+                        husband = [indi for indi in individuals.values() if indi.id == husband_id]
+                        if husband:
+                            husband_death = _parse_date(husband[0].death)
+                        continue
+
+                # check if husbands death, and prior to next marraige
+                elif husband and husband_death is not None:
+                    if (husband_death < next_marr):
+
+                        # next marraige if the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        husband_id = mar.husband_id
+                        continue
+                        
+                else:
+                    out.append(ErrorAnomaly(
+                        error_or_anomaly='ANOMALY',
+                        indi_or_fam = 'INDIVIDUAL',
+                        user_story_id = 'US11',
+                        gedcom_line = 'TBD',
+                        indi_or_fam_id = wife,
+                        message= f'{wife} engaged in Bigamy in families {family1} and {mar.id}'
+                        )
                     )
     return out
 
@@ -899,7 +1026,8 @@ def main():
     ERRORS_ANOMALIES.extend(validate_less_than_150_years_old(individuals))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_death(individuals, families))
-    ERRORS_ANOMALIES.extend(validate_marriage_after_14(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us10_marriage_after_14(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us11_no_bigamy(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us02_death_before_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us03_death_before_birth(individuals))
     ERRORS_ANOMALIES.extend(validate_us12_parents_not_too_old(individuals, families))
