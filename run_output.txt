@@ -122,17 +122,17 @@ Errors & Anomalies
 +---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
 |   Type  |    Tag     | User Story | File Line |      ID     |                                         Message                                         |
 +---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
-|  ERROR  | INDIVIDUAL |    US01    |    TBD    |     I13     |                         Birthday 2919-05-05 occurs in the future                        |
-|  ERROR  | INDIVIDUAL |    US01    |    TBD    |     I14     |                          Death 2100-06-06 occurs in the future                          |
-|  ERROR  |   FAMILY   |    US01    |    TBD    |      F5     |                      Marriage date 2040-07-04 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US01    |    TBD    |      F5     |                       Divorce date 2030-08-09 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US04    |    TBD    |      F5     |              Marriage date 2040-07-04 occurs after divorce date 2030-08-09              |
-|  ERROR  |   FAMILY   |    US05    |    TBD    |      F5     |   Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08  |
-|  ERROR  |   FAMILY   |    US06    |    TBD    |      F5     |   Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08   |
-|  ERROR  | INDIVIDUAL |    US07    |    TBD    |     I12     |                        More than 150 years old - Birth 1813-01-01                       |
-|  ERROR  | INDIVIDUAL |    US07    |    TBD    |     I14     |          More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06         |
-|  ERROR  | INDIVIDUAL |    US07    |    TBD    |   US15.P01  |                        More than 150 years old - Birth 1800-01-01                       |
-|  ERROR  | INDIVIDUAL |    US07    |    TBD    |   US15.P02  |                        More than 150 years old - Birth 1800-01-01                       |
+|  ERROR  | INDIVIDUAL |    US01    |     88    |     I13     |                         Birthday 2919-05-05 occurs in the future                        |
+|  ERROR  | INDIVIDUAL |    US01    |     98    |     I14     |                          Death 2100-06-06 occurs in the future                          |
+|  ERROR  |   FAMILY   |    US01    |    135    |      F5     |                      Marriage date 2040-07-04 occurs in the future                      |
+|  ERROR  |   FAMILY   |    US01    |    137    |      F5     |                       Divorce date 2030-08-09 occurs in the future                      |
+|  ERROR  |   FAMILY   |    US04    |    135    |      F5     |              Marriage date 2040-07-04 occurs after divorce date 2030-08-09              |
+|  ERROR  |   FAMILY   |    US05    |    135    |      F5     |   Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08  |
+|  ERROR  |   FAMILY   |    US06    |    137    |      F5     |   Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08   |
+|  ERROR  | INDIVIDUAL |    US07    |     82    |     I12     |                        More than 150 years old - Birth 1813-01-01                       |
+|  ERROR  | INDIVIDUAL |    US07    |     96    |     I14     |          More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06         |
+|  ERROR  | INDIVIDUAL |    US07    |    241    |   US15.P01  |                        More than 150 years old - Birth 1800-01-01                       |
+|  ERROR  | INDIVIDUAL |    US07    |    245    |   US15.P02  |                        More than 150 years old - Birth 1800-01-01                       |
 | ANOMALY |   FAMILY   |    US08    |    128    |      F4     |                  Child I3 born 1980-03-02 before marriage on 2010-07-04                 |
 | ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                  Child I4 born 1972-11-12 before marriage on 2040-07-04                 |
 | ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                 Child I15 born 1950-10-17 before marriage on 2040-07-04                 |
@@ -141,16 +141,16 @@ Errors & Anomalies
 |  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |            Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31           |
 | ANOMALY |   FAMILY   |    US10    |    122    |      F2     |         Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04        |
 | ANOMALY |   FAMILY   |    US10    |    135    |      F5     |       Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04       |
-| ANOMALY | INDIVIDUAL |    US11    |    TBD    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
-| ANOMALY | INDIVIDUAL |    US11    |    TBD    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
-|  ERROR  |   FAMILY   |    US02    |    TBD    |      F2     |   Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04   |
-|  ERROR  |   FAMILY   |    US02    |    TBD    |      F5     |     Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04     |
-|  ERROR  | INDIVIDUAL |    US03    |    TBD    |     I13     |          Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08          |
-|  ERROR  |   FAMILY   |    US12    |    TBD    |   US15.F01  |               Test12_Father is at least 80 years older then their children              |
-|  ERROR  |   FAMILY   |    US12    |    TBD    |   US15.F01  |               Test12_Mother is at least 60 years older then their children              |
-|  ERROR  |   FAMILY   |    US15    |    TBD    |   US15.F01  |                       US15.F01 has 15 or more siblings in a family                      |
-| ANOMALY |   FAMILY   |    US16    |    TBD    |   US16.FAM  | Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family |
-| ANOMALY |   FAMILY   |    US14    |    TBD    |   US14.FAM  |                   5 or more sibling born on the same date 17 OCT 1999                   |
-| ANOMALY |   FAMILY   |    US20    |    TBD    |  US20.FAM1  |                        Spouse Jane White is an aunt to Joe White                        |
-| ANOMALY |   FAMILY   |    US20    |    TBD    | US20.FAM1_2 |                        Spouse John Blue is an uncle to Katie Red                        |
+| ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
+| ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
+|  ERROR  |   FAMILY   |    US02    |    122    |      F2     |   Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04   |
+|  ERROR  |   FAMILY   |    US02    |    135    |      F5     |     Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04     |
+|  ERROR  | INDIVIDUAL |    US03    |     88    |     I13     |          Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08          |
+|  ERROR  |   FAMILY   |    US12    |    262    |   US15.F01  |               Test12_Father is at least 80 years older then their children              |
+|  ERROR  |   FAMILY   |    US12    |    263    |   US15.F01  |               Test12_Mother is at least 60 years older then their children              |
+|  ERROR  |   FAMILY   |    US15    |    246    |   US15.F01  |                       US15.F01 has 15 or more siblings in a family                      |
+| ANOMALY |   FAMILY   |    US16    |    291    |   US16.FAM  | Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family |
+| ANOMALY |   FAMILY   |    US14    |    293    |   US14.FAM  |                   5 or more sibling born on the same date 17 OCT 1999                   |
+| ANOMALY |   FAMILY   |    US20    |    377    |  US20.FAM1  |                        Spouse Jane White is an aunt to Joe White                        |
+| ANOMALY |   FAMILY   |    US20    |    401    | US20.FAM1_2 |                        Spouse John Blue is an uncle to Katie Red                        |
 +---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
