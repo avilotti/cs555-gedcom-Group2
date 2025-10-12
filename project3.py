@@ -576,6 +576,7 @@ def validate_us11_no_bigamy(individuals: Dict[str, Individual], families: Dict[s
             marr = _parse_date(temp[0].married)
             family1 = temp[0].id
             wife_id = temp[0].wife_id
+            wife_death = None
 
             wife = [indi for indi in individuals.values() if indi.id == wife_id]
             if wife:
@@ -633,6 +634,7 @@ def validate_us11_no_bigamy(individuals: Dict[str, Individual], families: Dict[s
             marr = _parse_date(temp[0].married)
             family1 = temp[0].id
             husband_id = temp[0].husband_id
+            husband_death = None
 
             husband = [indi for indi in individuals.values() if indi.id == husband_id]
             if husband:
@@ -816,6 +818,41 @@ def validate_us13_siblings_spacing(individuals: Dict[str, Individual],
                     ))
     return out
 
+def validate_us17_marriage_to_descendants(families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+
+    # for each family
+    for fam in families.values():
+        
+        # if there are children
+        if fam.children:
+
+            # for each child
+            for child in fam.children:
+
+                # check for their marriages
+                marriages = [f for f in families.values() if ((f.husband_id == child) or (f.wife_id == child))]
+
+                # for each childs marriages
+                for mar in marriages:
+
+                    # if the wife id is the mom, or the husband id is the dad, raise the anomaly
+                    if (mar.wife_id == fam.wife_id) or (mar.husband_id == fam.husband_id):
+                        
+                        # get the parent for the violation
+                        parent = mar.wife_id if mar.wife_id == fam.wife_id else mar.husband_id
+                        line_num = find_ged_line("FAM", mar.id, "MARR", mar.ged_line_start, mar.ged_line_end) #or fam.ged_line_start
+                        out.append(ErrorAnomaly(
+                        error_or_anomaly='ANOMALY',
+                        indi_or_fam = 'FAMILY',
+                        user_story_id = 'US17',
+                        gedcom_line = line_num,
+                        indi_or_fam_id = mar.id,
+                        message= f'descendant {child} married to parent {parent} (US17).'
+                        )
+                    )
+    return out
+
 
 def validate_us18_siblings_not_marry(individuals: Dict[str, Individual],
                                      families: Dict[str, Family]) -> List[ErrorAnomaly]:
@@ -845,6 +882,72 @@ def validate_us18_siblings_not_marry(individuals: Dict[str, Individual],
             ))
     return out
 #end of US18
+
+def validate_us19_first_cousins_marry(families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+
+    # for each family
+    for fam in families.values():
+        
+        # gather the spouses
+        spouses = [fam.husband_id, fam.wife_id]
+
+        # for each spouse
+        for spouse in spouses:
+            
+            # get all their other marriages
+            other_marriages = [d for d in families.values() if ((spouse == d.husband_id) or (spouse == d.wife_id))]
+
+            # get their parents
+            spouse_fam = [f for f in families.values() if spouse in f.children]
+
+            if len(spouse_fam) > 0:
+                # get the spouses parents
+                spouse_parents = [spouse_fam[0].husband_id, spouse_fam[0].wife_id]
+            else:
+                spouse_parents = []
+            
+            # for each parent
+            for x in spouse_parents:
+
+                # get the parents families, to get their siblings
+                fam1 = [g for g in families.values() if x in g.children]
+                
+                # collect the parents' siblings
+                for i in fam1:
+                    siblings = i.children
+                    siblings = [i for i in siblings if i != x]
+
+                    # for each of the parents' siblings, get their children (cousins)
+                    for j in siblings:
+                        fam2 = [h for h in families.values() if (h.husband_id == j) or (h.wife_id == j)]
+
+                        for k in fam2:
+                            cousins = k.children
+                            cousins = [c for c in cousins if c != spouse]
+
+                            # check if the spouse had any marriage to their cousins
+                            for mar in other_marriages:
+
+                                if ((mar.wife_id in cousins) or (mar.husband_id in cousins)):
+
+                                    cousin = mar.wife_id if mar.wife_id in cousins else mar.husband_id
+                                    line_num = find_ged_line("FAM", mar.id, None, mar.ged_line_start, mar.ged_line_end) #or ind_wife.ged_line_start
+                                    
+                                    # avoid duplicate errors
+                                    matches = [i for i in out if i.message == f'{spouse} married to cousin {cousin} in family {mar.id} (US19).']
+                                    if len(matches) == 0:
+                                        out.append(ErrorAnomaly(
+                                            error_or_anomaly='ANOMALY',
+                                            indi_or_fam = 'FAMILY',
+                                            user_story_id = 'US19',
+                                            gedcom_line = line_num,
+                                            indi_or_fam_id = spouse,
+                                            message= f'{spouse} married to cousin {cousin} in family {mar.id} (US19).'
+                                            )
+                    )
+                                    
+    return out
 
 #us15 - There should be fewer than 15 siblings in a family
 def validate_us15_fewer_than_15_siblings(families: Dict[str, Family]):
@@ -1061,6 +1164,8 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us16_male_last_names(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us14_less_than_five_births(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us20_aunts_and_uncles(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us17_marriage_to_descendants(families))
+    ERRORS_ANOMALIES.extend(validate_us19_first_cousins_marry(families))
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
     e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)

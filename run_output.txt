@@ -58,6 +58,19 @@ Individuals
 |  US14_F3_I5  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
 |   US15.P01   |   Test12_Father    |        |  1 JAN 1800 | 225  |  True |      NA     |        []       |           []           |
 |   US15.P02   |   Test12_Mother    |        |  1 JAN 1800 | 225  |  True |      NA     |        []       |           []           |
+|   US17.P01   |      US17.P01      |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       | ['US17.F1', 'US17.F2'] |
+|   US17.P02   |      US17.P02      |   F    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US17.F1']       |
+|   US17.P03   |      US17.P03      |   M    |  2 MAY 1979 |  46  |  True |      NA     |   ['US17.F1']   |      ['US17.F2']       |
+|   US17.P04   |      US17.P04      |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US17.F3']       |
+|   US17.P05   |      US17.P05      |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US17.F3']       |
+|   US19.P01   |      US19.P01      |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US19.F1']       |
+|   US19.P02   |      US19.P02      |   F    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US19.F1']       |
+|   US19.P03   |      US19.P03      |   M    |  2 MAY 1979 |  46  |  True |      NA     |   ['US19.F1']   |      ['US19.F2']       |
+|   US19.P04   |      US19.P04      |   F    |  2 MAY 1979 |  46  |  True |      NA     |   ['US19.F1']   |      ['US19.F3']       |
+|   US19.P05   |      US19.P05      |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US19.F2']       |
+|   US19.P06   |      US19.P06      |   M    |  2 MAY 1979 |  46  |  True |      NA     |   ['US19.F2']   |      ['US19.F4']       |
+|   US19.P07   |      US19.P07      |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |      ['US19.F3']       |
+|   US19.P08   |      US19.P08      |   M    |  2 MAY 1979 |  46  |  True |      NA     |   ['US19.F3']   |      ['US19.F4']       |
 |  US20_F1_I1  |     Joe White      |        |             |  NA  |  True |      NA     |  ['US20.FAM2']  |           []           |
 |  US20_F1_I2  |     Jane White     |        |             |  NA  |  True |      NA     |  ['US20.FAM3']  |           []           |
 |  US20_F1_I3  |     Katie Red      |        |             |  NA  |  True |      NA     |  ['US20.FAM4']  |           []           |
@@ -96,6 +109,13 @@ Families
 |   US11.F7   |  4 JUL 2010 |     NA     |   US11.P05   |    testperson6     |   US11.P08   |    testperson9     |                                                []                                                |
 |  US14.FAM2  |      NA     |     NA     |              |                    |              |                    |              ['US14_F2_I1', 'US14_F2_I2', 'US14_F2_I3', 'US14_F2_I4', 'US14_F2_I5']              |
 |  US14.FAM3  |      NA     |     NA     |              |                    |              |                    |              ['US14_F3_I1', 'US14_F3_I2', 'US14_F3_I3', 'US14_F3_I4', 'US14_F3_I5']              |
+|   US17.F1   |  4 JUL 2008 |     NA     |   US17.P01   |      US17.P01      |   US17.P02   |      US17.P02      |                                     ['US17.P03', 'US17.P04']                                     |
+|   US17.F2   |  4 JUL 2008 |     NA     |   US17.P01   |      US17.P01      |   US17.P03   |      US17.P03      |                                                []                                                |
+|   US17.F3   |  4 JUL 2008 |     NA     |   US17.P05   |      US17.P05      |   US17.P04   |      US17.P04      |                                                []                                                |
+|   US19.F1   |  4 JUL 2000 |     NA     |   US19.P01   |      US19.P01      |   US19.P02   |      US19.P02      |                                     ['US19.P03', 'US19.P04']                                     |
+|   US19.F2   |  4 JUL 2020 |     NA     |   US19.P03   |      US19.P03      |   US19.P05   |      US19.P05      |                                           ['US19.P06']                                           |
+|   US19.F3   |  4 JUL 2020 |     NA     |   US19.P07   |      US19.P07      |   US19.P04   |      US19.P04      |                                           ['US19.P08']                                           |
+|   US19.F4   |  4 JUL 2034 |     NA     |   US19.P06   |      US19.P06      |   US19.P08   |      US19.P08      |                                                []                                                |
 |  US20.FAM1  |      NA     |     NA     |  US20_F1_I1  |     Joe White      |  US20_F1_I2  |     Jane White     |                                                []                                                |
 |  US20.FAM2  |      NA     |     NA     |  US20_F1_I4  |     John Blue      |  US20_F1_I3  |     Katie Red      |                                          ['US20_F1_I1']                                          |
 |  US20.FAM3  |      NA     |     NA     |              |                    |              |                    |                                   ['US20_F1_I4', 'US20_F1_I2']                                   |
@@ -126,6 +146,7 @@ Errors & Anomalies
 |  ERROR  | INDIVIDUAL |    US01    |     98    |     I14     |                          Death 2100-06-06 occurs in the future                          |
 |  ERROR  |   FAMILY   |    US01    |    135    |      F5     |                      Marriage date 2040-07-04 occurs in the future                      |
 |  ERROR  |   FAMILY   |    US01    |    137    |      F5     |                       Divorce date 2030-08-09 occurs in the future                      |
+|  ERROR  |   FAMILY   |    US01    |    577    |   US19.F4   |                      Marriage date 2034-07-04 occurs in the future                      |
 |  ERROR  |   FAMILY   |    US04    |    135    |      F5     |              Marriage date 2040-07-04 occurs after divorce date 2030-08-09              |
 |  ERROR  |   FAMILY   |    US05    |    135    |      F5     |   Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08  |
 |  ERROR  |   FAMILY   |    US06    |    137    |      F5     |   Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08   |
@@ -137,10 +158,17 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                  Child I4 born 1972-11-12 before marriage on 2040-07-04                 |
 | ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                 Child I15 born 1950-10-17 before marriage on 2040-07-04                 |
 | ANOMALY |   FAMILY   |    US08    |    171    |   US08.F05  |               Child US08.I05 born 2000-01-01 before marriage on 2000-01-02              |
+| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |               Child US17.P03 born 1979-05-02 before marriage on 2008-07-04              |
+| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |               Child US17.P04 born 1979-05-02 before marriage on 2008-07-04              |
+| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |               Child US19.P03 born 1979-05-02 before marriage on 2000-07-04              |
+| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |               Child US19.P04 born 1979-05-02 before marriage on 2000-07-04              |
+| ANOMALY |   FAMILY   |    US08    |    566    |   US19.F2   |               Child US19.P06 born 1979-05-02 before marriage on 2020-07-04              |
+| ANOMALY |   FAMILY   |    US08    |    572    |   US19.F3   |               Child US19.P08 born 1979-05-02 before marriage on 2020-07-04              |
 |  ERROR  |   FAMILY   |    US09    |    213    |   US09.F05  |            Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31           |
 |  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |            Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31           |
 | ANOMALY |   FAMILY   |    US10    |    122    |      F2     |         Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04        |
 | ANOMALY |   FAMILY   |    US10    |    135    |      F5     |       Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04       |
+| ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                US17.P01 engaged in Bigamy in families US17.F1 and US17.F2               |
 | ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
 | ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
 |  ERROR  |   FAMILY   |    US02    |    122    |      F2     |   Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04   |
@@ -153,4 +181,9 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US14    |    293    |   US14.FAM  |                   5 or more sibling born on the same date 17 OCT 1999                   |
 | ANOMALY |   FAMILY   |    US20    |    377    |  US20.FAM1  |                        Spouse Jane White is an aunt to Joe White                        |
 | ANOMALY |   FAMILY   |    US20    |    401    | US20.FAM1_2 |                        Spouse John Blue is an uncle to Katie Red                        |
+| ANOMALY |   FAMILY   |    US17    |    None   |   US17.F2   |                  descendant US17.P03 married to parent US17.P01 (US17).                 |
+| ANOMALY |   FAMILY   |    US19    |    106    |      I2     |                       I2 married to cousin I3 in family F1 (US19).                      |
+| ANOMALY |   FAMILY   |    US19    |    106    |      I3     |                       I3 married to cousin I2 in family F1 (US19).                      |
+| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P06  |              US19.P06 married to cousin US19.P08 in family US19.F4 (US19).              |
+| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P08  |              US19.P08 married to cousin US19.P06 in family US19.F4 (US19).              |
 +---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
