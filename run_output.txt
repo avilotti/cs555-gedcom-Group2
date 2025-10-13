@@ -179,7 +179,7 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US14    |    293    |   US14.FAM  |                   5 or more sibling born on the same date 17 OCT 1999                   |
 |  ERROR  |   FAMILY   |    US15    |    246    |   US15.F01  |                       US15.F01 has 15 or more siblings in a family                      |
 | ANOMALY |   FAMILY   |    US16    |    291    |   US16.FAM  | Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family |
-| ANOMALY |   FAMILY   |    US17    |    None   |   US17.F2   |                  descendant US17.P03 married to parent US17.P01 (US17).                 |
+| ANOMALY |   FAMILY   |    US17    |    512    |   US17.F2   |                  descendant US17.P03 married to parent US17.P01 (US17).                 |
 | ANOMALY |   FAMILY   |    US19    |    106    |      I2     |                       I2 married to cousin I3 in family F1 (US19).                      |
 | ANOMALY |   FAMILY   |    US19    |    106    |      I3     |                       I3 married to cousin I2 in family F1 (US19).                      |
 | ANOMALY |   FAMILY   |    US19    |    573    |   US19.P06  |              US19.P06 married to cousin US19.P08 in family US19.F4 (US19).              |

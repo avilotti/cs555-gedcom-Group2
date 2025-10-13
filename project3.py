@@ -841,7 +841,13 @@ def validate_us17_marriage_to_descendants(families: Dict[str, Family]):
                         
                         # get the parent for the violation
                         parent = mar.wife_id if mar.wife_id == fam.wife_id else mar.husband_id
-                        line_num = find_ged_line("FAM", mar.id, "MARR", mar.ged_line_start, mar.ged_line_end) #or fam.ged_line_start
+
+                        # get the line number if global variable GED_LINES exists
+                        if GED_LINES:
+                            line_num = find_ged_line("FAM", mar.id, None, mar.ged_line_start, mar.ged_line_end) #or fam.ged_line_start
+                        else:
+                            line_num = None
+
                         out.append(ErrorAnomaly(
                         error_or_anomaly='ANOMALY',
                         indi_or_fam = 'FAMILY',
@@ -932,7 +938,12 @@ def validate_us19_first_cousins_marry(families: Dict[str, Family]):
                                 if ((mar.wife_id in cousins) or (mar.husband_id in cousins)):
 
                                     cousin = mar.wife_id if mar.wife_id in cousins else mar.husband_id
-                                    line_num = find_ged_line("FAM", mar.id, None, mar.ged_line_start, mar.ged_line_end) #or ind_wife.ged_line_start
+
+                                    # get the line number if global variable GED_LINES exists
+                                    if GED_LINES:
+                                        line_num = find_ged_line("FAM", mar.id, None, mar.ged_line_start, mar.ged_line_end) #or ind_wife.ged_line_start
+                                    else:
+                                        line_num = None
                                     
                                     # avoid duplicate errors
                                     matches = [i for i in out if i.message == f'{spouse} married to cousin {cousin} in family {mar.id} (US19).']
