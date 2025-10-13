@@ -1133,8 +1133,8 @@ def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> in
         return None
 
 def main():
-    path = "data/TestData.ged"
-    #path = prompt_user_for_input()
+    #path = "data/TestData.ged"
+    path = prompt_user_for_input()
     if len(sys.argv) > 1:
         path = sys.argv[1]
 
@@ -1166,9 +1166,10 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us20_aunts_and_uncles(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us17_marriage_to_descendants(families))
     ERRORS_ANOMALIES.extend(validate_us19_first_cousins_marry(families))
+    sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
-    e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
+    e_table = error_anomaly_prettytable(sorted_by_user_story)
 
     print("\nIndividuals")
     print(i_table)
