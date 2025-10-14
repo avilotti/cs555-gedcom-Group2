@@ -149,16 +149,6 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 elif pending_date_for == "DEAT":
                     current_person.death = date_text
                     current_person.alive = False
-                    if ( current_person.birthday and _compute_age(_parse_date(current_person.birthday) , _parse_date(date_text) ) < 0 ):
-                        error = ErrorAnomaly(
-                        error_or_anomaly='ERROR',
-                        indi_or_fam = 'INDIVIDUAL',
-                        user_story_id = 'US03',
-                        gedcom_line = 'TBD',
-                        indi_or_fam_id = current_person.id,
-                        message= f'{current_person.name}\'s birthday {_parse_date(current_person.birthday)} occurs after death date {date_text}'
-                        )
-                        ERRORS_ANOMALIES.append(error)
                 pending_date_for = None
             elif tag == "FAMC" and level == 1:
                 fam_id = args.strip("@")
@@ -179,28 +169,6 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
                 date_text = args.strip()
                 if pending_date_for == "MARR":
                     current_family.married = date_text
-                    husband = individuals.get(current_family.husband_id)
-                    wife = individuals.get(current_family.wife_id)
-                    if( husband and husband.birthday and _compute_age( _parse_date(husband.birthday), _parse_date(date_text) ) < 0 ):
-                        error = ErrorAnomaly(
-                        error_or_anomaly='ERROR',
-                        indi_or_fam = 'FAMILY',
-                        user_story_id = 'US02',
-                        gedcom_line = 'TBD',
-                        indi_or_fam_id = current_family.id,
-                        message= f'Husband {husband.name}\'s birth date {_parse_date(husband.birthday)} occurs after marriage date {_parse_date(date_text)}'
-                        )
-                        ERRORS_ANOMALIES.append(error)
-                    if(wife and wife.birthday and _compute_age( _parse_date(wife.birthday), _parse_date(date_text) ) < 0 ):
-                        error = ErrorAnomaly(
-                        error_or_anomaly='ERROR',
-                        indi_or_fam = 'FAMILY',
-                        user_story_id = 'US02',
-                        gedcom_line = 'TBD',
-                        indi_or_fam_id = current_family.id,
-                        message= f'Wife {wife.name}\'s birth date {_parse_date(wife.birthday)} occurs after marriage date {_parse_date(date_text)}'
-                        )
-                        ERRORS_ANOMALIES.append(error)
                 elif pending_date_for == "DIV":
                     current_family.divorced = date_text
                 pending_date_for = None
@@ -272,7 +240,7 @@ def prompt_user_for_input():
     while True:
         try:
             user_input = input("\nEnter the GEDCOM file path or enter q to exit the program: ")
-            if user_input is 'q':
+            if str(user_input).strip().lower() == 'q':                
                 print("\n*****User exited the program******")
                 sys.exit()
             user_input = str(user_input)
@@ -311,21 +279,23 @@ def validate_dates_before_current_date(individuals: Dict[str, Individual], famil
         b = _parse_date(person.birthday)
         d = _parse_date(person.death) if not person.alive else None
         if b and _compute_age(b, current_date) < 0:
+            line_num = find_ged_line("DATE", person.birthday, "BIRT", person.ged_line_start, person.ged_line_end) #or person.ged_line_start
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='INDIVIDUAL',
                 user_story_id='US01',
-                gedcom_line='TBD',
+                gedcom_line=line_num,
                 indi_or_fam_id=person.id,
                 message=f'Birthday {b} occurs in the future'
             )
             out.append(error)
         if d and not person.alive and _compute_age(d, current_date) < 0:
+            line_num = find_ged_line("DATE", person.death, "DEAT", person.ged_line_start, person.ged_line_end) #or person.ged_line_start
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='INDIVIDUAL',
                 user_story_id='US01',
-                gedcom_line='TBD',
+                gedcom_line=line_num,
                 indi_or_fam_id=person.id,
                 message=f'Death {d} occurs in the future'
             )
@@ -335,21 +305,23 @@ def validate_dates_before_current_date(individuals: Dict[str, Individual], famil
         m = _parse_date(fam.married)
         d = _parse_date(fam.divorced)
         if not m is None and _compute_age(m, current_date) < 0:
+            line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='FAMILY',
                 user_story_id='US01',
-                gedcom_line='TBD',
+                gedcom_line=line_num,
                 indi_or_fam_id=fam.id,
                 message=f'Marriage date {m} occurs in the future'
             )
             out.append(error)
         if not d is None and _compute_age(d, current_date) < 0:
+            line_num = find_ged_line("DATE", fam.divorced, "DIV", fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='FAMILY',
                 user_story_id='US01',
-                gedcom_line='TBD',
+                gedcom_line=line_num,
                 indi_or_fam_id=fam.id,
                 message=f'Divorce date {d} occurs in the future'
             )
@@ -362,11 +334,12 @@ def validate_less_than_150_years_old(individuals: Dict[str, Individual]) -> List
         b = _parse_date(person.birthday)
         d = _parse_date(person.death) if not person.alive else None
         if person.age != "NA" and person.age >= 150:
+            line_num = find_ged_line("DATE", person.birthday, "BIRT", person.ged_line_start, person.ged_line_end) #or person.ged_line_start
             error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='INDIVIDUAL',
                 user_story_id='US07',
-                gedcom_line='TBD',
+                gedcom_line=line_num,
                 indi_or_fam_id=person.id,
                 message=f'More than 150 years old - Birth {b}'
             )
@@ -381,11 +354,12 @@ def validate_us04(families: Dict[str, Family]) -> List[ErrorAnomaly]:
         m = _parse_date(f.married)
         d = _parse_date(f.divorced)
         if m and d and m > d:
+            line_num = find_ged_line("DATE", f.married, "MARR", f.ged_line_start, f.ged_line_end) #or f.ged_line_start
             out.append(ErrorAnomaly(
                 error_or_anomaly='ERROR',
                 indi_or_fam='FAMILY',
                 user_story_id='US04',
-                gedcom_line='TBD',
+                gedcom_line=line_num,
                 indi_or_fam_id=f.id,
                 message=f'Marriage date {m} occurs after divorce date {d}'
             ))
@@ -402,11 +376,12 @@ def validate_us05(individuals: Dict[str, Individual],
         if h:
             hd = _parse_date(h.death) if not h.alive else None
             if hd and m > hd:
+                line_num = find_ged_line("DATE", f.married, "MARR", f.ged_line_start, f.ged_line_end) #or f.ged_line_start
                 out.append(ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam='FAMILY',
                     user_story_id='US05',
-                    gedcom_line='TBD',
+                    gedcom_line=line_num,
                     indi_or_fam_id=f.id,
                     message=f'Marriage date {m} occurs after death of husband {h.id} ({h.name}) on {hd}'
                 ))
@@ -414,11 +389,12 @@ def validate_us05(individuals: Dict[str, Individual],
         if w:
             wd = _parse_date(w.death) if not w.alive else None
             if wd and m > wd:
+                line_num = find_ged_line("DATE", f.married, "MARR", f.ged_line_start, f.ged_line_end) #or f.ged_line_start
                 out.append(ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam='FAMILY',
                     user_story_id='US05',
-                    gedcom_line='TBD',
+                    gedcom_line=line_num,
                     indi_or_fam_id=f.id,
                     message=f'Marriage date {m} occurs after death of wife {w.id} ({w.name}) on {wd}'
                 ))
@@ -435,11 +411,12 @@ def validate_us06(individuals: Dict[str, Individual],
         if h:
             hd = _parse_date(h.death) if not h.alive else None
             if hd and dv > hd:
+                line_num = find_ged_line("DATE", f.divorced, "DIV", f.ged_line_start, f.ged_line_end) #or f.ged_line_start
                 out.append(ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam='FAMILY',
                     user_story_id='US06',
-                    gedcom_line='TBD',
+                    gedcom_line=line_num,
                     indi_or_fam_id=f.id,
                     message=f'Divorce date {dv} occurs after death of husband {h.id} ({h.name}) on {hd}'
                 ))
@@ -447,11 +424,12 @@ def validate_us06(individuals: Dict[str, Individual],
         if w:
             wd = _parse_date(w.death) if not w.alive else None
             if wd and dv > wd:
+                line_num = find_ged_line("DATE", f.divorced, "DIV", f.ged_line_start, f.ged_line_end) #or f.ged_line_start
                 out.append(ErrorAnomaly(
                     error_or_anomaly='ERROR',
                     indi_or_fam='FAMILY',
                     user_story_id='US06',
-                    gedcom_line='TBD',
+                    gedcom_line=line_num,
                     indi_or_fam_id=f.id,
                     message=f'Divorce date {dv} occurs after death of wife {w.id} ({w.name}) on {wd}'
                 ))
@@ -469,7 +447,7 @@ def validate_birth_before_parent_marriage(individuals: Dict[str, Individual], fa
                     fam_marr = _parse_date(fam.married)
                     if not fam_marr: continue
                     if indi_dob < fam_marr:
-                        line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end)
+                        line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
                         out.append(
                             ErrorAnomaly(
                                 error_or_anomaly = "ANOMALY",
@@ -503,7 +481,7 @@ def validate_birth_before_parent_death(individuals: Dict[str, Individual], famil
                                         parent_dod = _parse_date(parent.death)
                                         if parent.alive or not parent_dod: continue
                                         if indi_dob > parent_dod:
-                                            line_num = find_ged_line("DATE", indi.birthday, "BIRT", indi.ged_line_start, indi.ged_line_end)
+                                            line_num = find_ged_line("DATE", indi.birthday, "BIRT", indi.ged_line_start, indi.ged_line_end) #or indi.ged_line_start
                                             out.append(
                                                 ErrorAnomaly(
                                                     error_or_anomaly = "ERROR",
@@ -520,7 +498,7 @@ def validate_birth_before_parent_death(individuals: Dict[str, Individual], famil
         except: continue
     return out
 
-def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #US10
+def validate_us10_marriage_after_14(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #US10
     out: List[ErrorAnomaly] = []
     for fam in families.values():
         if fam.married != 'NA': # if no marriage date do nothing
@@ -557,7 +535,7 @@ def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dic
             # check all spouses for age >= 14 at marraige
             for dob in dobs:
                 if dob[2] < 14:
-                    line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end)
+                    line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
                     out.append(
                             ErrorAnomaly(
                                 error_or_anomaly = "ANOMALY",
@@ -570,13 +548,598 @@ def validate_marriage_after_14(individuals: Dict[str, Individual], families: Dic
                     )
     return out
 
+def validate_us11_no_bigamy(individuals: Dict[str, Individual], families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    married: Dict[str, Family] = {}
+
+    # collect valid marriages
+    for fam in families.values():
+        if ((fam.married != 'NA') and (fam.married != '') and (fam.husband_id) and (fam.wife_id)):
+            married[fam.id] = fam
+
+    # collect spouses
+    husbands = [fam.husband_id for fam in married.values()]
+    wifes = [fam.wife_id for fam in married.values()]
+
+    # check if each spouse occurs more than once
+    for husband in set(husbands):
+        count = husbands.count(husband)
+
+        if count > 1:
+            temp = [fam for fam in married.values() if fam.husband_id == husband]
+            temp = sorted(
+                [fam for fam in temp if fam.married not in ('NA','',None)],
+            key = lambda f: _parse_date(f.married),
+            )
+            
+            div = _parse_date(temp[0].divorced)
+            marr = _parse_date(temp[0].married)
+            family1 = temp[0].id
+            wife_id = temp[0].wife_id
+            wife_death = None
+
+            wife = [indi for indi in individuals.values() if indi.id == wife_id]
+            if wife:
+                wife_death = _parse_date(wife[0].death)
+
+            # for each later marriage
+            for mar in temp[1:]:
+                next_marr = _parse_date(mar.married)
+
+                # check if divorce, and prior to next marraige
+                if div:
+                    if (div < next_marr):
+
+                        # next marriage is the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        wife_id = mar.wife_id
+
+                # check if wifes death, and prior to next marraige
+                elif wife and wife_death is not None:
+                    if (wife_death < next_marr):
+
+                        # next marraige if the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        wife_id = mar.wife_id
+                        wife = [indi for indi in individuals.values() if indi.id == wife_id]
+                        if wife:
+                            wife_death = _parse_date(wife[0].death)
+                        
+                else:
+                    ind_husb = individuals.get(husband)
+                    line_num = find_ged_line("INDI", husband, None, ind_husb.ged_line_start, ind_husb.ged_line_end) #or ind_husb.ged_line_start
+                    out.append(ErrorAnomaly(
+                        error_or_anomaly='ANOMALY',
+                        indi_or_fam = 'INDIVIDUAL',
+                        user_story_id = 'US11',
+                        gedcom_line = line_num,
+                        indi_or_fam_id = husband,
+                        message= f'{husband} engaged in Bigamy in families {family1} and {mar.id}'
+                        )
+                    )
+    # check if each spouse occurs more than once
+    for wife in set(wifes):
+        count = wifes.count(wife)
+
+        if count > 1:
+            temp = [fam for fam in married.values() if fam.wife_id == wife]
+            temp = sorted(
+                [fam for fam in temp if fam.married not in ('NA','',None)],
+            key = lambda f: _parse_date(f.married),
+            )
+            
+            div = _parse_date(temp[0].divorced)
+            marr = _parse_date(temp[0].married)
+            family1 = temp[0].id
+            husband_id = temp[0].husband_id
+            husband_death = None
+
+            husband = [indi for indi in individuals.values() if indi.id == husband_id]
+            if husband:
+                husband_death = _parse_date(husband[0].death)
+
+            # for each later marriage
+            for mar in temp[1:]:
+                next_marr = _parse_date(mar.married)
+
+                # check if divorce, and prior to next marraige
+                if div:
+                    if (div < next_marr):
+
+                        # next marriage is the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        husband_id = mar.husband_id
+                        husband = [indi for indi in individuals.values() if indi.id == husband_id]
+                        if husband:
+                            husband_death = _parse_date(husband[0].death)
+                        continue
+
+                # check if husbands death, and prior to next marraige
+                elif husband and husband_death is not None:
+                    if (husband_death < next_marr):
+
+                        # next marraige if the valid marriage
+                        div = _parse_date(mar.divorced)
+                        marr = _parse_date(mar.married)
+                        husband_id = mar.husband_id
+                        continue
+                        
+                else:
+                    ind_wife = individuals.get(wife)
+                    line_num = find_ged_line("INDI", wife, None, ind_wife.ged_line_start, ind_wife.ged_line_end) #or ind_wife.ged_line_start
+                    out.append(ErrorAnomaly(
+                        error_or_anomaly='ANOMALY',
+                        indi_or_fam = 'INDIVIDUAL',
+                        user_story_id = 'US11',
+                        gedcom_line = line_num,
+                        indi_or_fam_id = wife,
+                        message= f'{wife} engaged in Bigamy in families {family1} and {mar.id}'
+                        )
+                    )
+    return out
+
+def validate_us02_death_before_marriage(individuals: Dict[str, Individual], families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        if(family and family.married != 'NA' and family.husband_id and family.wife_id):
+            marriageDate = _parse_date(family.married)
+            husband = individuals.get(family.husband_id)
+            wife = individuals.get(family.wife_id)
+            husbandBirthday = _parse_date(husband.birthday)
+            wifeBirthday = _parse_date(wife.birthday)
+            if(husbandBirthday and _compute_age(husbandBirthday, marriageDate) < 0):
+                line_num = find_ged_line("DATE", family.married, "MARR", family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+                error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam = 'FAMILY',
+                user_story_id = 'US02',
+                gedcom_line = line_num,
+                indi_or_fam_id = family.id,
+                message= f'Husband {husband.name}\'s birth date {husbandBirthday} occurs after marriage date {marriageDate}'
+                )
+                out.append(error)
+            if(wifeBirthday and _compute_age(wifeBirthday, marriageDate) < 0):
+                line_num = find_ged_line("DATE", family.married, "MARR", family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+                error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam = 'FAMILY',
+                user_story_id = 'US02',
+                gedcom_line = line_num,
+                indi_or_fam_id = family.id,
+                message= f'Wife {wife.name}\'s birth date {wifeBirthday} occurs after marriage date {marriageDate}'
+                )
+                out.append(error)
+    return out
+
+def validate_us03_death_before_birth(individuals: Dict[str, Individual]):
+    out: List[ErrorAnomaly] = []
+    for person in individuals.values():
+        if(person.birthday and person.death and  person.death != 'NA'):
+            birthday = _parse_date(person.birthday)
+            death = _parse_date(person.death)
+            if(_compute_age(birthday, death) < 0):
+                line_num = find_ged_line("DATE", person.birthday, "BIRT", person.ged_line_start, person.ged_line_end) #or person.ged_line_start
+                error = ErrorAnomaly(
+                error_or_anomaly='ERROR',
+                indi_or_fam = 'INDIVIDUAL',
+                user_story_id = 'US03',
+                gedcom_line = line_num,
+                indi_or_fam_id = person.id,
+                message= f'{person.name}\'s birthday {birthday} occurs after death date {death}'
+                )
+                out.append(error)
+    return out
+
+def validate_us12_parents_not_too_old(individuals: Dict[str, Individual], families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        if family.husband_id and family.wife_id:
+            #Get the youngest child
+            latest = _parse_date("1 JAN 1800")
+            for child in family.children:
+                current = individuals.get(child)
+                if current:
+                    currentBirthday = _parse_date(current.birthday)
+                    if type(latest) == type(currentBirthday) and _compute_age(latest, currentBirthday) > 0:
+                        latest = currentBirthday
+
+            husband = individuals.get(family.husband_id)
+            if husband:
+                husbandBirthday = _parse_date(husband.birthday)
+                if husbandBirthday and type(husbandBirthday) == type(latest) and _compute_age(husbandBirthday, latest) >= 80:
+                    line_num = find_ged_line("HUSB", family.husband_id, None, family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+                    error = ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam = 'FAMILY',
+                    user_story_id = 'US12',
+                    gedcom_line = line_num,
+                    indi_or_fam_id = family.id,
+                    message= f'{husband.name} is at least 80 years older then their children'
+                    )
+                    out.append(error)
+
+            wife = individuals.get(family.wife_id)
+            if wife:
+                wifeBirthday = _parse_date(wife.birthday)
+                if wifeBirthday and type(wifeBirthday) == type(latest) and _compute_age(wifeBirthday, latest) >= 60:
+                    line_num = find_ged_line("WIFE", family.wife_id, None, family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+                    error = ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam = 'FAMILY',
+                    user_story_id = 'US12',
+                    gedcom_line = line_num,
+                    indi_or_fam_id = family.id,
+                    message= f'{wife.name} is at least 60 years older then their children'
+                    )
+                    out.append(error)
+    return out
+                
+def validate_us13_siblings_spacing(individuals: Dict[str, Individual],
+                                   families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US13: Birth dates of siblings should be more than 8 months apart or less than 2 days apart.
+    Violation iff day_diff > 2 AND month_diff < 8.
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        kids = []
+        for cid in fam.children:
+            p = individuals.get(cid)
+            if not p:
+                continue
+            dob = _parse_date(p.birthday)
+            if dob:
+                kids.append((p, dob))
+
+        n = len(kids)
+        for i in range(n):
+            for j in range(i + 1, n):
+                (pi, di), (pj, dj) = kids[i], kids[j]
+                if di > dj:
+                    (pi, di), (pj, dj) = (pj, dj), (pi, di)
+
+                day_diff = (dj - di).days
+                rel = relativedelta(dj, di)
+                month_diff = rel.years * 12 + rel.months
+
+                if day_diff > 2 and month_diff < 8:
+                    line_num = find_ged_line("DATE", pi.birthday, "BIRT", pi.ged_line_start, pi.ged_line_end) #or pi.ged_line_start
+                    out.append(ErrorAnomaly(
+                        error_or_anomaly="ERROR",
+                        indi_or_fam="FAMILY",
+                        user_story_id="US13",
+                        gedcom_line=line_num,
+                        indi_or_fam_id=fam.id,
+                        message=(f"Siblings {pi.id} ({pi.name}, {di}) and "
+                                 f"{pj.id} ({pj.name}, {dj}) too close in age")
+                    ))
+    return out
+
+def validate_us17_marriage_to_descendants(families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+
+    # for each family
+    for fam in families.values():
+        
+        # if there are children
+        if fam.children:
+
+            # for each child
+            for child in fam.children:
+
+                # check for their marriages
+                marriages = [f for f in families.values() if ((f.husband_id == child) or (f.wife_id == child))]
+
+                # for each childs marriages
+                for mar in marriages:
+
+                    # if the wife id is the mom, or the husband id is the dad, raise the anomaly
+                    if (mar.wife_id == fam.wife_id) or (mar.husband_id == fam.husband_id):
+                        
+                        # get the parent for the violation
+                        parent = mar.wife_id if mar.wife_id == fam.wife_id else mar.husband_id
+
+                        # get the line number if global variable GED_LINES exists
+                        if GED_LINES:
+                            line_num = find_ged_line("FAM", mar.id, None, mar.ged_line_start, mar.ged_line_end) #or fam.ged_line_start
+                        else:
+                            line_num = None
+
+                        out.append(ErrorAnomaly(
+                        error_or_anomaly='ANOMALY',
+                        indi_or_fam = 'FAMILY',
+                        user_story_id = 'US17',
+                        gedcom_line = line_num,
+                        indi_or_fam_id = mar.id,
+                        message= f'descendant {child} married to parent {parent} (US17).'
+                        )
+                    )
+    return out
+
+
+def validate_us18_siblings_not_marry(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US18: Siblings should not marry one another.
+    If spouses share any parent family (intersection of their FAMC sets), flag an error.
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        h = individuals.get(fam.husband_id) if fam.husband_id else None
+        w = individuals.get(fam.wife_id) if fam.wife_id else None
+        if not h or not w:
+            continue
+
+        h_par = set(h.child or [])
+        w_par = set(w.child or [])
+        if h_par and w_par and h_par.intersection(w_par):
+            line_num = (find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+                        or fam.ged_line_start or "TBD")
+            out.append(ErrorAnomaly(
+                error_or_anomaly="ERROR",
+                indi_or_fam="FAMILY",
+                user_story_id="US18",
+                gedcom_line=line_num,
+                indi_or_fam_id=fam.id,
+                message=f"Spouses {h.id} ({h.name}) and {w.id} ({w.name}) are siblings"
+            ))
+    return out
+#end of US18
+
+def validate_us19_first_cousins_marry(families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+
+    # for each family
+    for fam in families.values():
+        
+        # gather the spouses
+        spouses = [fam.husband_id, fam.wife_id]
+
+        # for each spouse
+        for spouse in spouses:
+            
+            # get all their other marriages
+            other_marriages = [d for d in families.values() if ((spouse == d.husband_id) or (spouse == d.wife_id))]
+
+            # get their parents
+            spouse_fam = [f for f in families.values() if spouse in f.children]
+
+            if len(spouse_fam) > 0:
+                # get the spouses parents
+                spouse_parents = [spouse_fam[0].husband_id, spouse_fam[0].wife_id]
+            else:
+                spouse_parents = []
+            
+            # for each parent
+            for x in spouse_parents:
+
+                # get the parents families, to get their siblings
+                fam1 = [g for g in families.values() if x in g.children]
+                
+                # collect the parents' siblings
+                for i in fam1:
+                    siblings = i.children
+                    siblings = [i for i in siblings if i != x]
+
+                    # for each of the parents' siblings, get their children (cousins)
+                    for j in siblings:
+                        fam2 = [h for h in families.values() if (h.husband_id == j) or (h.wife_id == j)]
+
+                        for k in fam2:
+                            cousins = k.children
+                            cousins = [c for c in cousins if c != spouse]
+
+                            # check if the spouse had any marriage to their cousins
+                            for mar in other_marriages:
+
+                                if ((mar.wife_id in cousins) or (mar.husband_id in cousins)):
+
+                                    cousin = mar.wife_id if mar.wife_id in cousins else mar.husband_id
+
+                                    # get the line number if global variable GED_LINES exists
+                                    if GED_LINES:
+                                        line_num = find_ged_line("FAM", mar.id, None, mar.ged_line_start, mar.ged_line_end) #or ind_wife.ged_line_start
+                                    else:
+                                        line_num = None
+                                    
+                                    # avoid duplicate errors
+                                    matches = [i for i in out if i.message == f'{spouse} married to cousin {cousin} in family {mar.id} (US19).']
+                                    if len(matches) == 0:
+                                        out.append(ErrorAnomaly(
+                                            error_or_anomaly='ANOMALY',
+                                            indi_or_fam = 'FAMILY',
+                                            user_story_id = 'US19',
+                                            gedcom_line = line_num,
+                                            indi_or_fam_id = spouse,
+                                            message= f'{spouse} married to cousin {cousin} in family {mar.id} (US19).'
+                                            )
+                    )
+                                    
+    return out
+
+#us15 - There should be fewer than 15 siblings in a family
+def validate_us15_fewer_than_15_siblings(families: Dict[str, Family]):
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        if len(family.children) >= 15:
+            line_num = find_ged_line("FAM", family.id, None, family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+            error = ErrorAnomaly(
+            error_or_anomaly='ERROR',
+            indi_or_fam = 'FAMILY',
+            user_story_id = 'US15',
+            gedcom_line = line_num,
+            indi_or_fam_id = family.id,
+            message= f'{family.id} has 15 or more siblings in a family'
+            )
+            out.append(error)
+    return out
+
+def validate_us16_male_last_names(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US16: Male last names
+    All male members of a family should have the same last name, if not then flag an anomaly.
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        h = individuals.get(fam.husband_id) if fam.husband_id else None
+        if not h:
+            continue
+        name_parts = h.name.split()
+        if len(name_parts) != 2:
+            continue
+        last_name = name_parts[-1]
+        for child in fam.children:
+            ch = individuals.get(child)
+            if ch.sex != 'M':
+                continue
+            name_parts = ch.name.split()
+            if len(name_parts) != 2:
+                continue
+            child_last_name = name_parts[-1]
+            if child_last_name != last_name:
+                line_num = find_ged_line("CHIL", ch.id, None, fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+                out.append(ErrorAnomaly(
+                    error_or_anomaly="ANOMALY",
+                    indi_or_fam="FAMILY",
+                    user_story_id="US16",
+                    gedcom_line=line_num,
+                    indi_or_fam_id=fam.id,
+                    message=f"Male member {ch.id} ({ch.name}) does not share the same last name {last_name} in the family"
+                ))
+    return out
+
+def validate_us14_less_than_five_births(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US14: Multiple births <= 5
+    No more than five siblings should be born at the same time
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        child_count = len(fam.children)
+        if child_count < 5:
+            continue
+        birth_dates = []
+        for child in fam.children:
+            ch = individuals.get(child)
+            birth_dates.append(ch.birthday)
+        if all(d is None or d == "" for d in birth_dates):
+            continue
+        if len(set(birth_dates)) == 1:
+            line_num = find_ged_line("FAM", fam.id, None, fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+            out.append(ErrorAnomaly(
+                error_or_anomaly="ANOMALY",
+                indi_or_fam="FAMILY",
+                user_story_id="US14",
+                gedcom_line=line_num,
+                indi_or_fam_id=fam.id,
+                message=f"5 or more sibling born on the same date {birth_dates[0]}"
+            ))
+    return out
+
+def validate_us20_aunts_and_uncles(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """
+    US20: Aunts and uncles
+    Aunts and uncles should not marry their nieces or nephews 24
+    """
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+        h = individuals.get(fam.husband_id) if fam.husband_id else None
+        w = individuals.get(fam.wife_id) if fam.wife_id else None
+        if not h or not w:
+            continue
+        if len(h.child) > 0:
+            for h_families in h.child:
+                h_fam = families.get(h_families)
+                h_father = individuals.get(h_fam.husband_id)
+                h_mother = individuals.get(h_fam.wife_id)
+                if h_father and len(h_father.child) > 0:
+                    for h_father_families in h_father.child:
+                        h_father_fam = families.get(h_father_families)
+                        if h_father_fam.children.__contains__(w.id):
+                            line_num = find_ged_line("WIFE", w.id, None, fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line=line_num,
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {w.name} is an aunt to {h.name}"
+                            ))
+                if h_mother and len(h_mother.child) > 0:
+                    for h_mother_families in h_mother.child:
+                        h_mother_fam = families.get(h_mother_families)
+                        if h_mother_fam.children.__contains__(w.id):
+                            line_num = find_ged_line("WIFE", w.id, None, fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line=line_num,
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {w.name} is an aunt to {h.name}"
+                            ))
+        if len(w.child) > 0:
+            for w_families in w.child:
+                w_fam = families.get(w_families)
+                w_father = individuals.get(w_fam.husband_id)
+                w_mother = individuals.get(w_fam.wife_id)
+                if w_father and len(w_father.child) > 0:
+                    for w_father_families in w_father.child:
+                        w_father_fam = families.get(w_father_families)
+                        if w_father_fam.children.__contains__(h.id):
+                            line_num = find_ged_line("HUSB", h.id, None, fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line=line_num,
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {h.name} is an uncle to {w.name}"
+                            ))
+                if w_mother and len(w_mother.child) > 0:
+                    for w_mother_families in w_mother.child:
+                        w_mother_fam = families.get(w_mother_families)
+                        if w_mother_fam.children.__contains__(h.id):
+                            line_num = find_ged_line("HUSB", h.id, None, fam.ged_line_start, fam.ged_line_end) #or fam.ged_line_start
+                            out.append(ErrorAnomaly(
+                                error_or_anomaly="ANOMALY",
+                                indi_or_fam="FAMILY",
+                                user_story_id="US20",
+                                gedcom_line=line_num,
+                                indi_or_fam_id=fam.id,
+                                message=f"Spouse {h.name} is an aunt to {w.name}"
+                            ))
+    return out
 
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
-    if not tag and not value: return None
-    if start > end: return None
-    ged_lines = [g for g in GED_LINES if start <= g.line_num <= end and g.tag == tag and g.value == value and (not prev_tag or (0 < g.line_num < len(GED_LINES) and prev_tag == GED_LINES[g.line_num-1].tag))]
+    if not tag and not value: 
+        return None
+    
+    min_line = min(GED_LINES, key=lambda gl: gl.line_num).line_num or 0
+    max_line = max(GED_LINES, key=lambda gl: gl.line_num).line_num or 0
+
+    if not start:
+        start = min_line
+    if not end:
+        end = max_line
+    if start > end:
+        return None
+    
+    ged_lines = [g for g in GED_LINES 
+                 if start <= g.line_num <= end 
+                    and g.tag == tag 
+                    and g.value.replace("@", "") == value 
+                    and (not prev_tag 
+                            or (min_line < g.line_num < max_line
+                                and prev_tag == next((gp for gp in GED_LINES if gp.line_num == g.line_num - 1), None).tag))]
     if ged_lines:
-        return ged_lines[0].line_num #Returns first found instance
+        return ged_lines[0].line_num #First found instance
     else:
         return None
 
@@ -601,11 +1164,23 @@ def main():
     ERRORS_ANOMALIES.extend(validate_less_than_150_years_old(individuals))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_marriage(individuals, families))
     ERRORS_ANOMALIES.extend(validate_birth_before_parent_death(individuals, families))
-    ERRORS_ANOMALIES.extend(validate_marriage_after_14(individuals, families))
-
+    ERRORS_ANOMALIES.extend(validate_us10_marriage_after_14(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us11_no_bigamy(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us02_death_before_marriage(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us03_death_before_birth(individuals))
+    ERRORS_ANOMALIES.extend(validate_us12_parents_not_too_old(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us13_siblings_spacing(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us18_siblings_not_marry(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us15_fewer_than_15_siblings(families))
+    ERRORS_ANOMALIES.extend(validate_us16_male_last_names(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us14_less_than_five_births(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us20_aunts_and_uncles(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us17_marriage_to_descendants(families))
+    ERRORS_ANOMALIES.extend(validate_us19_first_cousins_marry(families))
+    sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families)
-    e_table = error_anomaly_prettytable(ERRORS_ANOMALIES)
+    e_table = error_anomaly_prettytable(sorted_by_user_story)
 
     print("\nIndividuals")
     print(i_table)

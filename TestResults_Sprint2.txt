@@ -1,0 +1,24 @@
+..                                                                       [100%]
+2 passed in 0.03s
+
+
+
+
+US16 and US20 Results
+Ran 2 tests in 0.005s
+OK
+
+
+=============================================================================================================== test session starts ================================================================================================================
+platform darwin -- Python 3.12.4, pytest-8.4.2, pluggy-1.6.0 -- /Users/Conrad/.local/share/virtualenvs/Assignment_Project_2-wfRVFrs0/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.12.4', 'Platform': 'macOS-26.0.1-arm64-arm-64bit', 'Packages': {'pytest': '8.4.2', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'metadata': '3.1.1'}}
+rootdir: /Users/Conrad/Documents/Masters/Term_5/CS:SSW 555/Term Project/cs555-gedcom-Group2
+plugins: html-4.1.1, metadata-3.1.1
+collected 3 items                                                                                                                                                                                                                                  
+
+tests/test_us11_us17_us19.py::test_us11 PASSED                                                                                                                                                                                               [ 33%]
+tests/test_us11_us17_us19.py::test_us17 PASSED                                                                                                                                                                                               [ 66%]
+tests/test_us11_us17_us19.py::test_us19 PASSED                                                                                                                                                                                               [100%]
+
+================================================================================================================ 3 passed in 0.01s =================================================================================================================
