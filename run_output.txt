@@ -171,8 +171,8 @@ Errors & Anomalies
 |  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |            Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31           |
 | ANOMALY |   FAMILY   |    US10    |    122    |      F2     |         Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04        |
 | ANOMALY |   FAMILY   |    US10    |    135    |      F5     |       Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04       |
-| ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                US17.P01 engaged in Bigamy in families US17.F1 and US17.F2               |
 | ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
+| ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                US17.P01 engaged in Bigamy in families US17.F1 and US17.F2               |
 | ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
 |  ERROR  |   FAMILY   |    US12    |    262    |   US15.F01  |               Test12_Father is at least 80 years older then their children              |
 |  ERROR  |   FAMILY   |    US12    |    263    |   US15.F01  |               Test12_Mother is at least 60 years older then their children              |
@@ -186,4 +186,5 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US19    |    573    |   US19.P08  |              US19.P08 married to cousin US19.P06 in family US19.F4 (US19).              |
 | ANOMALY |   FAMILY   |    US20    |    377    |  US20.FAM1  |                        Spouse Jane White is an aunt to Joe White                        |
 | ANOMALY |   FAMILY   |    US20    |    401    | US20.FAM1_2 |                        Spouse John Blue is an uncle to Katie Red                        |
+|  ERROR  | INDIVIDUAL |    US22    |    490    |   US11.P07  |                          Individual ID US11.P07 is a duplicate                          |
 +---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+

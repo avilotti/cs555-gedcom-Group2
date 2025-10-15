@@ -92,7 +92,6 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
     current_person: Optional[Individual] = None
     current_family: Optional[Family] = None
     pending_date_for: Optional[str] = None  
-
     for line_num, raw in enumerate(ged_file, start=1):
         line = raw.rstrip("\n")
         if not line.strip():
@@ -126,11 +125,33 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
             current_person = None
             current_family = None
             if tag == "INDI":
-                pid = args.strip("@")                             
+                pid = args.strip("@")
+                #US22 - Check duplicate individual IDs
+                if(individuals.get(pid)):
+                    error = ErrorAnomaly(
+                        error_or_anomaly='ERROR',
+                        indi_or_fam='INDIVIDUAL',
+                        user_story_id='US22',
+                        gedcom_line=line_num,
+                        indi_or_fam_id=pid,
+                        message=f'Individual ID {pid} is a duplicate'
+                    )
+                    ERRORS_ANOMALIES.append(error)
                 current_person = individuals.get(pid) or Individual(id=pid, ged_line_start=line_num)
                 individuals[pid] = current_person
             elif tag == "FAM":
-                fid = args.strip("@")                              
+                fid = args.strip("@")
+                #US22 - Check duplicate family IDs
+                if(families.get(fid)):
+                    error = ErrorAnomaly(
+                        error_or_anomaly='ERROR',
+                        indi_or_fam='FAMILY',
+                        user_story_id='US22',
+                        gedcom_line=line_num,
+                        indi_or_fam_id=fid,
+                        message=f'Family ID {fid} is a duplicate'
+                    )
+                    ERRORS_ANOMALIES.append(error)                              
                 current_family = families.get(fid) or Family(id=fid, ged_line_start=line_num)
                 families[fid] = current_family
             continue
@@ -688,30 +709,32 @@ def validate_us02_death_before_marriage(individuals: Dict[str, Individual], fami
             marriageDate = _parse_date(family.married)
             husband = individuals.get(family.husband_id)
             wife = individuals.get(family.wife_id)
-            husbandBirthday = _parse_date(husband.birthday)
-            wifeBirthday = _parse_date(wife.birthday)
-            if(husbandBirthday and _compute_age(husbandBirthday, marriageDate) < 0):
-                line_num = find_ged_line("DATE", family.married, "MARR", family.ged_line_start, family.ged_line_end) #or family.ged_line_start
-                error = ErrorAnomaly(
-                error_or_anomaly='ERROR',
-                indi_or_fam = 'FAMILY',
-                user_story_id = 'US02',
-                gedcom_line = line_num,
-                indi_or_fam_id = family.id,
-                message= f'Husband {husband.name}\'s birth date {husbandBirthday} occurs after marriage date {marriageDate}'
-                )
-                out.append(error)
-            if(wifeBirthday and _compute_age(wifeBirthday, marriageDate) < 0):
-                line_num = find_ged_line("DATE", family.married, "MARR", family.ged_line_start, family.ged_line_end) #or family.ged_line_start
-                error = ErrorAnomaly(
-                error_or_anomaly='ERROR',
-                indi_or_fam = 'FAMILY',
-                user_story_id = 'US02',
-                gedcom_line = line_num,
-                indi_or_fam_id = family.id,
-                message= f'Wife {wife.name}\'s birth date {wifeBirthday} occurs after marriage date {marriageDate}'
-                )
-                out.append(error)
+            if(husband):
+                husbandBirthday = _parse_date(husband.birthday)
+                if(husbandBirthday and _compute_age(husbandBirthday, marriageDate) < 0):
+                    line_num = find_ged_line("DATE", family.married, "MARR", family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+                    error = ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam = 'FAMILY',
+                    user_story_id = 'US02',
+                    gedcom_line = line_num,
+                    indi_or_fam_id = family.id,
+                    message= f'Husband {husband.name}\'s birth date {husbandBirthday} occurs after marriage date {marriageDate}'
+                    )
+                    out.append(error)
+            if(wife):
+                wifeBirthday = _parse_date(wife.birthday)
+                if(wifeBirthday and _compute_age(wifeBirthday, marriageDate) < 0):
+                    line_num = find_ged_line("DATE", family.married, "MARR", family.ged_line_start, family.ged_line_end) #or family.ged_line_start
+                    error = ErrorAnomaly(
+                    error_or_anomaly='ERROR',
+                    indi_or_fam = 'FAMILY',
+                    user_story_id = 'US02',
+                    gedcom_line = line_num,
+                    indi_or_fam_id = family.id,
+                    message= f'Wife {wife.name}\'s birth date {wifeBirthday} occurs after marriage date {marriageDate}'
+                    )
+                    out.append(error)
     return out
 
 def validate_us03_death_before_birth(individuals: Dict[str, Individual]):
