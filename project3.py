@@ -216,6 +216,19 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
 
     return individuals, families
 
+def ordered_children_ids_by_age(fam: Family, individuals: Dict[str, Individual]) -> List[str]:
+    """
+    Return the family's children ordered from oldest to youngest.
+    Children without a valid birthday go at the end (US28).
+    """
+    items: List[Tuple[str, Optional[date]]] = []
+    for cid in fam.children:
+        p = individuals.get(cid)
+        dob = _parse_date(p.birthday) if p else None
+        items.append((cid, dob))
+    items.sort(key=lambda x: (x[1] is None, x[1]))
+    return [cid for cid, _ in items]
+
 def individual_prettytable(individuals: Dict[str, Individual]):
     from prettytable import PrettyTable
     t = PrettyTable()
@@ -228,17 +241,19 @@ def individual_prettytable(individuals: Dict[str, Individual]):
         ])
     return t
 
-def family_prettytable(families: Dict[str, Family]):
+def family_prettytable(families: Dict[str, Family], individuals: Dict[str, Individual]):
     from prettytable import PrettyTable
     t = PrettyTable()
-    t.field_names = ['ID','Married','Divorced','Husband ID','Husband Name','Wife ID','Wife Name','Children']
+    t.field_names = ['ID','Married','Divorced','Husband ID','Husband Name','Wife ID','Wife Name','Children (oldest→youngest)']
     for fid in sorted(families.keys(), key=_id_sort_key):
         f = families[fid]
+        ordered_kids = ordered_children_ids_by_age(f, individuals)  # US28: display-only order
         t.add_row([
             f.id, f.married, f.divorced,
-            f.husband_id, f.husband_name, f.wife_id, f.wife_name, f.children
+            f.husband_id, f.husband_name, f.wife_id, f.wife_name, ordered_kids
         ])
     return t
+
 
 def error_anomaly_prettytable(error_anomalies: List[ErrorAnomaly]):
     from prettytable import PrettyTable
@@ -1140,6 +1155,39 @@ def validate_us20_aunts_and_uncles(individuals: Dict[str, Individual],
                             ))
     return out
 
+def validate_us23_unique_name_and_birthday(individuals: Dict[str, Individual]) -> List[ErrorAnomaly]:
+    """
+    US23: Unique name and birth date.
+    Build a map keyed by (normalized name, birthday string). If a key has >1 person,
+    add ONE anomaly listing all conflicting IDs for that (name, birthday).
+    """
+    out: List[ErrorAnomaly] = []
+
+    idx: Dict[Tuple[str, str], List[Individual]] = {}
+    for p in individuals.values():
+        name_norm = (p.name or "").strip().lower()
+        bday_raw = (p.birthday or "").strip()
+        if not name_norm or not bday_raw:
+            continue
+        idx.setdefault((name_norm, bday_raw), []).append(p)
+
+    for (name_norm, bday_raw), people in idx.items():
+        if len(people) > 1:
+            first = people[0]
+            line_num = find_ged_line("DATE", first.birthday, "BIRT", first.ged_line_start, first.ged_line_end) or first.ged_line_start
+            ids = ", ".join(sorted([p.id for p in people], key=_id_sort_key))
+            human_name = people[0].name  
+            out.append(ErrorAnomaly(
+                error_or_anomaly="ANOMALY",
+                indi_or_fam="INDIVIDUAL",
+                user_story_id="US23",
+                gedcom_line=line_num,
+                indi_or_fam_id=ids,
+                message=f"Duplicate Name+Birthday: '{human_name}' with birth '{bday_raw}' appears for IDs [{ids}]"
+            ))
+    return out
+
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 
         return None
@@ -1200,9 +1248,10 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us20_aunts_and_uncles(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us17_marriage_to_descendants(families))
     ERRORS_ANOMALIES.extend(validate_us19_first_cousins_marry(families))
+    ERRORS_ANOMALIES.extend(validate_us23_unique_name_and_birthday(individuals))  
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
-    f_table = family_prettytable(families)
+    f_table = family_prettytable(families, individuals)  
     e_table = error_anomaly_prettytable(sorted_by_user_story)
 
     print("\nIndividuals")
