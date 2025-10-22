@@ -1187,6 +1187,10 @@ def validate_us23_unique_name_and_birthday(individuals: Dict[str, Individual]) -
             ))
     return out
 
+# Helper function for US22 Testing
+def validate_us22_check_duplicates(individuals: Dict[str, Individual],
+                                     families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    return ERRORS_ANOMALIES
 
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 

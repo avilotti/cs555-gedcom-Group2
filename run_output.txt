@@ -16,16 +16,16 @@ Individuals
 |     I12      | Elizabeth Simmons  |   F    |  1 JAN 1813 | 212  |  True |      NA     |      ['F3']     |           []           |
 |     I13      |    Kendra Smith    |   F    |  5 MAY 2919 | -919 | False |  8 MAY 2000 |        []       |         ['F5']         |
 |     I14      |     Ken Smith      |   M    |  4 APR 1914 | 186  | False |  6 JUN 2100 |        []       |         ['F5']         |
-|     I15      |  Cassandra Smith   |   F    | 17 OCT 1950 |  74  |  True |      NA     |      ['F5']     |           []           |
-|   US14_I1    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I2    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I3    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I4    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I5    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US16_I1    |    Victor Sosa     |   M    | 17 OCT 1999 |  25  |  True |      NA     |   ['US16.FAM']  |           []           |
-|   US16_I2    |    Hector Smith    |   M    | 17 OCT 1950 |  74  |  True |      NA     |        []       |      ['US16.FAM']      |
-|   US16_I3    |     Lola Smith     |   F    | 17 OCT 1951 |  73  |  True |      NA     |        []       |      ['US16.FAM']      |
-|   US16_I4    |    Victor Smith    |   M    | 17 OCT 1999 |  25  |  True |      NA     |   ['US16.FAM']  |           []           |
+|     I15      |  Cassandra Smith   |   F    | 17 OCT 1950 |  75  |  True |      NA     |      ['F5']     |           []           |
+|   US14_I1    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I2    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I3    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I4    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I5    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US16_I1    |    Victor Sosa     |   M    | 17 OCT 1999 |  26  |  True |      NA     |   ['US16.FAM']  |           []           |
+|   US16_I2    |    Hector Smith    |   M    | 17 OCT 1950 |  75  |  True |      NA     |        []       |      ['US16.FAM']      |
+|   US16_I3    |     Lola Smith     |   F    | 17 OCT 1951 |  74  |  True |      NA     |        []       |      ['US16.FAM']      |
+|   US16_I4    |    Victor Smith    |   M    | 17 OCT 1999 |  26  |  True |      NA     |   ['US16.FAM']  |           []           |
 |   US08.I01   |    US08 Test01     |        |             |  NA  |  True |      NA     |        []       |           []           |
 |   US08.I02   |    US08 Test02     |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |           []           |
 |   US08.I03   |    US08 Test03     |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |           []           |
@@ -46,11 +46,11 @@ Individuals
 |   US11.P07   |    testperson8     |   F    |  2 MAY 1979 |  30  | False |  4 JUL 2009 |        []       | ['US11.F5', 'US11.F6'] |
 |   US11.P08   |    testperson9     |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |           []           |
 |   US11.P09   |    testperson10    |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |           []           |
-|  US14_F2_I1  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I2  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I3  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I4  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I5  |                    |        | 17 OCT 2000 |  24  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I1  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I2  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I3  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I4  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I5  |                    |        | 17 OCT 2000 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
 |  US14_F3_I1  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
 |  US14_F3_I2  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
 |  US14_F3_I3  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
@@ -91,13 +91,13 @@ Individuals
 
 Families
 +-------------+-------------+------------+--------------+--------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------+
-|      ID     |   Married   |  Divorced  |  Husband ID  |    Husband Name    |   Wife ID    |     Wife Name      |                                             Children                                             |
+|      ID     |   Married   |  Divorced  |  Husband ID  |    Husband Name    |   Wife ID    |     Wife Name      |                                    Children (oldest→youngest)                                    |
 +-------------+-------------+------------+--------------+--------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------+
-|      F1     |      NA     |     NA     |      I2      |    James Smith     |      I3      |    Donna Smith     |                                        ['I1', 'I8', 'I9']                                        |
+|      F1     |      NA     |     NA     |      I2      |    James Smith     |      I3      |    Donna Smith     |                                        ['I8', 'I1', 'I9']                                        |
 |      F2     |  4 JUL 1970 |     NA     |      I4      |   Richard Smith    |      I5      |   Rebecca Smith    |                                              ['I2']                                              |
-|      F3     |      NA     |     NA     |     I10      |    Rick Simmons    |      I3      |    Donna Smith     |                                          ['I11', 'I12']                                          |
+|      F3     |      NA     |     NA     |     I10      |    Rick Simmons    |      I3      |    Donna Smith     |                                          ['I12', 'I11']                                          |
 |      F4     |  4 JUL 2010 |     NA     |      I6      | William Blackburn  |      I7      | Victoria Blackburn |                                              ['I3']                                              |
-|      F5     |  4 JUL 2040 | 9 AUG 2030 |     I14      |     Ken Smith      |     I13      |    Kendra Smith    |                                          ['I4', 'I15']                                           |
+|      F5     |  4 JUL 2040 | 9 AUG 2030 |     I14      |     Ken Smith      |     I13      |    Kendra Smith    |                                          ['I15', 'I4']                                           |
 |   US14.FAM  |      NA     |     NA     |              |                    |              |                    |                     ['US14_I1', 'US14_I2', 'US14_I3', 'US14_I4', 'US14_I5']                      |
 |   US16.FAM  |      NA     |     NA     |   US16_I2    |    Hector Smith    |   US16_I3    |     Lola Smith     |                                      ['US16_I1', 'US16_I4']                                      |
 |   US11.F1   |  4 JUL 2008 |     NA     |   US11.P01   |    testperson2     |   US11.P02   |    testperson3     |                                                []                                                |
@@ -131,7 +131,7 @@ Families
 |   US09.F04  |      NA     |     NA     |  US09.P1.04  | US09 Test04_Father |  US09.P2.04  | US09 Test04_Mother |                                          ['US09.C.04']                                           |
 |   US09.F05  |      NA     |     NA     |  US09.P1.05  | US09 Test05_Father |  US09.P2.05  | US09 Test05_Mother |                                          ['US09.C.05']                                           |
 |   US09.F06  |      NA     |     NA     |  US09.P1.06  | US09 Test06_Father |  US09.P2.06  | US09 Test06_Mother |                                          ['US09.C.06']                                           |
-|   US15.F01  |      NA     |     NA     |   US15.P01   |   Test12_Father    |   US15.P02   |   Test12_Mother    | ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15'] |
+|   US15.F01  |      NA     |     NA     |   US15.P01   |   Test12_Father    |   US15.P02   |   Test12_Mother    | ['I12', 'I14', 'I6', 'I7', 'I15', 'I5', 'I4', 'I2', 'I3', 'I10', 'I8', 'I1', 'I9', 'I11', 'I13'] |
 | US20.FAM1_2 |      NA     |     NA     | US20_F1_I4_2 |     John Blue      | US20_F1_I3_2 |     Katie Red      |                                                []                                                |
 | US20.FAM2_2 |      NA     |     NA     | US20_F1_I1_2 |     Joe White      | US20_F1_I2_2 |     Jane White     |                                         ['US20_F1_I3_2']                                         |
 | US20.FAM3_2 |      NA     |     NA     |              |                    |              |                    |                                 ['US20_F1_I3_2', 'US20_F1_I2_2']                                 |
@@ -171,8 +171,8 @@ Errors & Anomalies
 |  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |            Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31           |
 | ANOMALY |   FAMILY   |    US10    |    122    |      F2     |         Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04        |
 | ANOMALY |   FAMILY   |    US10    |    135    |      F5     |       Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04       |
-| ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
 | ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                US17.P01 engaged in Bigamy in families US17.F1 and US17.F2               |
+| ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
 | ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
 |  ERROR  |   FAMILY   |    US12    |    262    |   US15.F01  |               Test12_Father is at least 80 years older then their children              |
 |  ERROR  |   FAMILY   |    US12    |    263    |   US15.F01  |               Test12_Mother is at least 60 years older then their children              |
