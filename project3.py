@@ -67,12 +67,20 @@ ERRORS_ANOMALIES: List[ErrorAnomaly] = []
 
 def _parse_date(s: str) -> Optional[date]:
     """Parse GEDCOM-like date 'D MON YYYY' -> date or None."""
-    try:
-        return datetime.strptime(s.strip(), "%d %b %Y").date()
-    except Exception:
+    allowed_date_patterns = {
+        "%d %b %Y", #D MMM YYYY
+        "%b %Y",    #MMM YYYY
+        "%Y"        #YYYY
+    }
+    for pattern in allowed_date_patterns:
+        try:
+            return datetime.strptime(s.strip(), pattern).date()
+        except Exception:
+            continue
+    else:
         return None
 
-def _compute_age(birth: Optional[date], end: Optional[date] = None):
+def _compute_age(birth: Optional[date], end: Optional[date] = None) -> int:
     if not birth:
         return "NA" #AF NOTE: Causes exceptions in int comparisons if returning string or None
     end = end or date.today()
@@ -296,17 +304,6 @@ def prompt_user_for_input():
     return user_input
 
     # ---------- AV Sprint 1 (US04, US05, US06) ----------
-
-from datetime import datetime, date  
-
-def _to_date(s: str) -> date | None:
-    """Parse 'DD MON YYYY' or return None for 'NA'/blank."""
-    if not s or s == "NA":
-        return None
-    try:
-        return datetime.strptime(s.strip(), "%d %b %Y").date()
-    except Exception:
-        return None
 
 def validate_dates_before_current_date(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]: #us01
     out: List[ErrorAnomaly] = []
@@ -758,7 +755,7 @@ def validate_us03_death_before_birth(individuals: Dict[str, Individual]):
         if(person.birthday and person.death and  person.death != 'NA'):
             birthday = _parse_date(person.birthday)
             death = _parse_date(person.death)
-            if(_compute_age(birthday, death) < 0):
+            if(birthday and _compute_age(birthday, death) < 0):
                 line_num = find_ged_line("DATE", person.birthday, "BIRT", person.ged_line_start, person.ged_line_end) #or person.ged_line_start
                 error = ErrorAnomaly(
                 error_or_anomaly='ERROR',
@@ -1187,6 +1184,36 @@ def validate_us23_unique_name_and_birthday(individuals: Dict[str, Individual]) -
             ))
     return out
 
+def validate_us24_unique_families_by_spouses(families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    """No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file"""
+    out: List[ErrorAnomaly] = []
+
+    unique_fam_info = {}
+    for fam_id, fam in families.items():
+        husb_id = fam.husband_id
+        wife_id = fam.wife_id
+        marr_dt = fam.married
+        fam_info = (husb_id, wife_id, marr_dt)
+        if fam_info in unique_fam_info:
+            unique_fam_info[fam_info].append(fam_id)
+        else:
+            unique_fam_info[fam_info] = [fam_id]
+    for attrs, fam_ids in unique_fam_info.items():
+        if len(fam_ids) > 1 and attrs[0] and attrs[1] and attrs[2] and attrs[2] != "NA":
+            #add error for each fam, list other fam ids
+            for fam_id in fam_ids:
+                fam = families.get(fam_id)
+                line_num = find_ged_line("FAM", fam_id, None, fam.ged_line_start, fam.ged_line_end)
+                out.append(ErrorAnomaly(
+                    error_or_anomaly="ERROR",
+                    indi_or_fam="FAMILY",
+                    user_story_id="US24",
+                    gedcom_line=line_num,
+                    indi_or_fam_id=fam.id,
+                    message=f"Duplicate family with same husband ({attrs[0]}), wife ({attrs[1]}), and marriage date ({attrs[2]}) exists: {', '.join(item for item in fam_ids if item != fam_id)}"
+                ))
+    return out
+
 # Helper function for US22 Testing
 def validate_us22_check_duplicates(individuals: Dict[str, Individual],
                                      families: Dict[str, Family]) -> List[ErrorAnomaly]:
@@ -1219,8 +1246,8 @@ def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> in
         return None
 
 def main():
-    #path = "data/TestData.ged"
-    path = prompt_user_for_input()
+    path = "data/TestData.ged"
+    #path = prompt_user_for_input()
     if len(sys.argv) > 1:
         path = sys.argv[1]
 
@@ -1252,7 +1279,8 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us20_aunts_and_uncles(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us17_marriage_to_descendants(families))
     ERRORS_ANOMALIES.extend(validate_us19_first_cousins_marry(families))
-    ERRORS_ANOMALIES.extend(validate_us23_unique_name_and_birthday(individuals))  
+    ERRORS_ANOMALIES.extend(validate_us23_unique_name_and_birthday(individuals)) 
+    ERRORS_ANOMALIES.extend(validate_us24_unique_families_by_spouses(families))
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families, individuals)  

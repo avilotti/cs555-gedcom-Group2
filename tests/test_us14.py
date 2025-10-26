@@ -44,7 +44,7 @@ def _util_setup_ged_output():
     ged_lines.append(GedLine(line_num=2, level=0, tag="TRLR", value=""))
     return ged_lines
 
-class Test_US40_FindGedLines(unittest.TestCase):
+class Test_US14_ValidateLtFiveBirths(unittest.TestCase):
     def setUp(self):
         self.individuals = _util_setup_indi_output()
         self.families = _util_setup_fam_output()

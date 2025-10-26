@@ -26,6 +26,16 @@ Individuals
 |   US16_I2    |    Hector Smith    |   M    | 17 OCT 1950 |  75  |  True |      NA     |        []       |      ['US16.FAM']      |
 |   US16_I3    |     Lola Smith     |   F    | 17 OCT 1951 |  74  |  True |      NA     |        []       |      ['US16.FAM']      |
 |   US16_I4    |    Victor Smith    |   M    | 17 OCT 1999 |  26  |  True |      NA     |   ['US16.FAM']  |           []           |
+|   US24.H1    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.W1    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.H2    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.W2    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.H3    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.W3    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US41.I1    |                    |        |     2000    |  1   | False |     2001    |        []       |           []           |
+|   US41.I2    |                    |        |   JAN 2000  |  1   | False |   JAN 2001  |        []       |           []           |
+|   US41.I3    |                    |        |    1 2000   |  NA  | False |    1 2001   |        []       |           []           |
+|   US41.I4    |                    |        |    1 JAN    |  NA  | False |    2 JAN    |        []       |           []           |
 |   US08.I01   |    US08 Test01     |        |             |  NA  |  True |      NA     |        []       |           []           |
 |   US08.I02   |    US08 Test02     |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |           []           |
 |   US08.I03   |    US08 Test03     |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |           []           |
@@ -120,6 +130,18 @@ Families
 |  US20.FAM2  |      NA     |     NA     |  US20_F1_I4  |     John Blue      |  US20_F1_I3  |     Katie Red      |                                          ['US20_F1_I1']                                          |
 |  US20.FAM3  |      NA     |     NA     |              |                    |              |                    |                                   ['US20_F1_I4', 'US20_F1_I2']                                   |
 |  US20.FAM4  |      NA     |     NA     |              |                    |              |                    |                                   ['US20_F1_I1', 'US20_F1_I3']                                   |
+|   US24.F1   |  1 JAN 2000 |     NA     |   US24.H1    |                    |   US24.W1    |                    |                                                []                                                |
+|   US24.F2   |  1 JAN 2000 |     NA     |   US24.H1    |                    |   US24.W1    |                    |                                                []                                                |
+|   US24.F3   |  1 JAN 2000 |     NA     |   US24.H1    |                    |   US24.W1    |                    |                                                []                                                |
+|   US24.F4   |  1 JAN 2000 |     NA     |   US24.H2    |                    |   US24.W2    |                    |                                                []                                                |
+|   US24.F5   |  2 JAN 2000 |     NA     |   US24.H2    |                    |   US24.W2    |                    |                                                []                                                |
+|   US24.F6   |  1 JAN 2000 |     NA     |   US24.H3    |                    |   US24.W3    |                    |                                                []                                                |
+|   US24.F7   |  1 JAN 2000 |     NA     |   US24.H3    |                    |   US24.W3    |                    |                                                []                                                |
+|   US24.F8   |  2 JAN 2000 |     NA     |   US24.H3    |                    |   US24.W3    |                    |                                                []                                                |
+|   US41.F1   |     2000    |    2001    |              |                    |              |                    |                                                []                                                |
+|   US41.F2   |   JAN 2000  |  JAN 2001  |              |                    |              |                    |                                                []                                                |
+|   US41.F3   |    1 2000   |   1 2001   |              |                    |              |                    |                                                []                                                |
+|   US41.F4   |    1 JAN    |   2 JAN    |              |                    |              |                    |                                                []                                                |
 |   US08.F01  |      NA     |     NA     |              |                    |              |                    |                                           ['US08.I01']                                           |
 |   US08.F02  |      NA     |     NA     |              |                    |              |                    |                                           ['US08.I02']                                           |
 |   US08.F03  |  1 JAN 2000 |     NA     |              |                    |              |                    |                                           ['US08.I03']                                           |
@@ -139,52 +161,83 @@ Families
 +-------------+-------------+------------+--------------+--------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------+
 
 Errors & Anomalies
-+---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
-|   Type  |    Tag     | User Story | File Line |      ID     |                                         Message                                         |
-+---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
-|  ERROR  | INDIVIDUAL |    US01    |     88    |     I13     |                         Birthday 2919-05-05 occurs in the future                        |
-|  ERROR  | INDIVIDUAL |    US01    |     98    |     I14     |                          Death 2100-06-06 occurs in the future                          |
-|  ERROR  |   FAMILY   |    US01    |    135    |      F5     |                      Marriage date 2040-07-04 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US01    |    137    |      F5     |                       Divorce date 2030-08-09 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US01    |    577    |   US19.F4   |                      Marriage date 2034-07-04 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US02    |    122    |      F2     |   Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04   |
-|  ERROR  |   FAMILY   |    US02    |    135    |      F5     |     Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04     |
-|  ERROR  | INDIVIDUAL |    US03    |     88    |     I13     |          Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08          |
-|  ERROR  |   FAMILY   |    US04    |    135    |      F5     |              Marriage date 2040-07-04 occurs after divorce date 2030-08-09              |
-|  ERROR  |   FAMILY   |    US05    |    135    |      F5     |   Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08  |
-|  ERROR  |   FAMILY   |    US06    |    137    |      F5     |   Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08   |
-|  ERROR  | INDIVIDUAL |    US07    |     82    |     I12     |                        More than 150 years old - Birth 1813-01-01                       |
-|  ERROR  | INDIVIDUAL |    US07    |     96    |     I14     |          More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06         |
-|  ERROR  | INDIVIDUAL |    US07    |    241    |   US15.P01  |                        More than 150 years old - Birth 1800-01-01                       |
-|  ERROR  | INDIVIDUAL |    US07    |    245    |   US15.P02  |                        More than 150 years old - Birth 1800-01-01                       |
-| ANOMALY |   FAMILY   |    US08    |    128    |      F4     |                  Child I3 born 1980-03-02 before marriage on 2010-07-04                 |
-| ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                  Child I4 born 1972-11-12 before marriage on 2040-07-04                 |
-| ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                 Child I15 born 1950-10-17 before marriage on 2040-07-04                 |
-| ANOMALY |   FAMILY   |    US08    |    171    |   US08.F05  |               Child US08.I05 born 2000-01-01 before marriage on 2000-01-02              |
-| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |               Child US17.P03 born 1979-05-02 before marriage on 2008-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |               Child US17.P04 born 1979-05-02 before marriage on 2008-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |               Child US19.P03 born 1979-05-02 before marriage on 2000-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |               Child US19.P04 born 1979-05-02 before marriage on 2000-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    566    |   US19.F2   |               Child US19.P06 born 1979-05-02 before marriage on 2020-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    572    |   US19.F3   |               Child US19.P08 born 1979-05-02 before marriage on 2020-07-04              |
-|  ERROR  |   FAMILY   |    US09    |    213    |   US09.F05  |            Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31           |
-|  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |            Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31           |
-| ANOMALY |   FAMILY   |    US10    |    122    |      F2     |         Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04        |
-| ANOMALY |   FAMILY   |    US10    |    135    |      F5     |       Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04       |
-| ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                US17.P01 engaged in Bigamy in families US17.F1 and US17.F2               |
-| ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
-| ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
-|  ERROR  |   FAMILY   |    US12    |    262    |   US15.F01  |               Test12_Father is at least 80 years older then their children              |
-|  ERROR  |   FAMILY   |    US12    |    263    |   US15.F01  |               Test12_Mother is at least 60 years older then their children              |
-| ANOMALY |   FAMILY   |    US14    |    293    |   US14.FAM  |                   5 or more sibling born on the same date 17 OCT 1999                   |
-|  ERROR  |   FAMILY   |    US15    |    246    |   US15.F01  |                       US15.F01 has 15 or more siblings in a family                      |
-| ANOMALY |   FAMILY   |    US16    |    291    |   US16.FAM  | Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family |
-| ANOMALY |   FAMILY   |    US17    |    512    |   US17.F2   |                  descendant US17.P03 married to parent US17.P01 (US17).                 |
-| ANOMALY |   FAMILY   |    US19    |    106    |      I2     |                       I2 married to cousin I3 in family F1 (US19).                      |
-| ANOMALY |   FAMILY   |    US19    |    106    |      I3     |                       I3 married to cousin I2 in family F1 (US19).                      |
-| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P06  |              US19.P06 married to cousin US19.P08 in family US19.F4 (US19).              |
-| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P08  |              US19.P08 married to cousin US19.P06 in family US19.F4 (US19).              |
-| ANOMALY |   FAMILY   |    US20    |    377    |  US20.FAM1  |                        Spouse Jane White is an aunt to Joe White                        |
-| ANOMALY |   FAMILY   |    US20    |    401    | US20.FAM1_2 |                        Spouse John Blue is an uncle to Katie Red                        |
-|  ERROR  | INDIVIDUAL |    US22    |    490    |   US11.P07  |                          Individual ID US11.P07 is a duplicate                          |
-+---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
++---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+|   Type  |    Tag     | User Story | File Line |      ID     |                                                        Message                                                        |
++---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+|  ERROR  | INDIVIDUAL |    US01    |     88    |     I13     |                                        Birthday 2919-05-05 occurs in the future                                       |
+|  ERROR  | INDIVIDUAL |    US01    |     98    |     I14     |                                         Death 2100-06-06 occurs in the future                                         |
+|  ERROR  |   FAMILY   |    US01    |    135    |      F5     |                                     Marriage date 2040-07-04 occurs in the future                                     |
+|  ERROR  |   FAMILY   |    US01    |    137    |      F5     |                                      Divorce date 2030-08-09 occurs in the future                                     |
+|  ERROR  |   FAMILY   |    US01    |    577    |   US19.F4   |                                     Marriage date 2034-07-04 occurs in the future                                     |
+|  ERROR  |   FAMILY   |    US02    |    122    |      F2     |                  Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04                  |
+|  ERROR  |   FAMILY   |    US02    |    135    |      F5     |                    Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04                    |
+|  ERROR  | INDIVIDUAL |    US03    |     88    |     I13     |                         Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08                         |
+|  ERROR  |   FAMILY   |    US04    |    135    |      F5     |                             Marriage date 2040-07-04 occurs after divorce date 2030-08-09                             |
+|  ERROR  |   FAMILY   |    US05    |    135    |      F5     |                  Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08                 |
+|  ERROR  |   FAMILY   |    US06    |    137    |      F5     |                  Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08                  |
+|  ERROR  | INDIVIDUAL |    US07    |     82    |     I12     |                                       More than 150 years old - Birth 1813-01-01                                      |
+|  ERROR  | INDIVIDUAL |    US07    |     96    |     I14     |                         More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06                        |
+|  ERROR  | INDIVIDUAL |    US07    |    241    |   US15.P01  |                                       More than 150 years old - Birth 1800-01-01                                      |
+|  ERROR  | INDIVIDUAL |    US07    |    245    |   US15.P02  |                                       More than 150 years old - Birth 1800-01-01                                      |
+| ANOMALY |   FAMILY   |    US08    |    128    |      F4     |                                 Child I3 born 1980-03-02 before marriage on 2010-07-04                                |
+| ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                                 Child I4 born 1972-11-12 before marriage on 2040-07-04                                |
+| ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                                Child I15 born 1950-10-17 before marriage on 2040-07-04                                |
+| ANOMALY |   FAMILY   |    US08    |    171    |   US08.F05  |                              Child US08.I05 born 2000-01-01 before marriage on 2000-01-02                             |
+| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |                              Child US17.P03 born 1979-05-02 before marriage on 2008-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |                              Child US17.P04 born 1979-05-02 before marriage on 2008-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |                              Child US19.P03 born 1979-05-02 before marriage on 2000-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |                              Child US19.P04 born 1979-05-02 before marriage on 2000-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    566    |   US19.F2   |                              Child US19.P06 born 1979-05-02 before marriage on 2020-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    572    |   US19.F3   |                              Child US19.P08 born 1979-05-02 before marriage on 2020-07-04                             |
+|  ERROR  |   FAMILY   |    US09    |    213    |   US09.F05  |                           Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31                          |
+|  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |                           Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31                          |
+| ANOMALY |   FAMILY   |    US10    |    122    |      F2     |                        Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04                       |
+| ANOMALY |   FAMILY   |    US10    |    135    |      F5     |                      Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04                      |
+| ANOMALY |   FAMILY   |    US10    |    640    |   US24.F1   |                         Spouse US24.H1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    640    |   US24.F1   |                         Spouse US24.W1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    645    |   US24.F2   |                         Spouse US24.H1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    645    |   US24.F2   |                         Spouse US24.W1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    650    |   US24.F3   |                         Spouse US24.H1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    650    |   US24.F3   |                         Spouse US24.W1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    655    |   US24.F4   |                         Spouse US24.H2 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    655    |   US24.F4   |                         Spouse US24.W2 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    660    |   US24.F5   |                         Spouse US24.H2 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY |   FAMILY   |    US10    |    660    |   US24.F5   |                         Spouse US24.W2 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY |   FAMILY   |    US10    |    665    |   US24.F6   |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    665    |   US24.F6   |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    670    |   US24.F7   |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    670    |   US24.F7   |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    675    |   US24.F8   |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY |   FAMILY   |    US10    |    675    |   US24.F8   |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY | INDIVIDUAL |    US11    |    630    |   US24.H1   |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F2                               |
+| ANOMALY | INDIVIDUAL |    US11    |    630    |   US24.H1   |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F3                               |
+| ANOMALY | INDIVIDUAL |    US11    |    632    |   US24.H2   |                               US24.H2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                               US11.P01 engaged in Bigamy in families US11.F1 and US11.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    634    |   US24.H3   |                               US24.H3 engaged in Bigamy in families US24.F6 and US24.F7                               |
+| ANOMALY | INDIVIDUAL |    US11    |    634    |   US24.H3   |                               US24.H3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+| ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                               US17.P01 engaged in Bigamy in families US17.F1 and US17.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                               US11.P03 engaged in Bigamy in families US11.F3 and US11.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    631    |   US24.W1   |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F2                               |
+| ANOMALY | INDIVIDUAL |    US11    |    631    |   US24.W1   |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F3                               |
+| ANOMALY | INDIVIDUAL |    US11    |    633    |   US24.W2   |                               US24.W2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    635    |   US24.W3   |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F7                               |
+| ANOMALY | INDIVIDUAL |    US11    |    635    |   US24.W3   |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+|  ERROR  |   FAMILY   |    US12    |    262    |   US15.F01  |                              Test12_Father is at least 80 years older then their children                             |
+|  ERROR  |   FAMILY   |    US12    |    263    |   US15.F01  |                              Test12_Mother is at least 60 years older then their children                             |
+| ANOMALY |   FAMILY   |    US14    |    293    |   US14.FAM  |                                  5 or more sibling born on the same date 17 OCT 1999                                  |
+|  ERROR  |   FAMILY   |    US15    |    246    |   US15.F01  |                                      US15.F01 has 15 or more siblings in a family                                     |
+| ANOMALY |   FAMILY   |    US16    |    291    |   US16.FAM  |                Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family                |
+| ANOMALY |   FAMILY   |    US17    |    512    |   US17.F2   |                                 descendant US17.P03 married to parent US17.P01 (US17).                                |
+| ANOMALY |   FAMILY   |    US19    |    106    |      I2     |                                      I2 married to cousin I3 in family F1 (US19).                                     |
+| ANOMALY |   FAMILY   |    US19    |    106    |      I3     |                                      I3 married to cousin I2 in family F1 (US19).                                     |
+| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P06  |                             US19.P06 married to cousin US19.P08 in family US19.F4 (US19).                             |
+| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P08  |                             US19.P08 married to cousin US19.P06 in family US19.F4 (US19).                             |
+| ANOMALY |   FAMILY   |    US20    |    377    |  US20.FAM1  |                                       Spouse Jane White is an aunt to Joe White                                       |
+| ANOMALY |   FAMILY   |    US20    |    401    | US20.FAM1_2 |                                       Spouse John Blue is an uncle to Katie Red                                       |
+|  ERROR  | INDIVIDUAL |    US22    |    490    |   US11.P07  |                                         Individual ID US11.P07 is a duplicate                                         |
+|  ERROR  |   FAMILY   |    US24    |    636    |   US24.F1   | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F2, US24.F3 |
+|  ERROR  |   FAMILY   |    US24    |    641    |   US24.F2   | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F1, US24.F3 |
+|  ERROR  |   FAMILY   |    US24    |    646    |   US24.F3   | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F1, US24.F2 |
+|  ERROR  |   FAMILY   |    US24    |    661    |   US24.F6   |      Duplicate family with same husband (US24.H3), wife (US24.W3), and marriage date (1 JAN 2000) exists: US24.F7     |
+|  ERROR  |   FAMILY   |    US24    |    666    |   US24.F7   |      Duplicate family with same husband (US24.H3), wife (US24.W3), and marriage date (1 JAN 2000) exists: US24.F6     |
++---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------------------------------------+
