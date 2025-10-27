@@ -12,7 +12,12 @@ def _load():
 def test_us22():
     individuals, families = _load()
     errs = [e for e in p.validate_us22_check_duplicates(individuals, families)]
-    print(errs)
+
     assert any(e.indi_or_fam_id == "US22.I01" for e in errs)
     assert any(e.indi_or_fam_id == "US22.F01" for e in errs)
     assert len(errs) == 2
+
+def test_us27():
+    individuals, families = _load()
+    for e in individuals.values():
+        assert e.age is not None
