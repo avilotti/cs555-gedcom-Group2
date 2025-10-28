@@ -1343,8 +1343,7 @@ def validate_us26_corresponding_entries(individuals: Dict[str, Individual], fami
 def validate_us22_check_duplicates(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:
     return ERRORS_ANOMALIES
 
-def validate_us25_unique_first_names_in_families(individuals: Dict[str, Individual],
-                                                 families: Dict[str, Family],) -> List[ErrorAnomaly]:
+def validate_us25_unique_first_names_in_families(individuals: Dict[str, Individual], families: Dict[str, Family],) -> List[ErrorAnomaly]:
     out: List[ErrorAnomaly] = []
     for fam in families.values():
 
@@ -1358,14 +1357,13 @@ def validate_us25_unique_first_names_in_families(individuals: Dict[str, Individu
             if cd:
                 c_bd = cd[0].birthday
                 c_n = cd[0].name
-                children.append((c_n,c_bd))
+
+                if c_bd and c_n:
+                    children.append((c_n,c_bd))
 
         # check for duplicates
         seen = set()
         dups = []
-
-        if fam.id == 'US25.F1':
-            print(children)
 
         for elem in children:
             if elem in seen:
@@ -1390,7 +1388,121 @@ def validate_us25_unique_first_names_in_families(individuals: Dict[str, Individu
                         indi_or_fam_id=fam.id,
                         message=f"Duplicate child {d[0]} in family {fam.id}"
                     ))
+    return out
 
+def validate_us42_reject_illegitimate_dates(individuals: Dict[str, Individual], families: Dict[str, Family],) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+
+    # months with 30 days
+    mos_30_days = [4, 6, 9, 11]
+
+    # months with 31 days
+    mos_31_days = [1, 3, 5, 7, 8, 10, 12]
+
+    prev_tag, prev_value = None, None
+
+    # function to check for leap years
+    def is_leap_year(year):
+        '''
+        Leap year is evenly divisible by 4, unless it is also evenly divisible by 100
+        Edge case: leap is evenly divisible by 400
+        '''
+
+        if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+            return True
+        else:
+            return False
+    
+    # for each date line
+    for line in GED_LINES:
+        
+        # store the previous level 0 tag and value
+        if line.level == 0:
+            prev_tag = line.tag
+            prev_value = line.value
+
+        # if the current line contains a date
+        if line.tag == "DATE":
+
+            # try to parse the date
+            try:
+                parsed_date = _parse_date(line.value)
+
+                # if it exists
+                if parsed_date:
+
+                    # initialize vars for day, month, and year
+                    day, month, year = None, None, None
+
+                    # try to extract day, month, and year
+                    try:
+                        day = parsed_date.day
+                        month = parsed_date.month
+                        year = parsed_date.year
+
+                        # check for illegitimate dates based on month and day
+                        if month and day:
+                            
+                            if month in mos_30_days:
+                                if not 0 < day <= 30:
+                                    out.append(ErrorAnomaly(
+                                    error_or_anomaly="ERROR",
+                                    indi_or_fam= prev_tag,
+                                    user_story_id="US42",
+                                    gedcom_line=line.line_num,
+                                    indi_or_fam_id=prev_value,
+                                    message=f"Illegitimate date in line {line.line_num}"
+                                ))
+                                    
+                            elif month in mos_31_days:
+                                if not 0 < day <= 31:
+                                    out.append(ErrorAnomaly(
+                                    error_or_anomaly="ERROR",
+                                    indi_or_fam= prev_tag,
+                                    user_story_id="US42",
+                                    gedcom_line=line.line_num,
+                                    indi_or_fam_id=prev_value,
+                                    message=f"Illegitimate date in line {line.line_num}"
+                                ))
+
+                        # when we have day, month, and year, and the month is february
+                        # we need to check for leap year
+                        if (day and month and year) and (month == 2):
+                            flag = is_leap_year(year)
+
+                            # match statement based on leap year flag
+                            match flag:
+                                case True:
+                                    valid_days = 29
+                                case False:
+                                    valid_days = 28
+                                
+                            if not 0 < day < valid_days:
+                                out.append(ErrorAnomaly(
+                                error_or_anomaly="ERROR",
+                                indi_or_fam= prev_tag,
+                                user_story_id="US42",
+                                gedcom_line=line.line_num,
+                                indi_or_fam_id=prev_value,
+                                message=f"Illegitimate date in line {line.line_num}"
+                            ))
+                    except:
+                        continue
+                
+                # python datetime automatically rejects invalid dates based on # of days in the month and leap years, with value error
+                # our _parse_date function returns None for these
+                else: 
+                    out.append(ErrorAnomaly(
+                    error_or_anomaly="ERROR",
+                    indi_or_fam= prev_tag,
+                    user_story_id="US42",
+                    gedcom_line=line.line_num,
+                    indi_or_fam_id=prev_value,
+                    message=f"Illegitimate date in line {line.line_num}"
+                ))
+            except:
+                continue
+            
     return out
 
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
@@ -1420,8 +1532,8 @@ def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> in
         return None
 
 def main():
-    path = "data/TestData.ged"
-    #path = prompt_user_for_input()
+    #path = "data/TestData.ged"
+    path = prompt_user_for_input()
     if len(sys.argv) > 1:
         path = sys.argv[1]
 
@@ -1458,6 +1570,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us21_correct_gender_for_role(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us26_corresponding_entries(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us25_unique_first_names_in_families(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us42_reject_illegitimate_dates(individuals, families))
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families, individuals)  
