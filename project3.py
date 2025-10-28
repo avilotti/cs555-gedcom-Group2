@@ -1343,6 +1343,56 @@ def validate_us26_corresponding_entries(individuals: Dict[str, Individual], fami
 def validate_us22_check_duplicates(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:
     return ERRORS_ANOMALIES
 
+def validate_us25_unique_first_names_in_families(individuals: Dict[str, Individual],
+                                                 families: Dict[str, Family],) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    for fam in families.values():
+
+        # create a children list of name, birthdays
+        children = []
+
+        # list of children is list of their indi ids
+        for c in fam.children:
+            
+            cd = [indi for indi in individuals.values() if indi.id == c]
+            if cd:
+                c_bd = cd[0].birthday
+                c_n = cd[0].name
+                children.append((c_n,c_bd))
+
+        # check for duplicates
+        seen = set()
+        dups = []
+
+        if fam.id == 'US25.F1':
+            print(children)
+
+        for elem in children:
+            if elem in seen:
+                dups.append(elem)
+            else:
+                seen.add(elem)
+
+        # if there are duplicates
+        if len(dups) >= 1:
+            for d in dups:
+
+                # try/except for unit tests, where GED_LINES is not available
+                try:
+                    line_num = find_ged_line("FAM", fam.id, None, fam.ged_line_start, fam.ged_line_end)
+                except:
+                    line_num = None
+                out.append(ErrorAnomaly(
+                        error_or_anomaly="ERROR",
+                        indi_or_fam="FAMILY",
+                        user_story_id="US25",
+                        gedcom_line=line_num,
+                        indi_or_fam_id=fam.id,
+                        message=f"Duplicate child {d[0]} in family {fam.id}"
+                    ))
+
+    return out
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 
         return None
@@ -1407,6 +1457,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us24_unique_families_by_spouses(families))
     ERRORS_ANOMALIES.extend(validate_us21_correct_gender_for_role(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us26_corresponding_entries(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us25_unique_first_names_in_families(individuals, families))
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families, individuals)  
