@@ -16,16 +16,29 @@ Individuals
 |     I12      | Elizabeth Simmons  |   F    |  1 JAN 1813 | 212  |  True |      NA     |      ['F3']     |           []           |
 |     I13      |    Kendra Smith    |   F    |  5 MAY 2919 | -919 | False |  8 MAY 2000 |        []       |         ['F5']         |
 |     I14      |     Ken Smith      |   M    |  4 APR 1914 | 186  | False |  6 JUN 2100 |        []       |         ['F5']         |
-|     I15      |  Cassandra Smith   |   F    | 17 OCT 1950 |  74  |  True |      NA     |      ['F5']     |           []           |
-|   US14_I1    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I2    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I3    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I4    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US14_I5    |                    |        | 17 OCT 1999 |  25  |  True |      NA     |   ['US14.FAM']  |           []           |
-|   US16_I1    |    Victor Sosa     |   M    | 17 OCT 1999 |  25  |  True |      NA     |   ['US16.FAM']  |           []           |
-|   US16_I2    |    Hector Smith    |   M    | 17 OCT 1950 |  74  |  True |      NA     |        []       |      ['US16.FAM']      |
-|   US16_I3    |     Lola Smith     |   F    | 17 OCT 1951 |  73  |  True |      NA     |        []       |      ['US16.FAM']      |
-|   US16_I4    |    Victor Smith    |   M    | 17 OCT 1999 |  25  |  True |      NA     |   ['US16.FAM']  |           []           |
+|     I15      |  Cassandra Smith   |   F    | 17 OCT 1950 |  75  |  True |      NA     |      ['F5']     |           []           |
+|   US14_I1    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I2    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I3    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I4    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US14_I5    |                    |        | 17 OCT 1999 |  26  |  True |      NA     |   ['US14.FAM']  |           []           |
+|   US16_I1    |    Victor Sosa     |   M    | 17 OCT 1999 |  26  |  True |      NA     |   ['US16.FAM']  |           []           |
+|   US16_I2    |    Hector Smith    |   M    | 17 OCT 1950 |  75  |  True |      NA     |        []       |      ['US16.FAM']      |
+|   US16_I3    |     Lola Smith     |   F    | 17 OCT 1951 |  74  |  True |      NA     |        []       |      ['US16.FAM']      |
+|   US16_I4    |    Victor Smith    |   M    | 17 OCT 1999 |  26  |  True |      NA     |   ['US16.FAM']  |           []           |
+|   US24.H1    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.W1    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.H2    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.W2    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.H3    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US24.W3    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
+|   US25.C1    |       Child1       |   M    |  1 JAN 2024 |  1   |  True |      NA     |   ['US25.F1']   |           []           |
+|   US25.C2    |       Child1       |   M    |  1 JAN 2024 |  1   |  True |      NA     |   ['US25.F1']   |           []           |
+|   US41.I1    |                    |        |     2000    |  1   | False |     2001    |        []       |           []           |
+|   US41.I2    |                    |        |   JAN 2000  |  1   | False |   JAN 2001  |        []       |           []           |
+|   US41.I3    |                    |        |    1 2000   |  NA  | False |    1 2001   |        []       |           []           |
+|   US41.I4    |                    |        |    1 JAN    |  NA  | False |    2 JAN    |        []       |           []           |
+|   US42.I1    |                    |        | 31 APR 2025 |  NA  |  True |      NA     |        []       |           []           |
 |   US08.I01   |    US08 Test01     |        |             |  NA  |  True |      NA     |        []       |           []           |
 |   US08.I02   |    US08 Test02     |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |           []           |
 |   US08.I03   |    US08 Test03     |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |           []           |
@@ -46,11 +59,11 @@ Individuals
 |   US11.P07   |    testperson8     |   F    |  2 MAY 1979 |  30  | False |  4 JUL 2009 |        []       | ['US11.F5', 'US11.F6'] |
 |   US11.P08   |    testperson9     |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |           []           |
 |   US11.P09   |    testperson10    |   M    |  2 MAY 1979 |  46  |  True |      NA     |        []       |           []           |
-|  US14_F2_I1  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I2  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I3  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I4  |                    |        | 17 OCT 1999 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
-|  US14_F2_I5  |                    |        | 17 OCT 2000 |  24  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I1  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I2  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I3  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I4  |                    |        | 17 OCT 1999 |  26  |  True |      NA     |  ['US14.FAM2']  |           []           |
+|  US14_F2_I5  |                    |        | 17 OCT 2000 |  25  |  True |      NA     |  ['US14.FAM2']  |           []           |
 |  US14_F3_I1  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
 |  US14_F3_I2  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
 |  US14_F3_I3  |                    |        |             |  NA  |  True |      NA     |  ['US14.FAM3']  |           []           |
@@ -91,13 +104,13 @@ Individuals
 
 Families
 +-------------+-------------+------------+--------------+--------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------+
-|      ID     |   Married   |  Divorced  |  Husband ID  |    Husband Name    |   Wife ID    |     Wife Name      |                                             Children                                             |
+|      ID     |   Married   |  Divorced  |  Husband ID  |    Husband Name    |   Wife ID    |     Wife Name      |                                    Children (oldest→youngest)                                    |
 +-------------+-------------+------------+--------------+--------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------+
-|      F1     |      NA     |     NA     |      I2      |    James Smith     |      I3      |    Donna Smith     |                                        ['I1', 'I8', 'I9']                                        |
+|      F1     |      NA     |     NA     |      I2      |    James Smith     |      I3      |    Donna Smith     |                                        ['I8', 'I1', 'I9']                                        |
 |      F2     |  4 JUL 1970 |     NA     |      I4      |   Richard Smith    |      I5      |   Rebecca Smith    |                                              ['I2']                                              |
-|      F3     |      NA     |     NA     |     I10      |    Rick Simmons    |      I3      |    Donna Smith     |                                          ['I11', 'I12']                                          |
+|      F3     |      NA     |     NA     |     I10      |    Rick Simmons    |      I3      |    Donna Smith     |                                          ['I12', 'I11']                                          |
 |      F4     |  4 JUL 2010 |     NA     |      I6      | William Blackburn  |      I7      | Victoria Blackburn |                                              ['I3']                                              |
-|      F5     |  4 JUL 2040 | 9 AUG 2030 |     I14      |     Ken Smith      |     I13      |    Kendra Smith    |                                          ['I4', 'I15']                                           |
+|      F5     |  4 JUL 2040 | 9 AUG 2030 |     I14      |     Ken Smith      |     I13      |    Kendra Smith    |                                          ['I15', 'I4']                                           |
 |   US14.FAM  |      NA     |     NA     |              |                    |              |                    |                     ['US14_I1', 'US14_I2', 'US14_I3', 'US14_I4', 'US14_I5']                      |
 |   US16.FAM  |      NA     |     NA     |   US16_I2    |    Hector Smith    |   US16_I3    |     Lola Smith     |                                      ['US16_I1', 'US16_I4']                                      |
 |   US11.F1   |  4 JUL 2008 |     NA     |   US11.P01   |    testperson2     |   US11.P02   |    testperson3     |                                                []                                                |
@@ -120,6 +133,19 @@ Families
 |  US20.FAM2  |      NA     |     NA     |  US20_F1_I4  |     John Blue      |  US20_F1_I3  |     Katie Red      |                                          ['US20_F1_I1']                                          |
 |  US20.FAM3  |      NA     |     NA     |              |                    |              |                    |                                   ['US20_F1_I4', 'US20_F1_I2']                                   |
 |  US20.FAM4  |      NA     |     NA     |              |                    |              |                    |                                   ['US20_F1_I1', 'US20_F1_I3']                                   |
+|   US24.F1   |  1 JAN 2000 |     NA     |   US24.H1    |                    |   US24.W1    |                    |                                                []                                                |
+|   US24.F2   |  1 JAN 2000 |     NA     |   US24.H1    |                    |   US24.W1    |                    |                                                []                                                |
+|   US24.F3   |  1 JAN 2000 |     NA     |   US24.H1    |                    |   US24.W1    |                    |                                                []                                                |
+|   US24.F4   |  1 JAN 2000 |     NA     |   US24.H2    |                    |   US24.W2    |                    |                                                []                                                |
+|   US24.F5   |  2 JAN 2000 |     NA     |   US24.H2    |                    |   US24.W2    |                    |                                                []                                                |
+|   US24.F6   |  1 JAN 2000 |     NA     |   US24.H3    |                    |   US24.W3    |                    |                                     ['US24.H3', 'US24.H123']                                     |
+|   US24.F7   |  1 JAN 2000 |     NA     |  US24.H999   |                    |  US24.W888   |                    |                                                []                                                |
+|   US24.F8   |  2 JAN 2000 |     NA     |   US24.H3    |                    |   US24.W3    |                    |                                                []                                                |
+|   US25.F1   |   JAN 2000  |     NA     |              |                    |              |                    |                                      ['US25.C1', 'US25.C2']                                      |
+|   US41.F1   |     2000    |    2001    |              |                    |              |                    |                                                []                                                |
+|   US41.F2   |   JAN 2000  |  JAN 2001  |              |                    |              |                    |                                                []                                                |
+|   US41.F3   |    1 2000   |   1 2001   |              |                    |              |                    |                                                []                                                |
+|   US41.F4   |    1 JAN    |   2 JAN    |              |                    |              |                    |                                                []                                                |
 |   US08.F01  |      NA     |     NA     |              |                    |              |                    |                                           ['US08.I01']                                           |
 |   US08.F02  |      NA     |     NA     |              |                    |              |                    |                                           ['US08.I02']                                           |
 |   US08.F03  |  1 JAN 2000 |     NA     |              |                    |              |                    |                                           ['US08.I03']                                           |
@@ -131,7 +157,7 @@ Families
 |   US09.F04  |      NA     |     NA     |  US09.P1.04  | US09 Test04_Father |  US09.P2.04  | US09 Test04_Mother |                                          ['US09.C.04']                                           |
 |   US09.F05  |      NA     |     NA     |  US09.P1.05  | US09 Test05_Father |  US09.P2.05  | US09 Test05_Mother |                                          ['US09.C.05']                                           |
 |   US09.F06  |      NA     |     NA     |  US09.P1.06  | US09 Test06_Father |  US09.P2.06  | US09 Test06_Mother |                                          ['US09.C.06']                                           |
-|   US15.F01  |      NA     |     NA     |   US15.P01   |   Test12_Father    |   US15.P02   |   Test12_Mother    | ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15'] |
+|   US15.F01  |      NA     |     NA     |   US15.P01   |   Test12_Father    |   US15.P02   |   Test12_Mother    | ['I12', 'I14', 'I6', 'I7', 'I15', 'I5', 'I4', 'I2', 'I3', 'I10', 'I8', 'I1', 'I9', 'I11', 'I13'] |
 | US20.FAM1_2 |      NA     |     NA     | US20_F1_I4_2 |     John Blue      | US20_F1_I3_2 |     Katie Red      |                                                []                                                |
 | US20.FAM2_2 |      NA     |     NA     | US20_F1_I1_2 |     Joe White      | US20_F1_I2_2 |     Jane White     |                                         ['US20_F1_I3_2']                                         |
 | US20.FAM3_2 |      NA     |     NA     |              |                    |              |                    |                                 ['US20_F1_I3_2', 'US20_F1_I2_2']                                 |
@@ -139,51 +165,291 @@ Families
 +-------------+-------------+------------+--------------+--------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------+
 
 Errors & Anomalies
-+---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
-|   Type  |    Tag     | User Story | File Line |      ID     |                                         Message                                         |
-+---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
-|  ERROR  | INDIVIDUAL |    US01    |     88    |     I13     |                         Birthday 2919-05-05 occurs in the future                        |
-|  ERROR  | INDIVIDUAL |    US01    |     98    |     I14     |                          Death 2100-06-06 occurs in the future                          |
-|  ERROR  |   FAMILY   |    US01    |    135    |      F5     |                      Marriage date 2040-07-04 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US01    |    137    |      F5     |                       Divorce date 2030-08-09 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US01    |    577    |   US19.F4   |                      Marriage date 2034-07-04 occurs in the future                      |
-|  ERROR  |   FAMILY   |    US02    |    122    |      F2     |   Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04   |
-|  ERROR  |   FAMILY   |    US02    |    135    |      F5     |     Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04     |
-|  ERROR  | INDIVIDUAL |    US03    |     88    |     I13     |          Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08          |
-|  ERROR  |   FAMILY   |    US04    |    135    |      F5     |              Marriage date 2040-07-04 occurs after divorce date 2030-08-09              |
-|  ERROR  |   FAMILY   |    US05    |    135    |      F5     |   Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08  |
-|  ERROR  |   FAMILY   |    US06    |    137    |      F5     |   Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08   |
-|  ERROR  | INDIVIDUAL |    US07    |     82    |     I12     |                        More than 150 years old - Birth 1813-01-01                       |
-|  ERROR  | INDIVIDUAL |    US07    |     96    |     I14     |          More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06         |
-|  ERROR  | INDIVIDUAL |    US07    |    241    |   US15.P01  |                        More than 150 years old - Birth 1800-01-01                       |
-|  ERROR  | INDIVIDUAL |    US07    |    245    |   US15.P02  |                        More than 150 years old - Birth 1800-01-01                       |
-| ANOMALY |   FAMILY   |    US08    |    128    |      F4     |                  Child I3 born 1980-03-02 before marriage on 2010-07-04                 |
-| ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                  Child I4 born 1972-11-12 before marriage on 2040-07-04                 |
-| ANOMALY |   FAMILY   |    US08    |    135    |      F5     |                 Child I15 born 1950-10-17 before marriage on 2040-07-04                 |
-| ANOMALY |   FAMILY   |    US08    |    171    |   US08.F05  |               Child US08.I05 born 2000-01-01 before marriage on 2000-01-02              |
-| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |               Child US17.P03 born 1979-05-02 before marriage on 2008-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    511    |   US17.F1   |               Child US17.P04 born 1979-05-02 before marriage on 2008-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |               Child US19.P03 born 1979-05-02 before marriage on 2000-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    560    |   US19.F1   |               Child US19.P04 born 1979-05-02 before marriage on 2000-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    566    |   US19.F2   |               Child US19.P06 born 1979-05-02 before marriage on 2020-07-04              |
-| ANOMALY |   FAMILY   |    US08    |    572    |   US19.F3   |               Child US19.P08 born 1979-05-02 before marriage on 2020-07-04              |
-|  ERROR  |   FAMILY   |    US09    |    213    |   US09.F05  |            Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31           |
-|  ERROR  |   FAMILY   |    US09    |    227    |   US09.F06  |            Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31           |
-| ANOMALY |   FAMILY   |    US10    |    122    |      F2     |         Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04        |
-| ANOMALY |   FAMILY   |    US10    |    135    |      F5     |       Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04       |
-| ANOMALY | INDIVIDUAL |    US11    |    522    |   US17.P01  |                US17.P01 engaged in Bigamy in families US17.F1 and US17.F2               |
-| ANOMALY | INDIVIDUAL |    US11    |    459    |   US11.P01  |                US11.P01 engaged in Bigamy in families US11.F1 and US11.F2               |
-| ANOMALY | INDIVIDUAL |    US11    |    470    |   US11.P03  |                US11.P03 engaged in Bigamy in families US11.F3 and US11.F2               |
-|  ERROR  |   FAMILY   |    US12    |    262    |   US15.F01  |               Test12_Father is at least 80 years older then their children              |
-|  ERROR  |   FAMILY   |    US12    |    263    |   US15.F01  |               Test12_Mother is at least 60 years older then their children              |
-| ANOMALY |   FAMILY   |    US14    |    293    |   US14.FAM  |                   5 or more sibling born on the same date 17 OCT 1999                   |
-|  ERROR  |   FAMILY   |    US15    |    246    |   US15.F01  |                       US15.F01 has 15 or more siblings in a family                      |
-| ANOMALY |   FAMILY   |    US16    |    291    |   US16.FAM  | Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family |
-| ANOMALY |   FAMILY   |    US17    |    512    |   US17.F2   |                  descendant US17.P03 married to parent US17.P01 (US17).                 |
-| ANOMALY |   FAMILY   |    US19    |    106    |      I2     |                       I2 married to cousin I3 in family F1 (US19).                      |
-| ANOMALY |   FAMILY   |    US19    |    106    |      I3     |                       I3 married to cousin I2 in family F1 (US19).                      |
-| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P06  |              US19.P06 married to cousin US19.P08 in family US19.F4 (US19).              |
-| ANOMALY |   FAMILY   |    US19    |    573    |   US19.P08  |              US19.P08 married to cousin US19.P06 in family US19.F4 (US19).              |
-| ANOMALY |   FAMILY   |    US20    |    377    |  US20.FAM1  |                        Spouse Jane White is an aunt to Joe White                        |
-| ANOMALY |   FAMILY   |    US20    |    401    | US20.FAM1_2 |                        Spouse John Blue is an uncle to Katie Red                        |
-+---------+------------+------------+-----------+-------------+-----------------------------------------------------------------------------------------+
++---------+------------+------------+-----------+------------------+-----------------------------------------------------------------------------------------------------------------------+
+|   Type  |    Tag     | User Story | File Line |        ID        |                                                        Message                                                        |
++---------+------------+------------+-----------+------------------+-----------------------------------------------------------------------------------------------------------------------+
+|  ERROR  | INDIVIDUAL |    US01    |     88    |       I13        |                                        Birthday 2919-05-05 occurs in the future                                       |
+|  ERROR  | INDIVIDUAL |    US01    |     98    |       I14        |                                         Death 2100-06-06 occurs in the future                                         |
+|  ERROR  |   FAMILY   |    US01    |    135    |        F5        |                                     Marriage date 2040-07-04 occurs in the future                                     |
+|  ERROR  |   FAMILY   |    US01    |    137    |        F5        |                                      Divorce date 2030-08-09 occurs in the future                                     |
+|  ERROR  |   FAMILY   |    US01    |    577    |     US19.F4      |                                     Marriage date 2034-07-04 occurs in the future                                     |
+|  ERROR  |   FAMILY   |    US02    |    122    |        F2        |                  Husband Richard Smith's birth date 1972-11-12 occurs after marriage date 1970-07-04                  |
+|  ERROR  |   FAMILY   |    US02    |    135    |        F5        |                    Wife Kendra Smith's birth date 2919-05-05 occurs after marriage date 2040-07-04                    |
+|  ERROR  | INDIVIDUAL |    US03    |     88    |       I13        |                         Kendra Smith's birthday 2919-05-05 occurs after death date 2000-05-08                         |
+|  ERROR  |   FAMILY   |    US04    |    135    |        F5        |                             Marriage date 2040-07-04 occurs after divorce date 2030-08-09                             |
+|  ERROR  |   FAMILY   |    US05    |    135    |        F5        |                  Marriage date 2040-07-04 occurs after death of wife I13 (Kendra Smith) on 2000-05-08                 |
+|  ERROR  |   FAMILY   |    US06    |    137    |        F5        |                  Divorce date 2030-08-09 occurs after death of wife I13 (Kendra Smith) on 2000-05-08                  |
+|  ERROR  | INDIVIDUAL |    US07    |     82    |       I12        |                                       More than 150 years old - Birth 1813-01-01                                      |
+|  ERROR  | INDIVIDUAL |    US07    |     96    |       I14        |                         More than 150 years old at death - Birth 1914-04-04 : Death 2100-06-06                        |
+|  ERROR  | INDIVIDUAL |    US07    |    241    |     US15.P01     |                                       More than 150 years old - Birth 1800-01-01                                      |
+|  ERROR  | INDIVIDUAL |    US07    |    245    |     US15.P02     |                                       More than 150 years old - Birth 1800-01-01                                      |
+| ANOMALY |   FAMILY   |    US08    |    128    |        F4        |                                 Child I3 born 1980-03-02 before marriage on 2010-07-04                                |
+| ANOMALY |   FAMILY   |    US08    |    135    |        F5        |                                 Child I4 born 1972-11-12 before marriage on 2040-07-04                                |
+| ANOMALY |   FAMILY   |    US08    |    135    |        F5        |                                Child I15 born 1950-10-17 before marriage on 2040-07-04                                |
+| ANOMALY |   FAMILY   |    US08    |    171    |     US08.F05     |                              Child US08.I05 born 2000-01-01 before marriage on 2000-01-02                             |
+| ANOMALY |   FAMILY   |    US08    |    511    |     US17.F1      |                              Child US17.P03 born 1979-05-02 before marriage on 2008-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    511    |     US17.F1      |                              Child US17.P04 born 1979-05-02 before marriage on 2008-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    560    |     US19.F1      |                              Child US19.P03 born 1979-05-02 before marriage on 2000-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    560    |     US19.F1      |                              Child US19.P04 born 1979-05-02 before marriage on 2000-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    566    |     US19.F2      |                              Child US19.P06 born 1979-05-02 before marriage on 2020-07-04                             |
+| ANOMALY |   FAMILY   |    US08    |    572    |     US19.F3      |                              Child US19.P08 born 1979-05-02 before marriage on 2020-07-04                             |
+|  ERROR  |   FAMILY   |    US09    |    213    |     US09.F05     |                           Child US09.C.05 born 2000-01-01 after mother's death on 1999-12-31                          |
+|  ERROR  |   FAMILY   |    US09    |    227    |     US09.F06     |                           Child US09.C.06 born 2000-01-01 after father's death on 1999-12-31                          |
+| ANOMALY |   FAMILY   |    US10    |    122    |        F2        |                        Spouse I4 born on 1972-11-12 had age -2 < 14 at marriage date 1970-07-04                       |
+| ANOMALY |   FAMILY   |    US10    |    135    |        F5        |                      Spouse I13 born on 2919-05-05 had age -878 < 14 at marriage date 2040-07-04                      |
+| ANOMALY |   FAMILY   |    US10    |    640    |     US24.F1      |                         Spouse US24.H1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    640    |     US24.F1      |                         Spouse US24.W1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    645    |     US24.F2      |                         Spouse US24.H1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    645    |     US24.F2      |                         Spouse US24.W1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    650    |     US24.F3      |                         Spouse US24.H1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    650    |     US24.F3      |                         Spouse US24.W1 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    655    |     US24.F4      |                         Spouse US24.H2 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    655    |     US24.F4      |                         Spouse US24.W2 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    660    |     US24.F5      |                         Spouse US24.H2 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY |   FAMILY   |    US10    |    660    |     US24.F5      |                         Spouse US24.W2 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY |   FAMILY   |    US10    |    665    |     US24.F6      |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    665    |     US24.F6      |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
+| ANOMALY |   FAMILY   |    US10    |    677    |     US24.F8      |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY |   FAMILY   |    US10    |    677    |     US24.F8      |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
+| ANOMALY | INDIVIDUAL |    US11    |    632    |     US24.H2      |                               US24.H2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    630    |     US24.H1      |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F2                               |
+| ANOMALY | INDIVIDUAL |    US11    |    630    |     US24.H1      |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F3                               |
+| ANOMALY | INDIVIDUAL |    US11    |    522    |     US17.P01     |                               US17.P01 engaged in Bigamy in families US17.F1 and US17.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    459    |     US11.P01     |                               US11.P01 engaged in Bigamy in families US11.F1 and US11.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    634    |     US24.H3      |                               US24.H3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+| ANOMALY | INDIVIDUAL |    US11    |    631    |     US24.W1      |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F2                               |
+| ANOMALY | INDIVIDUAL |    US11    |    631    |     US24.W1      |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F3                               |
+| ANOMALY | INDIVIDUAL |    US11    |    470    |     US11.P03     |                               US11.P03 engaged in Bigamy in families US11.F3 and US11.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    635    |     US24.W3      |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+| ANOMALY | INDIVIDUAL |    US11    |    633    |     US24.W2      |                               US24.W2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+|  ERROR  |   FAMILY   |    US12    |    262    |     US15.F01     |                              Test12_Father is at least 80 years older then their children                             |
+|  ERROR  |   FAMILY   |    US12    |    263    |     US15.F01     |                              Test12_Mother is at least 60 years older then their children                             |
+| ANOMALY |   FAMILY   |    US14    |    293    |     US14.FAM     |                                  5 or more sibling born on the same date 17 OCT 1999                                  |
+|  ERROR  |   FAMILY   |    US15    |    246    |     US15.F01     |                                      US15.F01 has 15 or more siblings in a family                                     |
+| ANOMALY |   FAMILY   |    US16    |    291    |     US16.FAM     |                Male member US16_I1 (Victor Sosa) does not share the same last name Smith in the family                |
+| ANOMALY |   FAMILY   |    US17    |    512    |     US17.F2      |                                 descendant US17.P03 married to parent US17.P01 (US17).                                |
+| ANOMALY |   FAMILY   |    US17    |    661    |     US24.F6      |                                  descendant US24.H3 married to parent US24.W3 (US17).                                 |
+| ANOMALY |   FAMILY   |    US17    |    673    |     US24.F8      |                                  descendant US24.H3 married to parent US24.W3 (US17).                                 |
+| ANOMALY |   FAMILY   |    US19    |    106    |        I2        |                                      I2 married to cousin I3 in family F1 (US19).                                     |
+| ANOMALY |   FAMILY   |    US19    |    106    |        I3        |                                      I3 married to cousin I2 in family F1 (US19).                                     |
+| ANOMALY |   FAMILY   |    US19    |    573    |     US19.P06     |                             US19.P06 married to cousin US19.P08 in family US19.F4 (US19).                             |
+| ANOMALY |   FAMILY   |    US19    |    573    |     US19.P08     |                             US19.P08 married to cousin US19.P06 in family US19.F4 (US19).                             |
+| ANOMALY |   FAMILY   |    US20    |    377    |    US20.FAM1     |                                       Spouse Jane White is an aunt to Joe White                                       |
+| ANOMALY |   FAMILY   |    US20    |    401    |   US20.FAM1_2    |                                       Spouse John Blue is an uncle to Katie Red                                       |
+| ANOMALY |   FAMILY   |    US21    |    186    |     US09.F02     |                                   Husband US09 Test02_Father is not listed as M sex                                   |
+| ANOMALY |   FAMILY   |    US21    |    197    |     US09.F03     |                                     Wife US09 Test03_Mother is not listed as F sex                                    |
+| ANOMALY |   FAMILY   |    US21    |    208    |     US09.F04     |                                   Husband US09 Test04_Father is not listed as M sex                                   |
+| ANOMALY |   FAMILY   |    US21    |    209    |     US09.F04     |                                     Wife US09 Test04_Mother is not listed as F sex                                    |
+| ANOMALY |   FAMILY   |    US21    |    222    |     US09.F05     |                                   Husband US09 Test05_Father is not listed as M sex                                   |
+| ANOMALY |   FAMILY   |    US21    |    223    |     US09.F05     |                                     Wife US09 Test05_Mother is not listed as F sex                                    |
+| ANOMALY |   FAMILY   |    US21    |    236    |     US09.F06     |                                   Husband US09 Test06_Father is not listed as M sex                                   |
+| ANOMALY |   FAMILY   |    US21    |    237    |     US09.F06     |                                     Wife US09 Test06_Mother is not listed as F sex                                    |
+| ANOMALY |   FAMILY   |    US21    |    262    |     US15.F01     |                                      Husband Test12_Father is not listed as M sex                                     |
+| ANOMALY |   FAMILY   |    US21    |    263    |     US15.F01     |                                       Wife Test12_Mother is not listed as F sex                                       |
+| ANOMALY |   FAMILY   |    US21    |    376    |    US20.FAM1     |                                        Husband Joe White is not listed as M sex                                       |
+| ANOMALY |   FAMILY   |    US21    |    377    |    US20.FAM1     |                                         Wife Jane White is not listed as F sex                                        |
+| ANOMALY |   FAMILY   |    US21    |    379    |    US20.FAM2     |                                        Husband John Blue is not listed as M sex                                       |
+| ANOMALY |   FAMILY   |    US21    |    380    |    US20.FAM2     |                                         Wife Katie Red is not listed as F sex                                         |
+| ANOMALY |   FAMILY   |    US21    |    401    |   US20.FAM1_2    |                                        Husband John Blue is not listed as M sex                                       |
+| ANOMALY |   FAMILY   |    US21    |    402    |   US20.FAM1_2    |                                         Wife Katie Red is not listed as F sex                                         |
+| ANOMALY |   FAMILY   |    US21    |    404    |   US20.FAM2_2    |                                        Husband Joe White is not listed as M sex                                       |
+| ANOMALY |   FAMILY   |    US21    |    405    |   US20.FAM2_2    |                                         Wife Jane White is not listed as F sex                                        |
+| ANOMALY |   FAMILY   |    US21    |    437    |     US11.F7      |                                        Wife testperson9 is not listed as F sex                                        |
+| ANOMALY |   FAMILY   |    US21    |    441    |     US11.F5      |                                       Husband testperson8 is not listed as M sex                                      |
+| ANOMALY |   FAMILY   |    US21    |    442    |     US11.F5      |                                        Wife testperson9 is not listed as F sex                                        |
+| ANOMALY |   FAMILY   |    US21    |    447    |     US11.F6      |                                        Wife testperson9 is not listed as F sex                                        |
+| ANOMALY |   FAMILY   |    US21    |    514    |     US17.F2      |                                          Wife US17.P03 is not listed as F sex                                         |
+| ANOMALY |   FAMILY   |    US21    |    519    |     US17.F3      |                                          Wife US17.P04 is not listed as F sex                                         |
+| ANOMALY |   FAMILY   |    US21    |    563    |     US19.F2      |                                          Wife US19.P05 is not listed as F sex                                         |
+| ANOMALY |   FAMILY   |    US21    |    575    |     US19.F4      |                                          Wife US19.P08 is not listed as F sex                                         |
+| ANOMALY |   FAMILY   |    US21    |    637    |     US24.F1      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    638    |     US24.F1      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    642    |     US24.F2      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    643    |     US24.F2      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    647    |     US24.F3      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    648    |     US24.F3      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    652    |     US24.F4      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    653    |     US24.F4      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    657    |     US24.F5      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    658    |     US24.F5      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    662    |     US24.F6      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    663    |     US24.F6      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    674    |     US24.F8      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    675    |     US24.F8      |                                              Wife  is not listed as F sex                                             |
+|  ERROR  | INDIVIDUAL |    US22    |    490    |     US11.P07     |                                         Individual ID US11.P07 is a duplicate                                         |
+| ANOMALY | INDIVIDUAL |    US23    |    728    | US25.C1, US25.C2 |              Duplicate Name+Birthday: 'Child1' with birth '1 JAN 2024' appears for IDs [US25.C1, US25.C2]             |
+|  ERROR  |   FAMILY   |    US24    |    636    |     US24.F1      | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F2, US24.F3 |
+|  ERROR  |   FAMILY   |    US24    |    641    |     US24.F2      | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F1, US24.F3 |
+|  ERROR  |   FAMILY   |    US24    |    646    |     US24.F3      | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F1, US24.F2 |
+|  ERROR  |   FAMILY   |    US25    |    718    |     US25.F1      |                                        Duplicate child Child1 in family US25.F1                                       |
+|  ERROR  | INDIVIDUAL |    US26    |     7     |        I1        |                    Individual John Smith FAMC does not have a corresponding entry CHIL in Family F1                   |
+|  ERROR  | INDIVIDUAL |    US26    |     16    |        I2        |                   Individual James Smith FAMC does not have a corresponding entry CHIL in Family F2                   |
+|  ERROR  | INDIVIDUAL |    US26    |     24    |        I3        |                   Individual Donna Smith FAMC does not have a corresponding entry CHIL in Family F4                   |
+|  ERROR  | INDIVIDUAL |    US26    |     31    |        I4        |                  Individual Richard Smith FAMC does not have a corresponding entry CHIL in Family F5                  |
+|  ERROR  | INDIVIDUAL |    US26    |     59    |        I8        |                   Individual Daniel Smith FAMC does not have a corresponding entry CHIL in Family F1                  |
+|  ERROR  | INDIVIDUAL |    US26    |     65    |        I9        |                   Individual Angela Smith FAMC does not have a corresponding entry CHIL in Family F1                  |
+|  ERROR  | INDIVIDUAL |    US26    |     77    |       I11        |                  Individual Brent Simmons FAMC does not have a corresponding entry CHIL in Family F3                  |
+|  ERROR  | INDIVIDUAL |    US26    |     83    |       I12        |                Individual Elizabeth Simmons FAMC does not have a corresponding entry CHIL in Family F3                |
+|  ERROR  | INDIVIDUAL |    US26    |    105    |       I15        |                 Individual Cassandra Smith FAMC does not have a corresponding entry CHIL in Family F5                 |
+|  ERROR  | INDIVIDUAL |    US26    |    269    |     US16_I1      |                Individual Victor Sosa FAMC does not have a corresponding entry CHIL in Family US16.FAM                |
+|  ERROR  | INDIVIDUAL |    US26    |    287    |     US16_I4      |                Individual Victor Smith FAMC does not have a corresponding entry CHIL in Family US16.FAM               |
+|  ERROR  | INDIVIDUAL |    US26    |    302    |     US14_I1      |                      Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM                     |
+|  ERROR  | INDIVIDUAL |    US26    |    306    |     US14_I2      |                      Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM                     |
+|  ERROR  | INDIVIDUAL |    US26    |    310    |     US14_I3      |                      Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM                     |
+|  ERROR  | INDIVIDUAL |    US26    |    314    |     US14_I4      |                      Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM                     |
+|  ERROR  | INDIVIDUAL |    US26    |    318    |     US14_I5      |                      Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM                     |
+|  ERROR  | INDIVIDUAL |    US26    |    328    |    US14_F2_I1    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM2                     |
+|  ERROR  | INDIVIDUAL |    US26    |    332    |    US14_F2_I2    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM2                     |
+|  ERROR  | INDIVIDUAL |    US26    |    336    |    US14_F2_I3    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM2                     |
+|  ERROR  | INDIVIDUAL |    US26    |    340    |    US14_F2_I4    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM2                     |
+|  ERROR  | INDIVIDUAL |    US26    |    344    |    US14_F2_I5    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM2                     |
+|  ERROR  | INDIVIDUAL |    US26    |    352    |    US14_F3_I1    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM3                     |
+|  ERROR  | INDIVIDUAL |    US26    |    354    |    US14_F3_I2    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM3                     |
+|  ERROR  | INDIVIDUAL |    US26    |    356    |    US14_F3_I3    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM3                     |
+|  ERROR  | INDIVIDUAL |    US26    |    358    |    US14_F3_I4    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM3                     |
+|  ERROR  | INDIVIDUAL |    US26    |    360    |    US14_F3_I5    |                     Individual  FAMC does not have a corresponding entry CHIL in Family US14.FAM3                     |
+|  ERROR  | INDIVIDUAL |    US26    |    365    |    US20_F1_I1    |                 Individual Joe White FAMC does not have a corresponding entry CHIL in Family US20.FAM2                |
+|  ERROR  | INDIVIDUAL |    US26    |    368    |    US20_F1_I2    |                Individual Jane White FAMC does not have a corresponding entry CHIL in Family US20.FAM3                |
+|  ERROR  | INDIVIDUAL |    US26    |    371    |    US20_F1_I3    |                 Individual Katie Red FAMC does not have a corresponding entry CHIL in Family US20.FAM4                |
+|  ERROR  | INDIVIDUAL |    US26    |    374    |    US20_F1_I4    |                 Individual John Blue FAMC does not have a corresponding entry CHIL in Family US20.FAM3                |
+|  ERROR  | INDIVIDUAL |    US26    |    390    |   US20_F1_I1_2   |                Individual Joe White FAMC does not have a corresponding entry CHIL in Family US20.FAM4_2               |
+|  ERROR  | INDIVIDUAL |    US26    |    393    |   US20_F1_I2_2   |               Individual Jane White FAMC does not have a corresponding entry CHIL in Family US20.FAM3_2               |
+|  ERROR  | INDIVIDUAL |    US26    |    396    |   US20_F1_I3_2   |                Individual Katie Red FAMC does not have a corresponding entry CHIL in Family US20.FAM2_2               |
+|  ERROR  | INDIVIDUAL |    US26    |    399    |   US20_F1_I4_2   |                Individual John Blue FAMC does not have a corresponding entry CHIL in Family US20.FAM4_2               |
+|  ERROR  | INDIVIDUAL |    US26    |    458    |     US11.P07     |              Individual testperson8 FAMS does not have a corresponding entry HUSB/WIFE in Family US11.F6              |
+|  ERROR  | INDIVIDUAL |    US26    |    538    |     US17.P03     |                  Individual US17.P03 FAMC does not have a corresponding entry CHIL in Family US17.F1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    594    |     US19.P03     |                  Individual US19.P03 FAMC does not have a corresponding entry CHIL in Family US19.F1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    601    |     US19.P04     |                  Individual US19.P04 FAMC does not have a corresponding entry CHIL in Family US19.F1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    613    |     US19.P06     |                  Individual US19.P06 FAMC does not have a corresponding entry CHIL in Family US19.F2                  |
+|  ERROR  | INDIVIDUAL |    US26    |    626    |     US19.P08     |                  Individual US19.P08 FAMC does not have a corresponding entry CHIL in Family US19.F3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    726    |     US25.C1      |                   Individual Child1 FAMC does not have a corresponding entry CHIL in Family US25.F1                   |
+|  ERROR  | INDIVIDUAL |    US26    |    732    |     US25.C2      |                   Individual Child1 FAMC does not have a corresponding entry CHIL in Family US25.F1                   |
+|  ERROR  | INDIVIDUAL |    US26    |    109    |        F1        |                        Family F1 CHIL does not have a corresponding entry FAMC in Individual I1                       |
+|  ERROR  | INDIVIDUAL |    US26    |    110    |        F1        |                        Family F1 CHIL does not have a corresponding entry FAMC in Individual I8                       |
+|  ERROR  | INDIVIDUAL |    US26    |    111    |        F1        |                        Family F1 CHIL does not have a corresponding entry FAMC in Individual I9                       |
+|  ERROR  | INDIVIDUAL |    US26    |    115    |        F3        |                       Family F3 CHIL does not have a corresponding entry FAMC in Individual I11                       |
+|  ERROR  | INDIVIDUAL |    US26    |    116    |        F3        |                       Family F3 CHIL does not have a corresponding entry FAMC in Individual I12                       |
+|  ERROR  | INDIVIDUAL |    US26    |    120    |        F2        |                        Family F2 CHIL does not have a corresponding entry FAMC in Individual I2                       |
+|  ERROR  | INDIVIDUAL |    US26    |    126    |        F4        |                        Family F4 CHIL does not have a corresponding entry FAMC in Individual I3                       |
+|  ERROR  | INDIVIDUAL |    US26    |    132    |        F5        |                        Family F5 CHIL does not have a corresponding entry FAMC in Individual I4                       |
+|  ERROR  | INDIVIDUAL |    US26    |    133    |        F5        |                       Family F5 CHIL does not have a corresponding entry FAMC in Individual I15                       |
+|  ERROR  | INDIVIDUAL |    US26    |    141    |     US08.F01     |                  Family US08.F01 CHIL does not have a corresponding entry FAMC in Individual US08.I01                 |
+|  ERROR  | INDIVIDUAL |    US26    |    147    |     US08.F02     |                  Family US08.F02 CHIL does not have a corresponding entry FAMC in Individual US08.I02                 |
+|  ERROR  | INDIVIDUAL |    US26    |    153    |     US08.F03     |                  Family US08.F03 CHIL does not have a corresponding entry FAMC in Individual US08.I03                 |
+|  ERROR  | INDIVIDUAL |    US26    |    161    |     US08.F04     |                  Family US08.F04 CHIL does not have a corresponding entry FAMC in Individual US08.I04                 |
+|  ERROR  | INDIVIDUAL |    US26    |    169    |     US08.F05     |                  Family US08.F05 CHIL does not have a corresponding entry FAMC in Individual US08.I05                 |
+|  ERROR  | INDIVIDUAL |    US26    |    175    |     US09.F01     |                 Family US09.F01 CHIL does not have a corresponding entry FAMC in Individual US09.C.01                 |
+|  ERROR  | INDIVIDUAL |    US26    |    186    |     US09.F02     |                 Family US09.F02 HUSB does not have a corresponding entry FAMS in Individual US09.P1.02                |
+|  ERROR  | INDIVIDUAL |    US26    |    185    |     US09.F02     |                 Family US09.F02 CHIL does not have a corresponding entry FAMC in Individual US09.C.02                 |
+|  ERROR  | INDIVIDUAL |    US26    |    197    |     US09.F03     |                 Family US09.F03 WIFE does not have a corresponding entry FAMS in Individual US09.P2.03                |
+|  ERROR  | INDIVIDUAL |    US26    |    196    |     US09.F03     |                 Family US09.F03 CHIL does not have a corresponding entry FAMC in Individual US09.C.03                 |
+|  ERROR  | INDIVIDUAL |    US26    |    208    |     US09.F04     |                 Family US09.F04 HUSB does not have a corresponding entry FAMS in Individual US09.P1.04                |
+|  ERROR  | INDIVIDUAL |    US26    |    209    |     US09.F04     |                 Family US09.F04 WIFE does not have a corresponding entry FAMS in Individual US09.P2.04                |
+|  ERROR  | INDIVIDUAL |    US26    |    207    |     US09.F04     |                 Family US09.F04 CHIL does not have a corresponding entry FAMC in Individual US09.C.04                 |
+|  ERROR  | INDIVIDUAL |    US26    |    222    |     US09.F05     |                 Family US09.F05 HUSB does not have a corresponding entry FAMS in Individual US09.P1.05                |
+|  ERROR  | INDIVIDUAL |    US26    |    223    |     US09.F05     |                 Family US09.F05 WIFE does not have a corresponding entry FAMS in Individual US09.P2.05                |
+|  ERROR  | INDIVIDUAL |    US26    |    221    |     US09.F05     |                 Family US09.F05 CHIL does not have a corresponding entry FAMC in Individual US09.C.05                 |
+|  ERROR  | INDIVIDUAL |    US26    |    236    |     US09.F06     |                 Family US09.F06 HUSB does not have a corresponding entry FAMS in Individual US09.P1.06                |
+|  ERROR  | INDIVIDUAL |    US26    |    237    |     US09.F06     |                 Family US09.F06 WIFE does not have a corresponding entry FAMS in Individual US09.P2.06                |
+|  ERROR  | INDIVIDUAL |    US26    |    235    |     US09.F06     |                 Family US09.F06 CHIL does not have a corresponding entry FAMC in Individual US09.C.06                 |
+|  ERROR  | INDIVIDUAL |    US26    |    262    |     US15.F01     |                  Family US15.F01 HUSB does not have a corresponding entry FAMS in Individual US15.P01                 |
+|  ERROR  | INDIVIDUAL |    US26    |    263    |     US15.F01     |                  Family US15.F01 WIFE does not have a corresponding entry FAMS in Individual US15.P02                 |
+|  ERROR  | INDIVIDUAL |    US26    |    247    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I1                    |
+|  ERROR  | INDIVIDUAL |    US26    |    248    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I2                    |
+|  ERROR  | INDIVIDUAL |    US26    |    249    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I3                    |
+|  ERROR  | INDIVIDUAL |    US26    |    250    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I4                    |
+|  ERROR  | INDIVIDUAL |    US26    |    251    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I5                    |
+|  ERROR  | INDIVIDUAL |    US26    |    252    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I6                    |
+|  ERROR  | INDIVIDUAL |    US26    |    253    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I7                    |
+|  ERROR  | INDIVIDUAL |    US26    |    254    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I8                    |
+|  ERROR  | INDIVIDUAL |    US26    |    255    |     US15.F01     |                     Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I9                    |
+|  ERROR  | INDIVIDUAL |    US26    |    256    |     US15.F01     |                    Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I10                    |
+|  ERROR  | INDIVIDUAL |    US26    |    257    |     US15.F01     |                    Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I11                    |
+|  ERROR  | INDIVIDUAL |    US26    |    258    |     US15.F01     |                    Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I12                    |
+|  ERROR  | INDIVIDUAL |    US26    |    259    |     US15.F01     |                    Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I13                    |
+|  ERROR  | INDIVIDUAL |    US26    |    260    |     US15.F01     |                    Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I14                    |
+|  ERROR  | INDIVIDUAL |    US26    |    261    |     US15.F01     |                    Family US15.F01 CHIL does not have a corresponding entry FAMC in Individual I15                    |
+|  ERROR  | INDIVIDUAL |    US26    |    291    |     US16.FAM     |                  Family US16.FAM CHIL does not have a corresponding entry FAMC in Individual US16_I1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    292    |     US16.FAM     |                  Family US16.FAM CHIL does not have a corresponding entry FAMC in Individual US16_I4                  |
+|  ERROR  | INDIVIDUAL |    US26    |    294    |     US14.FAM     |                  Family US14.FAM CHIL does not have a corresponding entry FAMC in Individual US14_I1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    295    |     US14.FAM     |                  Family US14.FAM CHIL does not have a corresponding entry FAMC in Individual US14_I2                  |
+|  ERROR  | INDIVIDUAL |    US26    |    296    |     US14.FAM     |                  Family US14.FAM CHIL does not have a corresponding entry FAMC in Individual US14_I3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    297    |     US14.FAM     |                  Family US14.FAM CHIL does not have a corresponding entry FAMC in Individual US14_I4                  |
+|  ERROR  | INDIVIDUAL |    US26    |    298    |     US14.FAM     |                  Family US14.FAM CHIL does not have a corresponding entry FAMC in Individual US14_I5                  |
+|  ERROR  | INDIVIDUAL |    US26    |    320    |    US14.FAM2     |                Family US14.FAM2 CHIL does not have a corresponding entry FAMC in Individual US14_F2_I1                |
+|  ERROR  | INDIVIDUAL |    US26    |    321    |    US14.FAM2     |                Family US14.FAM2 CHIL does not have a corresponding entry FAMC in Individual US14_F2_I2                |
+|  ERROR  | INDIVIDUAL |    US26    |    322    |    US14.FAM2     |                Family US14.FAM2 CHIL does not have a corresponding entry FAMC in Individual US14_F2_I3                |
+|  ERROR  | INDIVIDUAL |    US26    |    323    |    US14.FAM2     |                Family US14.FAM2 CHIL does not have a corresponding entry FAMC in Individual US14_F2_I4                |
+|  ERROR  | INDIVIDUAL |    US26    |    324    |    US14.FAM2     |                Family US14.FAM2 CHIL does not have a corresponding entry FAMC in Individual US14_F2_I5                |
+|  ERROR  | INDIVIDUAL |    US26    |    346    |    US14.FAM3     |                Family US14.FAM3 CHIL does not have a corresponding entry FAMC in Individual US14_F3_I1                |
+|  ERROR  | INDIVIDUAL |    US26    |    347    |    US14.FAM3     |                Family US14.FAM3 CHIL does not have a corresponding entry FAMC in Individual US14_F3_I2                |
+|  ERROR  | INDIVIDUAL |    US26    |    348    |    US14.FAM3     |                Family US14.FAM3 CHIL does not have a corresponding entry FAMC in Individual US14_F3_I3                |
+|  ERROR  | INDIVIDUAL |    US26    |    349    |    US14.FAM3     |                Family US14.FAM3 CHIL does not have a corresponding entry FAMC in Individual US14_F3_I4                |
+|  ERROR  | INDIVIDUAL |    US26    |    350    |    US14.FAM3     |                Family US14.FAM3 CHIL does not have a corresponding entry FAMC in Individual US14_F3_I5                |
+|  ERROR  | INDIVIDUAL |    US26    |    376    |    US20.FAM1     |                Family US20.FAM1 HUSB does not have a corresponding entry FAMS in Individual US20_F1_I1                |
+|  ERROR  | INDIVIDUAL |    US26    |    377    |    US20.FAM1     |                Family US20.FAM1 WIFE does not have a corresponding entry FAMS in Individual US20_F1_I2                |
+|  ERROR  | INDIVIDUAL |    US26    |    379    |    US20.FAM2     |                Family US20.FAM2 HUSB does not have a corresponding entry FAMS in Individual US20_F1_I4                |
+|  ERROR  | INDIVIDUAL |    US26    |    380    |    US20.FAM2     |                Family US20.FAM2 WIFE does not have a corresponding entry FAMS in Individual US20_F1_I3                |
+|  ERROR  | INDIVIDUAL |    US26    |    381    |    US20.FAM2     |                Family US20.FAM2 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I1                |
+|  ERROR  | INDIVIDUAL |    US26    |    383    |    US20.FAM3     |                Family US20.FAM3 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I4                |
+|  ERROR  | INDIVIDUAL |    US26    |    384    |    US20.FAM3     |                Family US20.FAM3 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I2                |
+|  ERROR  | INDIVIDUAL |    US26    |    386    |    US20.FAM4     |                Family US20.FAM4 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I1                |
+|  ERROR  | INDIVIDUAL |    US26    |    387    |    US20.FAM4     |                Family US20.FAM4 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I3                |
+|  ERROR  | INDIVIDUAL |    US26    |    401    |   US20.FAM1_2    |              Family US20.FAM1_2 HUSB does not have a corresponding entry FAMS in Individual US20_F1_I4_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    402    |   US20.FAM1_2    |              Family US20.FAM1_2 WIFE does not have a corresponding entry FAMS in Individual US20_F1_I3_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    404    |   US20.FAM2_2    |              Family US20.FAM2_2 HUSB does not have a corresponding entry FAMS in Individual US20_F1_I1_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    405    |   US20.FAM2_2    |              Family US20.FAM2_2 WIFE does not have a corresponding entry FAMS in Individual US20_F1_I2_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    406    |   US20.FAM2_2    |              Family US20.FAM2_2 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I3_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    408    |   US20.FAM3_2    |              Family US20.FAM3_2 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I3_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    409    |   US20.FAM3_2    |              Family US20.FAM3_2 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I2_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    411    |   US20.FAM4_2    |              Family US20.FAM4_2 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I1_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    412    |   US20.FAM4_2    |              Family US20.FAM4_2 CHIL does not have a corresponding entry FAMC in Individual US20_F1_I4_2              |
+|  ERROR  | INDIVIDUAL |    US26    |    414    |     US11.F1      |                  Family US11.F1 HUSB does not have a corresponding entry FAMS in Individual US11.P01                  |
+|  ERROR  | INDIVIDUAL |    US26    |    415    |     US11.F1      |                  Family US11.F1 WIFE does not have a corresponding entry FAMS in Individual US11.P02                  |
+|  ERROR  | INDIVIDUAL |    US26    |    419    |     US11.F2      |                  Family US11.F2 HUSB does not have a corresponding entry FAMS in Individual US11.P01                  |
+|  ERROR  | INDIVIDUAL |    US26    |    420    |     US11.F2      |                  Family US11.F2 WIFE does not have a corresponding entry FAMS in Individual US11.P03                  |
+|  ERROR  | INDIVIDUAL |    US26    |    424    |     US11.F3      |                  Family US11.F3 HUSB does not have a corresponding entry FAMS in Individual US11.P04                  |
+|  ERROR  | INDIVIDUAL |    US26    |    425    |     US11.F3      |                  Family US11.F3 WIFE does not have a corresponding entry FAMS in Individual US11.P03                  |
+|  ERROR  | INDIVIDUAL |    US26    |    429    |     US11.F4      |                  Family US11.F4 HUSB does not have a corresponding entry FAMS in Individual US11.P05                  |
+|  ERROR  | INDIVIDUAL |    US26    |    430    |     US11.F4      |                  Family US11.F4 WIFE does not have a corresponding entry FAMS in Individual US11.P06                  |
+|  ERROR  | INDIVIDUAL |    US26    |    436    |     US11.F7      |                  Family US11.F7 HUSB does not have a corresponding entry FAMS in Individual US11.P05                  |
+|  ERROR  | INDIVIDUAL |    US26    |    437    |     US11.F7      |                  Family US11.F7 WIFE does not have a corresponding entry FAMS in Individual US11.P08                  |
+|  ERROR  | INDIVIDUAL |    US26    |    442    |     US11.F5      |                  Family US11.F5 WIFE does not have a corresponding entry FAMS in Individual US11.P08                  |
+|  ERROR  | INDIVIDUAL |    US26    |    446    |     US11.F6      |                  Family US11.F6 HUSB does not have a corresponding entry FAMS in Individual US11.P09                  |
+|  ERROR  | INDIVIDUAL |    US26    |    447    |     US11.F6      |                  Family US11.F6 WIFE does not have a corresponding entry FAMS in Individual US11.P08                  |
+|  ERROR  | INDIVIDUAL |    US26    |    508    |     US17.F1      |                  Family US17.F1 CHIL does not have a corresponding entry FAMC in Individual US17.P03                  |
+|  ERROR  | INDIVIDUAL |    US26    |    509    |     US17.F1      |                  Family US17.F1 CHIL does not have a corresponding entry FAMC in Individual US17.P04                  |
+|  ERROR  | INDIVIDUAL |    US26    |    557    |     US19.F1      |                  Family US19.F1 CHIL does not have a corresponding entry FAMC in Individual US19.P03                  |
+|  ERROR  | INDIVIDUAL |    US26    |    558    |     US19.F1      |                  Family US19.F1 CHIL does not have a corresponding entry FAMC in Individual US19.P04                  |
+|  ERROR  | INDIVIDUAL |    US26    |    564    |     US19.F2      |                  Family US19.F2 CHIL does not have a corresponding entry FAMC in Individual US19.P06                  |
+|  ERROR  | INDIVIDUAL |    US26    |    570    |     US19.F3      |                  Family US19.F3 CHIL does not have a corresponding entry FAMC in Individual US19.P08                  |
+|  ERROR  | INDIVIDUAL |    US26    |    637    |     US24.F1      |                   Family US24.F1 HUSB does not have a corresponding entry FAMS in Individual US24.H1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    638    |     US24.F1      |                   Family US24.F1 WIFE does not have a corresponding entry FAMS in Individual US24.W1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    642    |     US24.F2      |                   Family US24.F2 HUSB does not have a corresponding entry FAMS in Individual US24.H1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    643    |     US24.F2      |                   Family US24.F2 WIFE does not have a corresponding entry FAMS in Individual US24.W1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    647    |     US24.F3      |                   Family US24.F3 HUSB does not have a corresponding entry FAMS in Individual US24.H1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    648    |     US24.F3      |                   Family US24.F3 WIFE does not have a corresponding entry FAMS in Individual US24.W1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    652    |     US24.F4      |                   Family US24.F4 HUSB does not have a corresponding entry FAMS in Individual US24.H2                  |
+|  ERROR  | INDIVIDUAL |    US26    |    653    |     US24.F4      |                   Family US24.F4 WIFE does not have a corresponding entry FAMS in Individual US24.W2                  |
+|  ERROR  | INDIVIDUAL |    US26    |    657    |     US24.F5      |                   Family US24.F5 HUSB does not have a corresponding entry FAMS in Individual US24.H2                  |
+|  ERROR  | INDIVIDUAL |    US26    |    658    |     US24.F5      |                   Family US24.F5 WIFE does not have a corresponding entry FAMS in Individual US24.W2                  |
+|  ERROR  | INDIVIDUAL |    US26    |    662    |     US24.F6      |                   Family US24.F6 HUSB does not have a corresponding entry FAMS in Individual US24.H3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    663    |     US24.F6      |                   Family US24.F6 WIFE does not have a corresponding entry FAMS in Individual US24.W3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    666    |     US24.F6      |                   Family US24.F6 CHIL does not have a corresponding entry FAMC in Individual US24.H3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    667    |     US24.F6      |                      Family US24.F6 CHIL does not have a corresponding entry Individual US24.H123                     |
+|  ERROR  | INDIVIDUAL |    US26    |    669    |     US24.F7      |                      Family US24.F7 HUSB does not have a corresponding entry Individual US24.H999                     |
+|  ERROR  | INDIVIDUAL |    US26    |    670    |     US24.F7      |                      Family US24.F7 WIFE does not have a corresponding entry Individual US24.W888                     |
+|  ERROR  | INDIVIDUAL |    US26    |    674    |     US24.F8      |                   Family US24.F8 HUSB does not have a corresponding entry FAMS in Individual US24.H3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    675    |     US24.F8      |                   Family US24.F8 WIFE does not have a corresponding entry FAMS in Individual US24.W3                  |
+|  ERROR  | INDIVIDUAL |    US26    |    719    |     US25.F1      |                   Family US25.F1 CHIL does not have a corresponding entry FAMC in Individual US25.C1                  |
+|  ERROR  | INDIVIDUAL |    US26    |    720    |     US25.F1      |                   Family US25.F1 CHIL does not have a corresponding entry FAMC in Individual US25.C2                  |
+|  ERROR  |    FAM     |    US42    |    700    |    @US41.F3@     |                                             Illegitimate date in line 700                                             |
+|  ERROR  |    FAM     |    US42    |    702    |    @US41.F3@     |                                             Illegitimate date in line 702                                             |
+|  ERROR  |    INDI    |    US42    |    705    |    @US41.I3@     |                                             Illegitimate date in line 705                                             |
+|  ERROR  |    INDI    |    US42    |    707    |    @US41.I3@     |                                             Illegitimate date in line 707                                             |
+|  ERROR  |    FAM     |    US42    |    710    |    @US41.F4@     |                                             Illegitimate date in line 710                                             |
+|  ERROR  |    FAM     |    US42    |    712    |    @US41.F4@     |                                             Illegitimate date in line 712                                             |
+|  ERROR  |    INDI    |    US42    |    715    |    @US41.I4@     |                                             Illegitimate date in line 715                                             |
+|  ERROR  |    INDI    |    US42    |    717    |    @US41.I4@     |                                             Illegitimate date in line 717                                             |
+|  ERROR  |    INDI    |    US42    |    737    |    @US42.I1@     |                                             Illegitimate date in line 737                                             |
++---------+------------+------------+-----------+------------------+-----------------------------------------------------------------------------------------------------------------------+
