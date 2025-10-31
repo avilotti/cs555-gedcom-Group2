@@ -174,6 +174,17 @@ def parse_individuals_family_data(ged_file) -> Tuple[Dict[str, Individual], Dict
             elif tag == "DATE" and level == 2 and pending_date_for:
                 date_text = args.strip()               
                 if pending_date_for == "BIRT":
+                    #US32 List multiple births
+                    if(current_person.birthday):
+                        error = ErrorAnomaly(
+                            error_or_anomaly='ANOMALY',
+                            indi_or_fam='INDIVIDUAL',
+                            user_story_id='US32',
+                            gedcom_line=line_num,
+                            indi_or_fam_id=current_person.id,
+                            message=f'Individual {pid} has another birth at {current_person.birthday}'
+                        )
+                        ERRORS_ANOMALIES.append(error)    
                     current_person.birthday = date_text
                 elif pending_date_for == "DEAT":
                     current_person.death = date_text
@@ -1505,6 +1516,27 @@ def validate_us42_reject_illegitimate_dates(individuals: Dict[str, Individual], 
             
     return out
 
+def validate_us33_list_orphans(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    for family in families.values():
+        husband = individuals.get(family.husband_id)
+        wife = individuals.get(family.wife_id) 
+        if(husband and wife and husband.death and wife.death and husband.death != "NA" and wife.death != "NA"):
+            for child in family.children:
+                orphan = individuals.get(child)
+                if(orphan and orphan.age and orphan.age < 18):
+                    line_num = find_ged_line("FAM", family.id, "DATE", family.ged_line_start, family.ged_line_end)
+                    out.append(ErrorAnomaly(
+                    error_or_anomaly="ANOMALY",
+                    indi_or_fam= "FAMILY",
+                    user_story_id="US33",
+                    gedcom_line= line_num,
+                    indi_or_fam_id=family.id,
+                    message=f"Individual {orphan.id} {orphan.name} is an Orphan"
+                    ))
+            
+    return out
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 
         return None
@@ -1571,6 +1603,7 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us26_corresponding_entries(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us25_unique_first_names_in_families(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us42_reject_illegitimate_dates(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us33_list_orphans(individuals, families))
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families, individuals)  
