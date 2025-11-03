@@ -1,0 +1,50 @@
+Last login: Mon Nov  3 10:21:38 on ttys000
+(base) anthonyvilotti@Anthonys-MacBook-Air ~ % cd ~/Desktop/cs555-gedcom-Group2
+
+(base) anthonyvilotti@Anthonys-MacBook-Air cs555-gedcom-Group2 % pytest tests/sprint4/test_us38_us39.py -v
+
+============================= test session starts ==============================
+platform darwin -- Python 3.13.5, pytest-8.3.4, pluggy-1.5.0
+rootdir: /Users/anthonyvilotti/Desktop/cs555-gedcom-Group2
+configfile: pytest.ini
+plugins: anyio-4.7.0
+collected 2 items                                                              
+
+tests/sprint4/test_us38_us39.py ..                                       [100%]
+
+============================== 2 passed in 0.02s ===============================
+(base) anthonyvilotti@Anthonys-MacBook-Air cs555-gedcom-Group2 % python3 project3.py tests/sprint4/test_data_us38_us39.ged
+
+
+Enter the GEDCOM file path or enter q to exit the program: tests/sprint4/test_data_us38_us39.ged
+
+Individuals
++----+------------+--------+-------------+-----+-------+-------+-------+--------+
+| ID |    Name    | Gender |   Birthday  | Age | Alive | Death | Child | Spouse |
++----+------------+--------+-------------+-----+-------+-------+-------+--------+
+| I1 | John /Doe/ |   M    | 10 NOV 2000 |  24 |  True |   NA  |   []  |   []   |
+| I2 | Jane /Doe/ |   F    | 05 DEC 1995 |  29 |  True |   NA  |   []  |   []   |
++----+------------+--------+-------------+-----+-------+-------+-------+--------+
+
+Families
++----+-------------+----------+------------+--------------+---------+------------+----------------------------+
+| ID |   Married   | Divorced | Husband ID | Husband Name | Wife ID | Wife Name  | Children (oldest→youngest) |
++----+-------------+----------+------------+--------------+---------+------------+----------------------------+
+| F1 | 15 NOV 2015 |    NA    |     I1     |  John /Doe/  |    I2   | Jane /Doe/ |             []             |
++----+-------------+----------+------------+--------------+---------+------------+----------------------------+
+
+Errors & Anomalies
++-------+------------+------------+-----------+----+----------------------------------------------------------------------------------+
+|  Type |    Tag     | User Story | File Line | ID |                                     Message                                      |
++-------+------------+------------+-----------+----+----------------------------------------------------------------------------------+
+| ERROR | INDIVIDUAL |    US26    |     14    | F1 |     Family F1 HUSB does not have a corresponding entry FAMS in Individual I1     |
+| ERROR | INDIVIDUAL |    US26    |     15    | F1 |     Family F1 WIFE does not have a corresponding entry FAMS in Individual I2     |
+|  INFO | INDIVIDUAL |    US38    |     5     | I1 |          Upcoming birthday for John /Doe/ (I1) on 10 Nov (7 days away)           |
+|  INFO |   FAMILY   |    US39    |     17    | F1 | Upcoming anniversary for John /Doe/ and Jane /Doe/ (F1) on 15 Nov (12 days away) |
++-------+------------+------------+-----------+----+----------------------------------------------------------------------------------+
+(base) anthonyvilotti@Anthonys-MacBook-Air cs555-gedcom-Group2 % 
+(base) anthonyvilotti@Anthonys-MacBook-Air cs555-gedcom-Group2 % python3 project3.py tests/sprint4/test_data_us38_us39.ged > tests/sprint4/TestResults_Sprint4.txt
+
+
+
+

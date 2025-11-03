@@ -1537,6 +1537,77 @@ def validate_us33_list_orphans(individuals: Dict[str, Individual], families: Dic
             
     return out
 
+def validate_us38_upcoming_birthdays(individuals: Dict[str, Individual]) -> List[ErrorAnomaly]:
+ 
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+    for indi in individuals.values():
+        if not indi.alive or not indi.birthday:
+            continue
+        bday = _parse_date(indi.birthday)
+        if not bday:
+            continue
+
+        next_bday = date(today.year, bday.month, bday.day)
+        if next_bday < today:
+            next_bday = date(today.year + 1, bday.month, bday.day)
+
+        diff = (next_bday - today).days
+        if 0 <= diff <= 30:
+            try:
+                line_num = find_ged_line("DATE", indi.birthday, "BIRT", indi.ged_line_start, indi.ged_line_end)
+            except Exception:
+                line_num = 0
+            out.append(ErrorAnomaly(
+                error_or_anomaly="INFO",
+                indi_or_fam="INDIVIDUAL",
+                user_story_id="US38",
+                gedcom_line=line_num,
+                indi_or_fam_id=indi.id,
+                message=f"Upcoming birthday for {indi.name} ({indi.id}) on {bday.strftime('%d %b')} ({diff} days away)"
+            ))
+    return out
+
+def validate_us39_upcoming_anniversaries(families: Dict[str, Family], individuals: Dict[str, Individual]) -> List[ErrorAnomaly]:
+
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+
+    for fam in families.values():
+        if fam.married in ("NA", "", None):
+            continue
+        mdate = _parse_date(fam.married)
+        if not mdate:
+            continue
+
+        h = individuals.get(fam.husband_id)
+        w = individuals.get(fam.wife_id)
+        if not h or not w or not h.alive or not w.alive:
+            continue
+
+        next_anniv = date(today.year, mdate.month, mdate.day)
+        if next_anniv < today:
+            next_anniv = date(today.year + 1, mdate.month, mdate.day)
+
+        diff = (next_anniv - today).days
+        if 0 <= diff <= 30:
+            try:
+                line_num = find_ged_line("DATE", fam.married, "MARR", fam.ged_line_start, fam.ged_line_end)
+            except Exception:
+                line_num = 0
+
+            out.append(ErrorAnomaly(
+                error_or_anomaly="INFO",
+                indi_or_fam="FAMILY",
+                user_story_id="US39",
+                gedcom_line=line_num,
+                indi_or_fam_id=fam.id,
+                message=f"Upcoming anniversary for {h.name} and {w.name} ({fam.id}) on {mdate.strftime('%d %b')} ({diff} days away)"
+            ))
+    return out
+
+
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 
         return None
@@ -1604,6 +1675,9 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us25_unique_first_names_in_families(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us42_reject_illegitimate_dates(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us33_list_orphans(individuals, families))
+    ERRORS_ANOMALIES.extend(validate_us38_upcoming_birthdays(individuals))
+    ERRORS_ANOMALIES.extend(validate_us39_upcoming_anniversaries(families, individuals))
+
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families, individuals)  
