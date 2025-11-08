@@ -1606,7 +1606,92 @@ def validate_us39_upcoming_anniversaries(families: Dict[str, Family], individual
             ))
     return out
 
+def us35_list_recent_births(individuals: Dict[str, Individual]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+    for indi in individuals.values():
+        if indi.birthday:
+            bd = indi.birthday
+            try:
+                bdp = _parse_date(bd)
+                diff = today - bdp
+                diff = diff.days
+                if diff <= 30:
+                    out.append(ErrorAnomaly(
+                    error_or_anomaly="INFO",
+                    indi_or_fam= "INDIVIDUAL",
+                    user_story_id="US35",
+                    gedcom_line=indi.ged_line_start,
+                    indi_or_fam_id=indi.id,
+                    message=f"Individual {indi.id} born in the last 30 days."))
+            except:
+                continue  
+    return out
 
+def us36_list_recent_deaths(individuals: Dict[str, Individual]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+    for indi in individuals.values():
+        if indi.death:
+            dd = indi.death
+            try:
+                ddp = _parse_date(dd)
+                diff = today - ddp
+                diff = diff.days
+                if diff <= 30:
+                    out.append(ErrorAnomaly(
+                    error_or_anomaly="INFO",
+                    indi_or_fam= "INDIVIDUAL",
+                    user_story_id="US36",
+                    gedcom_line=indi.ged_line_start,
+                    indi_or_fam_id=indi.id,
+                    message=f"Individual {indi.id} died in the last 30 days."))
+            except:
+                continue  
+    return out
+
+def us37_list_recent_survivors(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+    for indi in individuals.values():
+        if indi.death:
+            dd = indi.death
+            try:
+                ddp = _parse_date(dd)
+                diff = today - ddp
+                diff = diff.days
+                if diff <= 30:
+                    fams = [fam for fam in families.values() if ((fam.husband_id == indi.id) or (fam.wife_id == indi.id))]
+                    for fam in fams:
+
+                        # store the indi ids of fam members
+                        fam_mems = []
+                        
+                        # add the spouse to fam member list
+                        if fam.husband_id == indi.id:
+                            fam_mems.append(fam.wife_id)
+                        else:
+                            fam_mems.append(fam.husband_id)
+
+                        # add the children to fam member list
+                        children = fam.children
+                        for child in children:
+                            fam_mems.append(child)
+
+                        # final loop - go through each family member and check if alive
+                        for memb in fam_mems:
+                            temp_indi = individuals.get(memb)
+                            if temp_indi.death == 'NA':
+                                out.append(ErrorAnomaly(
+                                error_or_anomaly="INFO",
+                                indi_or_fam= "INDIVIDUAL",
+                                user_story_id="US37",
+                                gedcom_line=indi.ged_line_start,
+                                indi_or_fam_id=temp_indi.id,
+                                message=f"Individual {temp_indi.id} is a survivior of {indi.id} who died in the last 30 days."))
+            except:
+                continue  
+    return out
 
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 
@@ -1677,6 +1762,10 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us33_list_orphans(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us38_upcoming_birthdays(individuals))
     ERRORS_ANOMALIES.extend(validate_us39_upcoming_anniversaries(families, individuals))
+    ERRORS_ANOMALIES.extend(us35_list_recent_births(individuals))
+    ERRORS_ANOMALIES.extend(us36_list_recent_deaths(individuals))
+    ERRORS_ANOMALIES.extend(us37_list_recent_survivors(individuals, families))
+
 
     sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
