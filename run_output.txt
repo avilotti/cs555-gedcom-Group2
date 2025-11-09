@@ -216,16 +216,16 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US10    |    677    |     US24.F8      |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
 | ANOMALY |   FAMILY   |    US10    |    677    |     US24.F8      |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
 | ANOMALY | INDIVIDUAL |    US11    |    522    |     US17.P01     |                               US17.P01 engaged in Bigamy in families US17.F1 and US17.F2                              |
-| ANOMALY | INDIVIDUAL |    US11    |    459    |     US11.P01     |                               US11.P01 engaged in Bigamy in families US11.F1 and US11.F2                              |
-| ANOMALY | INDIVIDUAL |    US11    |    632    |     US24.H2      |                               US24.H2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    634    |     US24.H3      |                               US24.H3 engaged in Bigamy in families US24.F6 and US24.F8                               |
 | ANOMALY | INDIVIDUAL |    US11    |    630    |     US24.H1      |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F2                               |
 | ANOMALY | INDIVIDUAL |    US11    |    630    |     US24.H1      |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F3                               |
-| ANOMALY | INDIVIDUAL |    US11    |    634    |     US24.H3      |                               US24.H3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+| ANOMALY | INDIVIDUAL |    US11    |    632    |     US24.H2      |                               US24.H2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    459    |     US11.P01     |                               US11.P01 engaged in Bigamy in families US11.F1 and US11.F2                              |
 | ANOMALY | INDIVIDUAL |    US11    |    633    |     US24.W2      |                               US24.W2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    635    |     US24.W3      |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+| ANOMALY | INDIVIDUAL |    US11    |    470    |     US11.P03     |                               US11.P03 engaged in Bigamy in families US11.F3 and US11.F2                              |
 | ANOMALY | INDIVIDUAL |    US11    |    631    |     US24.W1      |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F2                               |
 | ANOMALY | INDIVIDUAL |    US11    |    631    |     US24.W1      |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F3                               |
-| ANOMALY | INDIVIDUAL |    US11    |    470    |     US11.P03     |                               US11.P03 engaged in Bigamy in families US11.F3 and US11.F2                              |
-| ANOMALY | INDIVIDUAL |    US11    |    635    |     US24.W3      |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F8                               |
 |  ERROR  |   FAMILY   |    US12    |    262    |     US15.F01     |                              Test12_Father is at least 80 years older then their children                             |
 |  ERROR  |   FAMILY   |    US12    |    263    |     US15.F01     |                              Test12_Mother is at least 60 years older then their children                             |
 | ANOMALY |   FAMILY   |    US14    |    293    |     US14.FAM     |                                  5 or more sibling born on the same date 17 OCT 1999                                  |
@@ -450,16 +450,6 @@ Errors & Anomalies
 |  ERROR  | INDIVIDUAL |    US26    |    719    |     US25.F1      |                   Family US25.F1 CHIL does not have a corresponding entry FAMC in Individual US25.C1                  |
 |  ERROR  | INDIVIDUAL |    US26    |    720    |     US25.F1      |                   Family US25.F1 CHIL does not have a corresponding entry FAMC in Individual US25.C2                  |
 | ANOMALY | INDIVIDUAL |    US32    |    494    |     US11.P07     |                                  Individual US11.P07 has another birth at 2 MAY 1979                                  |
-|   INFO  | INDIVIDUAL |    US35    |     84    |       I13        |                                        Individual I13 born in the last 30 days.                                       |
-|   INFO  | INDIVIDUAL |    US35    |    738    |     US35.I1      |                                      Individual US35.I1 born in the last 30 days.                                     |
-|   INFO  | INDIVIDUAL |    US36    |     92    |       I14        |                                        Individual I14 died in the last 30 days.                                       |
-|   INFO  | INDIVIDUAL |    US36    |    738    |     US35.I1      |                                      Individual US35.I1 died in the last 30 days.                                     |
-|   INFO  | INDIVIDUAL |    US36    |    743    |     US37.I1      |                                      Individual US37.I1 died in the last 30 days.                                     |
-|   INFO  | INDIVIDUAL |    US37    |     92    |        I4        |                           Individual I4 is a survivior of I14 who died in the last 30 days.                           |
-|   INFO  | INDIVIDUAL |    US37    |     92    |       I15        |                           Individual I15 is a survivior of I14 who died in the last 30 days.                          |
-|   INFO  | INDIVIDUAL |    US37    |    743    |     US37.I2      |                       Individual US37.I2 is a survivior of US37.I1 who died in the last 30 days.                      |
-|   INFO  | INDIVIDUAL |    US38    |     29    |        I4        |                            Upcoming birthday for Richard Smith (I4) on 12 Nov (4 days away)                           |
-|   INFO  | INDIVIDUAL |    US38    |     52    |        I7        |                         Upcoming birthday for Victoria Blackburn (I7) on 25 Nov (17 days away)                        |
 |  ERROR  |    FAM     |    US42    |    700    |    @US41.F3@     |                                             Illegitimate date in line 700                                             |
 |  ERROR  |    FAM     |    US42    |    702    |    @US41.F3@     |                                             Illegitimate date in line 702                                             |
 |  ERROR  |    INDI    |    US42    |    705    |    @US41.I3@     |                                             Illegitimate date in line 705                                             |

@@ -64,6 +64,7 @@ VALID_TAGS = {
 }
 
 ERRORS_ANOMALIES: List[ErrorAnomaly] = []
+OTHER_INFO: List[ErrorAnomaly] = []
 
 def _parse_date(s: str) -> Optional[date]:
     """Parse GEDCOM-like date 'D MON YYYY' -> date or None."""
@@ -1693,6 +1694,42 @@ def us37_list_recent_survivors(individuals: Dict[str, Individual], families: Dic
                 continue  
     return out
 
+def us30_list_living_married(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+    for indi_id, indi in individuals.items():
+        if indi.alive  or not indi.alive and ((death_date := _parse_date(indi.death)) is None or death_date > date.today()):
+            curr_fams = [f for f in families.values()
+                         if indi_id in [f.husband_id, f.wife_id]
+                            and ((div_date := _parse_date(f.divorced)) is None or div_date > date.today())]
+            if len(curr_fams) >= 1:
+                out.append(ErrorAnomaly(
+                error_or_anomaly="INFO",
+                indi_or_fam= "INDIVIDUAL",
+                user_story_id="US30",
+                gedcom_line=indi.ged_line_start,
+                indi_or_fam_id=indi.id,
+                message=f"Individual is currently living and married."))
+    return out
+
+def us31_list_living_single(individuals: Dict[str, Individual], families: Dict[str, Family]) -> List[ErrorAnomaly]:
+    out: List[ErrorAnomaly] = []
+    today = date.today()
+    for indi_id, indi in individuals.items():
+        if indi.alive  or not indi.alive and ((death_date := _parse_date(indi.death)) is None or death_date > date.today()):
+            curr_fams = [f for f in families.values()
+                         if indi_id in [f.husband_id, f.wife_id]
+                            and ((div_date := _parse_date(f.divorced)) is None or div_date > date.today())]
+            if len(curr_fams) == 0:
+                out.append(ErrorAnomaly(
+                error_or_anomaly="INFO",
+                indi_or_fam= "INDIVIDUAL",
+                user_story_id="US31",
+                gedcom_line=indi.ged_line_start,
+                indi_or_fam_id=indi.id,
+                message=f"Individual is currently living and single."))
+    return out
+
 def find_ged_line(tag: str, value: str, prev_tag: str, start:int, end:int) -> int:
     if not tag and not value: 
         return None
@@ -1759,18 +1796,22 @@ def main():
     ERRORS_ANOMALIES.extend(validate_us26_corresponding_entries(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us25_unique_first_names_in_families(individuals, families))
     ERRORS_ANOMALIES.extend(validate_us42_reject_illegitimate_dates(individuals, families))
-    ERRORS_ANOMALIES.extend(validate_us33_list_orphans(individuals, families))
-    ERRORS_ANOMALIES.extend(validate_us38_upcoming_birthdays(individuals))
-    ERRORS_ANOMALIES.extend(validate_us39_upcoming_anniversaries(families, individuals))
-    ERRORS_ANOMALIES.extend(us35_list_recent_births(individuals))
-    ERRORS_ANOMALIES.extend(us36_list_recent_deaths(individuals))
-    ERRORS_ANOMALIES.extend(us37_list_recent_survivors(individuals, families))
 
+    OTHER_INFO.extend(validate_us33_list_orphans(individuals, families))
+    OTHER_INFO.extend(validate_us38_upcoming_birthdays(individuals))
+    OTHER_INFO.extend(validate_us39_upcoming_anniversaries(families, individuals))
+    OTHER_INFO.extend(us35_list_recent_births(individuals))
+    OTHER_INFO.extend(us36_list_recent_deaths(individuals))
+    OTHER_INFO.extend(us37_list_recent_survivors(individuals, families))
+    OTHER_INFO.extend(us30_list_living_married(individuals, families))
+    OTHER_INFO.extend(us31_list_living_single(individuals, families))
 
-    sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
+    erroranom_sorted_by_user_story = sorted(ERRORS_ANOMALIES, key=lambda sort_key: sort_key.user_story_id)
+    otherinfo_sorted_by_user_story = sorted(OTHER_INFO, key=lambda sort_key: sort_key.user_story_id)
     i_table = individual_prettytable(individuals)
     f_table = family_prettytable(families, individuals)  
-    e_table = error_anomaly_prettytable(sorted_by_user_story)
+    e_table = error_anomaly_prettytable(erroranom_sorted_by_user_story)
+    o_table = error_anomaly_prettytable(otherinfo_sorted_by_user_story)
 
     print("\nIndividuals")
     print(i_table)
@@ -1778,6 +1819,8 @@ def main():
     print(f_table)
     print("\nErrors & Anomalies")
     print(e_table)
+    print("\nOther Information")
+    print(o_table)
 
     with open("run_output.txt", "w", encoding="utf-8") as out:
         out.write("Individuals\n")
