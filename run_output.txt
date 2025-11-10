@@ -34,6 +34,9 @@ Individuals
 |   US24.W3    |                    |        |             |  NA  |  True |      NA     |        []       |           []           |
 |   US25.C1    |       Child1       |   M    |  1 JAN 2024 |  1   |  True |      NA     |   ['US25.F1']   |           []           |
 |   US25.C2    |       Child1       |   M    |  1 JAN 2024 |  1   |  True |      NA     |   ['US25.F1']   |           []           |
+|   US35.I1    |                    |        |  6 NOV 2025 |  0   | False |  7 NOV 2025 |        []       |           []           |
+|   US37.I1    |                    |        |  1 JAN 2000 |  25  | False |  7 NOV 2025 |        []       |      ['US37.F1']       |
+|   US37.I2    |                    |        |  1 JAN 2000 |  25  |  True |      NA     |        []       |      ['US37.F1']       |
 |   US41.I1    |                    |        |     2000    |  1   | False |     2001    |        []       |           []           |
 |   US41.I2    |                    |        |   JAN 2000  |  1   | False |   JAN 2001  |        []       |           []           |
 |   US41.I3    |                    |        |    1 2000   |  NA  | False |    1 2001   |        []       |           []           |
@@ -142,6 +145,7 @@ Families
 |   US24.F7   |  1 JAN 2000 |     NA     |  US24.H999   |                    |  US24.W888   |                    |                                                []                                                |
 |   US24.F8   |  2 JAN 2000 |     NA     |   US24.H3    |                    |   US24.W3    |                    |                                                []                                                |
 |   US25.F1   |   JAN 2000  |     NA     |              |                    |              |                    |                                      ['US25.C1', 'US25.C2']                                      |
+|   US37.F1   |  1 JAN 2020 |     NA     |   US37.I1    |                    |   US37.I2    |                    |                                                []                                                |
 |   US41.F1   |     2000    |    2001    |              |                    |              |                    |                                                []                                                |
 |   US41.F2   |   JAN 2000  |  JAN 2001  |              |                    |              |                    |                                                []                                                |
 |   US41.F3   |    1 2000   |   1 2001   |              |                    |              |                    |                                                []                                                |
@@ -211,17 +215,17 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US10    |    665    |     US24.F6      |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-01                        |
 | ANOMALY |   FAMILY   |    US10    |    677    |     US24.F8      |                         Spouse US24.H3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
 | ANOMALY |   FAMILY   |    US10    |    677    |     US24.F8      |                         Spouse US24.W3 born on None had age 0 < 14 at marriage date 2000-01-02                        |
-| ANOMALY | INDIVIDUAL |    US11    |    632    |     US24.H2      |                               US24.H2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    459    |     US11.P01     |                               US11.P01 engaged in Bigamy in families US11.F1 and US11.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    522    |     US17.P01     |                               US17.P01 engaged in Bigamy in families US17.F1 and US17.F2                              |
 | ANOMALY | INDIVIDUAL |    US11    |    630    |     US24.H1      |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F2                               |
 | ANOMALY | INDIVIDUAL |    US11    |    630    |     US24.H1      |                               US24.H1 engaged in Bigamy in families US24.F1 and US24.F3                               |
-| ANOMALY | INDIVIDUAL |    US11    |    522    |     US17.P01     |                               US17.P01 engaged in Bigamy in families US17.F1 and US17.F2                              |
-| ANOMALY | INDIVIDUAL |    US11    |    459    |     US11.P01     |                               US11.P01 engaged in Bigamy in families US11.F1 and US11.F2                              |
+| ANOMALY | INDIVIDUAL |    US11    |    632    |     US24.H2      |                               US24.H2 engaged in Bigamy in families US24.F4 and US24.F5                               |
 | ANOMALY | INDIVIDUAL |    US11    |    634    |     US24.H3      |                               US24.H3 engaged in Bigamy in families US24.F6 and US24.F8                               |
 | ANOMALY | INDIVIDUAL |    US11    |    631    |     US24.W1      |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F2                               |
 | ANOMALY | INDIVIDUAL |    US11    |    631    |     US24.W1      |                               US24.W1 engaged in Bigamy in families US24.F1 and US24.F3                               |
-| ANOMALY | INDIVIDUAL |    US11    |    470    |     US11.P03     |                               US11.P03 engaged in Bigamy in families US11.F3 and US11.F2                              |
-| ANOMALY | INDIVIDUAL |    US11    |    635    |     US24.W3      |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F8                               |
 | ANOMALY | INDIVIDUAL |    US11    |    633    |     US24.W2      |                               US24.W2 engaged in Bigamy in families US24.F4 and US24.F5                               |
+| ANOMALY | INDIVIDUAL |    US11    |    635    |     US24.W3      |                               US24.W3 engaged in Bigamy in families US24.F6 and US24.F8                               |
+| ANOMALY | INDIVIDUAL |    US11    |    470    |     US11.P03     |                               US11.P03 engaged in Bigamy in families US11.F3 and US11.F2                              |
 |  ERROR  |   FAMILY   |    US12    |    262    |     US15.F01     |                              Test12_Father is at least 80 years older then their children                             |
 |  ERROR  |   FAMILY   |    US12    |    263    |     US15.F01     |                              Test12_Mother is at least 60 years older then their children                             |
 | ANOMALY |   FAMILY   |    US14    |    293    |     US14.FAM     |                                  5 or more sibling born on the same date 17 OCT 1999                                  |
@@ -276,6 +280,8 @@ Errors & Anomalies
 | ANOMALY |   FAMILY   |    US21    |    663    |     US24.F6      |                                              Wife  is not listed as F sex                                             |
 | ANOMALY |   FAMILY   |    US21    |    674    |     US24.F8      |                                            Husband  is not listed as M sex                                            |
 | ANOMALY |   FAMILY   |    US21    |    675    |     US24.F8      |                                              Wife  is not listed as F sex                                             |
+| ANOMALY |   FAMILY   |    US21    |    754    |     US37.F1      |                                            Husband  is not listed as M sex                                            |
+| ANOMALY |   FAMILY   |    US21    |    755    |     US37.F1      |                                              Wife  is not listed as F sex                                             |
 |  ERROR  | INDIVIDUAL |    US22    |    490    |     US11.P07     |                                         Individual ID US11.P07 is a duplicate                                         |
 | ANOMALY | INDIVIDUAL |    US23    |    728    | US25.C1, US25.C2 |              Duplicate Name+Birthday: 'Child1' with birth '1 JAN 2024' appears for IDs [US25.C1, US25.C2]             |
 |  ERROR  |   FAMILY   |    US24    |    636    |     US24.F1      | Duplicate family with same husband (US24.H1), wife (US24.W1), and marriage date (1 JAN 2000) exists: US24.F2, US24.F3 |
@@ -443,6 +449,7 @@ Errors & Anomalies
 |  ERROR  | INDIVIDUAL |    US26    |    675    |     US24.F8      |                   Family US24.F8 WIFE does not have a corresponding entry FAMS in Individual US24.W3                  |
 |  ERROR  | INDIVIDUAL |    US26    |    719    |     US25.F1      |                   Family US25.F1 CHIL does not have a corresponding entry FAMC in Individual US25.C1                  |
 |  ERROR  | INDIVIDUAL |    US26    |    720    |     US25.F1      |                   Family US25.F1 CHIL does not have a corresponding entry FAMC in Individual US25.C2                  |
+| ANOMALY | INDIVIDUAL |    US32    |    494    |     US11.P07     |                                  Individual US11.P07 has another birth at 2 MAY 1979                                  |
 |  ERROR  |    FAM     |    US42    |    700    |    @US41.F3@     |                                             Illegitimate date in line 700                                             |
 |  ERROR  |    FAM     |    US42    |    702    |    @US41.F3@     |                                             Illegitimate date in line 702                                             |
 |  ERROR  |    INDI    |    US42    |    705    |    @US41.I3@     |                                             Illegitimate date in line 705                                             |
@@ -453,3 +460,208 @@ Errors & Anomalies
 |  ERROR  |    INDI    |    US42    |    717    |    @US41.I4@     |                                             Illegitimate date in line 717                                             |
 |  ERROR  |    INDI    |    US42    |    737    |    @US42.I1@     |                                             Illegitimate date in line 737                                             |
 +---------+------------+------------+-----------+------------------+-----------------------------------------------------------------------------------------------------------------------+
+
+Other Information
++------+------------+------------+-----------+--------------+----------------------------------------------------------------------------+
+| Type |    Tag     | User Story | File Line |      ID      |                                  Message                                   |
++------+------------+------------+-----------+--------------+----------------------------------------------------------------------------+
+| INFO | INDIVIDUAL |    US29    |     2     |      I1      |                          Deceased individual I1.                           |
+| INFO | INDIVIDUAL |    US29    |     8     |      I2      |                          Deceased individual I2.                           |
+| INFO | INDIVIDUAL |    US29    |     17    |      I3      |                          Deceased individual I3.                           |
+| INFO | INDIVIDUAL |    US29    |     25    |      I4      |                          Deceased individual I4.                           |
+| INFO | INDIVIDUAL |    US29    |     32    |      I5      |                          Deceased individual I5.                           |
+| INFO | INDIVIDUAL |    US29    |     40    |      I6      |                          Deceased individual I6.                           |
+| INFO | INDIVIDUAL |    US29    |     48    |      I7      |                          Deceased individual I7.                           |
+| INFO | INDIVIDUAL |    US29    |     54    |      I8      |                          Deceased individual I8.                           |
+| INFO | INDIVIDUAL |    US29    |     60    |      I9      |                          Deceased individual I9.                           |
+| INFO | INDIVIDUAL |    US29    |     66    |     I10      |                          Deceased individual I10.                          |
+| INFO | INDIVIDUAL |    US29    |     72    |     I11      |                          Deceased individual I11.                          |
+| INFO | INDIVIDUAL |    US29    |     78    |     I12      |                          Deceased individual I12.                          |
+| INFO | INDIVIDUAL |    US29    |     84    |     I13      |                          Deceased individual I13.                          |
+| INFO | INDIVIDUAL |    US29    |     92    |     I14      |                          Deceased individual I14.                          |
+| INFO | INDIVIDUAL |    US29    |    100    |     I15      |                          Deceased individual I15.                          |
+| INFO | INDIVIDUAL |    US29    |    138    |   US08.I01   |                       Deceased individual US08.I01.                        |
+| INFO | INDIVIDUAL |    US29    |    142    |   US08.I02   |                       Deceased individual US08.I02.                        |
+| INFO | INDIVIDUAL |    US29    |    148    |   US08.I03   |                       Deceased individual US08.I03.                        |
+| INFO | INDIVIDUAL |    US29    |    156    |   US08.I04   |                       Deceased individual US08.I04.                        |
+| INFO | INDIVIDUAL |    US29    |    164    |   US08.I05   |                       Deceased individual US08.I05.                        |
+| INFO | INDIVIDUAL |    US29    |    172    |  US09.C.01   |                       Deceased individual US09.C.01.                       |
+| INFO | INDIVIDUAL |    US29    |    176    |  US09.C.02   |                       Deceased individual US09.C.02.                       |
+| INFO | INDIVIDUAL |    US29    |    180    |  US09.P1.02  |                      Deceased individual US09.P1.02.                       |
+| INFO | INDIVIDUAL |    US29    |    187    |  US09.C.03   |                       Deceased individual US09.C.03.                       |
+| INFO | INDIVIDUAL |    US29    |    191    |  US09.P2.03  |                      Deceased individual US09.P2.03.                       |
+| INFO | INDIVIDUAL |    US29    |    198    |  US09.C.04   |                       Deceased individual US09.C.04.                       |
+| INFO | INDIVIDUAL |    US29    |    202    |  US09.P1.04  |                      Deceased individual US09.P1.04.                       |
+| INFO | INDIVIDUAL |    US29    |    204    |  US09.P2.04  |                      Deceased individual US09.P2.04.                       |
+| INFO | INDIVIDUAL |    US29    |    210    |  US09.C.05   |                       Deceased individual US09.C.05.                       |
+| INFO | INDIVIDUAL |    US29    |    214    |  US09.P1.05  |                      Deceased individual US09.P1.05.                       |
+| INFO | INDIVIDUAL |    US29    |    216    |  US09.P2.05  |                      Deceased individual US09.P2.05.                       |
+| INFO | INDIVIDUAL |    US29    |    224    |  US09.C.06   |                       Deceased individual US09.C.06.                       |
+| INFO | INDIVIDUAL |    US29    |    228    |  US09.P1.06  |                      Deceased individual US09.P1.06.                       |
+| INFO | INDIVIDUAL |    US29    |    232    |  US09.P2.06  |                      Deceased individual US09.P2.06.                       |
+| INFO | INDIVIDUAL |    US29    |    238    |   US15.P01   |                       Deceased individual US15.P01.                        |
+| INFO | INDIVIDUAL |    US29    |    242    |   US15.P02   |                       Deceased individual US15.P02.                        |
+| INFO | INDIVIDUAL |    US29    |    264    |   US16_I1    |                        Deceased individual US16_I1.                        |
+| INFO | INDIVIDUAL |    US29    |    270    |   US16_I2    |                        Deceased individual US16_I2.                        |
+| INFO | INDIVIDUAL |    US29    |    276    |   US16_I3    |                        Deceased individual US16_I3.                        |
+| INFO | INDIVIDUAL |    US29    |    282    |   US16_I4    |                        Deceased individual US16_I4.                        |
+| INFO | INDIVIDUAL |    US29    |    299    |   US14_I1    |                        Deceased individual US14_I1.                        |
+| INFO | INDIVIDUAL |    US29    |    303    |   US14_I2    |                        Deceased individual US14_I2.                        |
+| INFO | INDIVIDUAL |    US29    |    307    |   US14_I3    |                        Deceased individual US14_I3.                        |
+| INFO | INDIVIDUAL |    US29    |    311    |   US14_I4    |                        Deceased individual US14_I4.                        |
+| INFO | INDIVIDUAL |    US29    |    315    |   US14_I5    |                        Deceased individual US14_I5.                        |
+| INFO | INDIVIDUAL |    US29    |    325    |  US14_F2_I1  |                      Deceased individual US14_F2_I1.                       |
+| INFO | INDIVIDUAL |    US29    |    329    |  US14_F2_I2  |                      Deceased individual US14_F2_I2.                       |
+| INFO | INDIVIDUAL |    US29    |    333    |  US14_F2_I3  |                      Deceased individual US14_F2_I3.                       |
+| INFO | INDIVIDUAL |    US29    |    337    |  US14_F2_I4  |                      Deceased individual US14_F2_I4.                       |
+| INFO | INDIVIDUAL |    US29    |    341    |  US14_F2_I5  |                      Deceased individual US14_F2_I5.                       |
+| INFO | INDIVIDUAL |    US29    |    351    |  US14_F3_I1  |                      Deceased individual US14_F3_I1.                       |
+| INFO | INDIVIDUAL |    US29    |    353    |  US14_F3_I2  |                      Deceased individual US14_F3_I2.                       |
+| INFO | INDIVIDUAL |    US29    |    355    |  US14_F3_I3  |                      Deceased individual US14_F3_I3.                       |
+| INFO | INDIVIDUAL |    US29    |    357    |  US14_F3_I4  |                      Deceased individual US14_F3_I4.                       |
+| INFO | INDIVIDUAL |    US29    |    359    |  US14_F3_I5  |                      Deceased individual US14_F3_I5.                       |
+| INFO | INDIVIDUAL |    US29    |    363    |  US20_F1_I1  |                      Deceased individual US20_F1_I1.                       |
+| INFO | INDIVIDUAL |    US29    |    366    |  US20_F1_I2  |                      Deceased individual US20_F1_I2.                       |
+| INFO | INDIVIDUAL |    US29    |    369    |  US20_F1_I3  |                      Deceased individual US20_F1_I3.                       |
+| INFO | INDIVIDUAL |    US29    |    372    |  US20_F1_I4  |                      Deceased individual US20_F1_I4.                       |
+| INFO | INDIVIDUAL |    US29    |    388    | US20_F1_I1_2 |                     Deceased individual US20_F1_I1_2.                      |
+| INFO | INDIVIDUAL |    US29    |    391    | US20_F1_I2_2 |                     Deceased individual US20_F1_I2_2.                      |
+| INFO | INDIVIDUAL |    US29    |    394    | US20_F1_I3_2 |                     Deceased individual US20_F1_I3_2.                      |
+| INFO | INDIVIDUAL |    US29    |    397    | US20_F1_I4_2 |                     Deceased individual US20_F1_I4_2.                      |
+| INFO | INDIVIDUAL |    US29    |    450    |   US11.P07   |                       Deceased individual US11.P07.                        |
+| INFO | INDIVIDUAL |    US29    |    459    |   US11.P01   |                       Deceased individual US11.P01.                        |
+| INFO | INDIVIDUAL |    US29    |    465    |   US11.P02   |                       Deceased individual US11.P02.                        |
+| INFO | INDIVIDUAL |    US29    |    470    |   US11.P03   |                       Deceased individual US11.P03.                        |
+| INFO | INDIVIDUAL |    US29    |    475    |   US11.P04   |                       Deceased individual US11.P04.                        |
+| INFO | INDIVIDUAL |    US29    |    480    |   US11.P05   |                       Deceased individual US11.P05.                        |
+| INFO | INDIVIDUAL |    US29    |    485    |   US11.P06   |                       Deceased individual US11.P06.                        |
+| INFO | INDIVIDUAL |    US29    |    495    |   US11.P08   |                       Deceased individual US11.P08.                        |
+| INFO | INDIVIDUAL |    US29    |    500    |   US11.P09   |                       Deceased individual US11.P09.                        |
+| INFO | INDIVIDUAL |    US29    |    522    |   US17.P01   |                       Deceased individual US17.P01.                        |
+| INFO | INDIVIDUAL |    US29    |    529    |   US17.P02   |                       Deceased individual US17.P02.                        |
+| INFO | INDIVIDUAL |    US29    |    535    |   US17.P03   |                       Deceased individual US17.P03.                        |
+| INFO | INDIVIDUAL |    US29    |    542    |   US17.P04   |                       Deceased individual US17.P04.                        |
+| INFO | INDIVIDUAL |    US29    |    548    |   US17.P05   |                       Deceased individual US17.P05.                        |
+| INFO | INDIVIDUAL |    US29    |    578    |   US19.P01   |                       Deceased individual US19.P01.                        |
+| INFO | INDIVIDUAL |    US29    |    584    |   US19.P02   |                       Deceased individual US19.P02.                        |
+| INFO | INDIVIDUAL |    US29    |    590    |   US19.P03   |                       Deceased individual US19.P03.                        |
+| INFO | INDIVIDUAL |    US29    |    597    |   US19.P04   |                       Deceased individual US19.P04.                        |
+| INFO | INDIVIDUAL |    US29    |    604    |   US19.P05   |                       Deceased individual US19.P05.                        |
+| INFO | INDIVIDUAL |    US29    |    610    |   US19.P06   |                       Deceased individual US19.P06.                        |
+| INFO | INDIVIDUAL |    US29    |    617    |   US19.P07   |                       Deceased individual US19.P07.                        |
+| INFO | INDIVIDUAL |    US29    |    623    |   US19.P08   |                       Deceased individual US19.P08.                        |
+| INFO | INDIVIDUAL |    US29    |    630    |   US24.H1    |                        Deceased individual US24.H1.                        |
+| INFO | INDIVIDUAL |    US29    |    631    |   US24.W1    |                        Deceased individual US24.W1.                        |
+| INFO | INDIVIDUAL |    US29    |    632    |   US24.H2    |                        Deceased individual US24.H2.                        |
+| INFO | INDIVIDUAL |    US29    |    633    |   US24.W2    |                        Deceased individual US24.W2.                        |
+| INFO | INDIVIDUAL |    US29    |    634    |   US24.H3    |                        Deceased individual US24.H3.                        |
+| INFO | INDIVIDUAL |    US29    |    635    |   US24.W3    |                        Deceased individual US24.W3.                        |
+| INFO | INDIVIDUAL |    US29    |    683    |   US41.I1    |                        Deceased individual US41.I1.                        |
+| INFO | INDIVIDUAL |    US29    |    693    |   US41.I2    |                        Deceased individual US41.I2.                        |
+| INFO | INDIVIDUAL |    US29    |    703    |   US41.I3    |                        Deceased individual US41.I3.                        |
+| INFO | INDIVIDUAL |    US29    |    713    |   US41.I4    |                        Deceased individual US41.I4.                        |
+| INFO | INDIVIDUAL |    US29    |    723    |   US25.C1    |                        Deceased individual US25.C1.                        |
+| INFO | INDIVIDUAL |    US29    |    729    |   US25.C2    |                        Deceased individual US25.C2.                        |
+| INFO | INDIVIDUAL |    US29    |    735    |   US42.I1    |                        Deceased individual US42.I1.                        |
+| INFO | INDIVIDUAL |    US29    |    738    |   US35.I1    |                        Deceased individual US35.I1.                        |
+| INFO | INDIVIDUAL |    US29    |    743    |   US37.I1    |                        Deceased individual US37.I1.                        |
+| INFO | INDIVIDUAL |    US29    |    749    |   US37.I2    |                        Deceased individual US37.I2.                        |
+| INFO | INDIVIDUAL |    US30    |     17    |      I3      |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |     25    |      I4      |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |     48    |      I7      |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |     66    |     I10      |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |     92    |     I14      |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    202    |  US09.P1.04  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    204    |  US09.P2.04  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    214    |  US09.P1.05  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    232    |  US09.P2.06  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    238    |   US15.P01   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    242    |   US15.P02   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    270    |   US16_I2    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    276    |   US16_I3    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    363    |  US20_F1_I1  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    366    |  US20_F1_I2  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    369    |  US20_F1_I3  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    372    |  US20_F1_I4  |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    388    | US20_F1_I1_2 |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    391    | US20_F1_I2_2 |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    394    | US20_F1_I3_2 |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    397    | US20_F1_I4_2 |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    459    |   US11.P01   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    465    |   US11.P02   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    470    |   US11.P03   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    475    |   US11.P04   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    480    |   US11.P05   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    495    |   US11.P08   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    500    |   US11.P09   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    522    |   US17.P01   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    529    |   US17.P02   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    535    |   US17.P03   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    542    |   US17.P04   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    548    |   US17.P05   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    578    |   US19.P01   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    584    |   US19.P02   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    590    |   US19.P03   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    597    |   US19.P04   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    604    |   US19.P05   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    610    |   US19.P06   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    617    |   US19.P07   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    623    |   US19.P08   |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    630    |   US24.H1    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    631    |   US24.W1    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    632    |   US24.H2    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    633    |   US24.W2    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    634    |   US24.H3    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    635    |   US24.W3    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US30    |    749    |   US37.I2    |                Individual is currently living and married.                 |
+| INFO | INDIVIDUAL |    US31    |     2     |      I1      |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |     54    |      I8      |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |     60    |      I9      |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |     72    |     I11      |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |     78    |     I12      |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    100    |     I15      |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    138    |   US08.I01   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    142    |   US08.I02   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    148    |   US08.I03   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    156    |   US08.I04   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    164    |   US08.I05   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    172    |  US09.C.01   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    176    |  US09.C.02   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    187    |  US09.C.03   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    198    |  US09.C.04   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    210    |  US09.C.05   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    224    |  US09.C.06   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    264    |   US16_I1    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    282    |   US16_I4    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    299    |   US14_I1    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    303    |   US14_I2    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    307    |   US14_I3    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    311    |   US14_I4    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    315    |   US14_I5    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    325    |  US14_F2_I1  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    329    |  US14_F2_I2  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    333    |  US14_F2_I3  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    337    |  US14_F2_I4  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    341    |  US14_F2_I5  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    351    |  US14_F3_I1  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    353    |  US14_F3_I2  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    355    |  US14_F3_I3  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    357    |  US14_F3_I4  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    359    |  US14_F3_I5  |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    485    |   US11.P06   |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    703    |   US41.I3    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    713    |   US41.I4    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    723    |   US25.C1    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    729    |   US25.C2    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US31    |    735    |   US42.I1    |                 Individual is currently living and single.                 |
+| INFO | INDIVIDUAL |    US35    |     84    |     I13      |                  Individual I13 born in the last 30 days.                  |
+| INFO | INDIVIDUAL |    US35    |    738    |   US35.I1    |                Individual US35.I1 born in the last 30 days.                |
+| INFO | INDIVIDUAL |    US36    |     92    |     I14      |                  Individual I14 died in the last 30 days.                  |
+| INFO | INDIVIDUAL |    US36    |    738    |   US35.I1    |                Individual US35.I1 died in the last 30 days.                |
+| INFO | INDIVIDUAL |    US36    |    743    |   US37.I1    |                Individual US37.I1 died in the last 30 days.                |
+| INFO | INDIVIDUAL |    US37    |     92    |      I4      |     Individual I4 is a survivior of I14 who died in the last 30 days.      |
+| INFO | INDIVIDUAL |    US37    |     92    |     I15      |     Individual I15 is a survivior of I14 who died in the last 30 days.     |
+| INFO | INDIVIDUAL |    US37    |    743    |   US37.I2    | Individual US37.I2 is a survivior of US37.I1 who died in the last 30 days. |
+| INFO | INDIVIDUAL |    US38    |     29    |      I4      |      Upcoming birthday for Richard Smith (I4) on 12 Nov (3 days away)      |
+| INFO | INDIVIDUAL |    US38    |     52    |      I7      |   Upcoming birthday for Victoria Blackburn (I7) on 25 Nov (16 days away)   |
++------+------------+------------+-----------+--------------+----------------------------------------------------------------------------+

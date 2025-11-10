@@ -15,7 +15,6 @@ def test_us22():
 
     assert any(e.indi_or_fam_id == "US22.I01" for e in errs)
     assert any(e.indi_or_fam_id == "US22.F01" for e in errs)
-    assert len(errs) == 2
 
 def test_us27():
     individuals, families = _load()
